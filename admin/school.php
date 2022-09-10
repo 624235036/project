@@ -1,8 +1,19 @@
 <?php
 
-    session_start();
-    require_once "../config/db.php";
+session_start();
+require_once "../config/db.php";
 
+if (isset($_GET['delete'])) {
+  $delete_id = $_GET['delete'];
+  $deletestmt = $conn->query("DELETE FROM school WHERE id = $delete_id");
+  $deletestmt->execute();
+
+  if ($deletestmt) {
+    echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
+    $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
+    header("refresh:1; url=school.php");
+  }
+}
 
 ?>
 
@@ -19,7 +30,7 @@
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {
-      height: 1500px
+      height: 500px
     }
 
     /* Set gray background color and 100% height */
@@ -46,11 +57,11 @@
         height: auto;
       }
     }
-    .modal-content{
+
+    .modal-content {
       margin: 20px;
       padding: 20px;
     }
-
   </style>
 </head>
 
@@ -58,11 +69,14 @@
 
   <div class="container-fluid">
     <div class="row content">
-      <div class="col-sm-3 sidenav" >
-        <div align ="center">
-        <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
-        </div>
-        <h4>ชื่อของใช้งาน</h4>
+      <div class="col-sm-3 sidenav">
+        <br>
+        <div align="center">
+          <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
+        </div><br>
+        <div align="center">
+          <h4>ชื่อของใช้งาน</h4>
+        </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="admin.php">หน้าแรก</a></li>
           <li><a href="school.php">โรงเรียน</a></li>
@@ -76,27 +90,27 @@
         <div class="container">
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
           <hr>
-          <?php if (isset($_SESSION['success'])) {?>
-              <div class = "alert alert-succes">
-                <?php 
-                  echo $_SESSION['success'];
-                  unset($_SESSION['succes']);
-                ?>
-              </div>
-          <?php }?>
-          <?php if (isset($_SESSION['error'])) {?>
-              <div class = "alert alert-danger">
-                <?php 
-                  echo $_SESSION['error'];
-                  unset($_SESSION['error']);
-                ?>
-              </div>
-          <?php }?>
+          <?php if (isset($_SESSION['success'])) { ?>
+            <div class="alert alert-success">
+              <?php
+              echo $_SESSION['success'];
+              unset($_SESSION['success']);
+              ?>
+            </div>
+          <?php } ?>
+          <?php if (isset($_SESSION['error'])) { ?>
+            <div class="alert alert-danger">
+              <?php
+              echo $_SESSION['error'];
+              unset($_SESSION['error']);
+              ?>
+            </div>
+          <?php } ?>
 
           <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
-              <div class="modal-content" >
+              <div class="modal-content">
                 <h2>เพิ่มโรงเรียน</h2>
                 <form action="addschool.php" method="post" enctype="multipart/form-data">
                   <div class="form-group">
@@ -112,14 +126,14 @@
                     <input type="file" class="form-control" id="imgInput" name="img">
                     <img width="100%" id="previewImg" alt="">
                   </div>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="submit" name="submit" class="btn btn-default">Submit</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target ="#myModal">ปิด</button>
+                  <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                 </form>
               </div>
             </div>
           </div>
 
-          <table class="table">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th>#</th>
@@ -132,33 +146,33 @@
             </thead>
             <tbody>
               <?php
-                $stmt = $conn->query("SELECT * FROM school");
-                $stmt->execute();
-                $schools = $stmt->fetchAll();
+              $stmt = $conn->query("SELECT * FROM school");
+              $stmt->execute();
+              $schools = $stmt->fetchAll();
 
-                if (!$schools) {
-                  echo "<tr><td> colspan='6' class='text-center'>NO school found</td></tr>";
-                }else {
-                  foreach ($schools as $school) {
+              if (!$schools) {
+                echo "<tr><td> colspan='6' class='text-center'>ไม่มีข้อมูล</td></tr>";
+              } else {
+                foreach ($schools as $school) {
 
-                 
+
               ?>
 
-              <tr>
-                <th scope="row"><?= $school['id']; ?></th>
-                <td><?= $school['schoolname']; ?></td>
-                <td><?= $school['schooladrees']; ?></td>
-                <td width="250px"><img width="100%" src="uploads/<?= $school['img']; ?>" class= "rounded" alt=""></td>
-                <td>
-                    <a href="editschool.php?id=<?= $school['id'];?>" class="btn btn-warning">แก้ไข</a>
-                </td>
-                <td>
-                    <a href="?delete=<?= $school['id'];?>" class="btn btn-danger">ลบ</a>
-                </td>
-              </tr>
-                    
+                  <tr>
+                    <th scope="row"><?= $school['id']; ?></th>
+                    <td><?= $school['schoolname']; ?></td>
+                    <td><?= $school['schooladrees']; ?></td>
+                    <td width="250px"><img width="100%" src="uploads/<?= $school['img']; ?>" class="rounded" alt=""></td>
+                    <td>
+                      <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning">แก้ไข</a>
+                    </td>
+                    <td>
+                      <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
+                    </td>
+                  </tr>
+
               <?php  }
-                } ?>
+              } ?>
             </tbody>
           </table>
         </div>
@@ -178,11 +192,10 @@
 
     imgInput.onchange = evt => {
       const [file] = imgInput.files;
-      if (file){
+      if (file) {
         previewImg.src = URL.createObjectURL(file);
       }
     }
-
   </script>
 
 </body>

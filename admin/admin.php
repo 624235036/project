@@ -1,3 +1,11 @@
+<?php
+
+    session_start();
+    require_once "../config/db.php";
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +20,7 @@
     <style>
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
         .row.content {
-            height: 1500px
+            height: 500px
         }
 
         /* Set gray background color and 100% height */
@@ -41,14 +49,20 @@
         }
     </style>
 </head>
-    
+
 
 <body>
 
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
+                <br>
+                <div align="center">
+                    <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
+                </div><br>
+                <div align="center">
                 <h4>ชื่อของใช้งาน</h4>
+                </div><br>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="admin.php">หน้าแรก</a></li>
                     <li><a href="school.php">โรงเรียน</a></li>
