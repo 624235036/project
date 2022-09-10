@@ -35,17 +35,15 @@ if (isset($_GET['delete'])) {
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #f1f1f1;
+      background-color: #cdcd;
       height: 100%;
     }
-
     /* Set black background color, white text and some padding */
     footer {
       background-color: #555;
       color: white;
       padding: 15px;
     }
-
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -78,8 +76,8 @@ if (isset($_GET['delete'])) {
           <h4>ชื่อของใช้งาน</h4>
         </div><br>
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="admin.php">หน้าแรก</a></li>
-          <li><a href="school.php">โรงเรียน</a></li>
+          <li><a href="admin.php">หน้าแรก</a></li>
+          <li class="active"><a href="school.php">โรงเรียน</a></li>
           <li><a href="#section3">ตัวชี้วัดสมรรถนะ</a></li>
           <li><a href="#section3">ช่วงเวลาประเมิน</a></li>
           <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
@@ -133,25 +131,27 @@ if (isset($_GET['delete'])) {
             </div>
           </div>
 
-          <table class="table table-bordered">
+          <table class="table">
             <thead>
               <tr>
-                <th>#</th>
+                <th>ลำดับที่</th>
                 <th>โรงเรียน</th>
                 <th>ที่อยู่</th>
                 <th>รูปภาพ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
+                <th>ข้อมูล</th>
               </tr>
             </thead>
             <tbody>
               <?php
+              $index = 1;
               $stmt = $conn->query("SELECT * FROM school");
               $stmt->execute();
               $schools = $stmt->fetchAll();
 
               if (!$schools) {
-                echo "<tr><td> colspan='6' class='text-center'>ไม่มีข้อมูล</td></tr>";
+                echo "ไม่มีข้อมูล";
               } else {
                 foreach ($schools as $school) {
 
@@ -159,7 +159,7 @@ if (isset($_GET['delete'])) {
               ?>
 
                   <tr>
-                    <th scope="row"><?= $school['id']; ?></th>
+                    <th><?= $index++;['id']; ?></th>
                     <td><?= $school['schoolname']; ?></td>
                     <td><?= $school['schooladrees']; ?></td>
                     <td width="250px"><img width="100%" src="uploads/<?= $school['img']; ?>" class="rounded" alt=""></td>
@@ -168,6 +168,9 @@ if (isset($_GET['delete'])) {
                     </td>
                     <td>
                       <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
+                    </td>
+                    <td>
+                      <a href="selectdata.php" class="btn btn-primary">ข้อมูล</a>
                     </td>
                   </tr>
 

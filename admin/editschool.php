@@ -11,37 +11,35 @@ if (isset($_POST['update'])) {
   $img2 = $_POST['img2'];
   $upload = $_FILES['img'];
 
-  if ($upload){
+  if ($upload) {
     $allow = array('jpg', 'jpec', 'png');
     $extension = explode(".", $img['name']);
     $fileActExt = strtolower(end($extension));
     $fileNew = rand() . "." . $fileActExt;
-    $filePath = "uploads/".$fileNew;
+    $filePath = "uploads/" . $fileNew;
 
     if (in_array($fileActExt, $allow)) {
       if ($img['size'] > 0 && $img['error'] == 0) {
         (move_uploaded_file($img['tmp_name'], $filePath));
-
       }
-    }else{
+    } else {
       $fileNew = $img2;
     }
 
     $sql = $conn->prepare("UPDATE school SET schoolname = :schoolname, schooladrees = :schooladrees, img = :img WHERE id = :id");
-    $sql->bindParam(":id",$id);
-    $sql->bindParam(":schoolname",$schoolname);
-    $sql->bindParam(":schooladrees",$schooladrees);
-    $sql->bindParam(":img",$fileNew);
+    $sql->bindParam(":id", $id);
+    $sql->bindParam(":schoolname", $schoolname);
+    $sql->bindParam(":schooladrees", $schooladrees);
+    $sql->bindParam(":img", $fileNew);
     $sql->execute();
 
     if ($sql) {
       $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
       header("location: school.php");
-  }else {
+    } else {
       $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
       header("location: school.php");
-  }
-
+    }
   }
 }
 
@@ -105,10 +103,13 @@ if (isset($_POST['update'])) {
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav">
+        <br>
         <div align="center">
           <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
-        </div>
-        <h4>ชื่อของใช้งาน</h4>
+        </div><br>
+        <div align="center">
+          <h4>ชื่อของใช้งาน</h4>
+        </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="admin.php">หน้าแรก</a></li>
           <li><a href="school.php">โรงเรียน</a></li>
@@ -121,16 +122,16 @@ if (isset($_POST['update'])) {
       <div class="col-sm-9">
         <div class="container" style="background-color: #cdcdcd;">
           <div class="card" style="background-color: #5d8d73;" style="border-radius: 25px;">
-          <h1 class="container-">แก้ไขโรงเรียน</h1>
+            <h1 class="container-">แก้ไขโรงเรียน</h1>
           </div><br>
           <form action="editschool.php" method="post" enctype="multipart/form-data">
             <?php
-              if(isset($_GET['id'])) {
-                $id = $_GET['id'];
-                $stmt = $conn->query("SELECT * FROM school WHERE id = $id");
-                $stmt->execute();
-                $data = $stmt->fetch();
-              }
+            if (isset($_GET['id'])) {
+              $id = $_GET['id'];
+              $stmt = $conn->query("SELECT * FROM school WHERE id = $id");
+              $stmt->execute();
+              $data = $stmt->fetch();
+            }
             ?>
             <div class="form-group">
               <label for="schoolname">ชื่อโรงเรียน:</label>
@@ -147,7 +148,7 @@ if (isset($_POST['update'])) {
               <input type="file" class="form-control" id="imgInput" name="img">
               <img width="100%" src="uploads/<?= $data['img']; ?>" id="previewImg" alt="">
             </div>
-            <a class="btn btn-danger" href="school.php" >ปิด</a>
+            <a class="btn btn-danger" href="school.php">ปิด</a>
             <button type="submit" name="update" class="btn btn-default">บันทึก</button>
             <hr>
           </form>
