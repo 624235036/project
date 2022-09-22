@@ -131,6 +131,7 @@ if (isset($_REQUEST['delete_id'])) {
                   <label for="email">อีเมล</label>
                   <input type="text" class="form-control" name="email">
                 </div>
+
                 <div class="form-group">
                   <label for="password">รหัสผ่าน:</label>
                   <input type="text" class="form-control" name="password">
@@ -138,6 +139,17 @@ if (isset($_REQUEST['delete_id'])) {
                 <div class="form-group">
                   <label for="password">ยืนยันรหัสผ่าน:</label>
                   <input type="text" class="form-control" name="c_password">
+                </div>
+                <div class="form-group">
+                  <label for="type" class="col-sm-3 control-label">Select Type</label>
+                  <div class="col-sm-13">
+                    <select name="txt_role" class="form-control">
+                      <option value="" selected="selected">- Select Role -</option>
+                      <option value="admin">Admin</option>
+                      <option value="employee">Employee</option>
+                      <option value="user">User</option>
+                    </select>
+                  </div>
                 </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                 <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
@@ -181,9 +193,9 @@ if (isset($_REQUEST['delete_id'])) {
                   <td><?= $a['password']; ?></td>
                   <td>
                     <a href="edit_director.php?id=<?= $a['id']; ?>" class="btn btn-warning">แก้ไข</a>
-                    <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger">ลบข้อมูล</a></td>
+                  <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger">ลบข้อมูล</a></td>
                   </td>
-                  
+
                 </tr>
 
             <?php  }

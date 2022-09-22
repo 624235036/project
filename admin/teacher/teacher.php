@@ -114,7 +114,7 @@ if (isset($_REQUEST['delete_id'])) {
             <!-- Modal content-->
             <div class="modal-content">
               <h2>เพิ่มคุณครู</h2>
-              <form action="add_teacher.php" method="post" enctype="multipart/form-data">
+              <form action="add_teacher.php" method="post" >
                 <div class="form-group">
                   <label for="firstname">ชื่่อ</label>
                   <input type="text" class="form-control" name="firstname">
@@ -139,6 +139,13 @@ if (isset($_REQUEST['delete_id'])) {
                   <label for="password">ยืนยันรหัสผ่าน:</label>
                   <input type="text" class="form-control" name="c_password">
                 </div>
+                <div class="form-group">
+                            <label for="urole">สถานะ:</label>
+                            <select name="urole">
+                                <option value="director">director</option>
+                                <option value="user">user</option>
+                            </select>
+                </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" name="submit" class="btn btn-default">Submit</button>
               </form>
@@ -149,6 +156,8 @@ if (isset($_REQUEST['delete_id'])) {
           <thead>
             <tr>
               <th>ลำดับที่</th>
+              <th>ตำแหน่ง</th>
+              <th>ชื่อโรงเรียน</th>
               <th>ชื่่อ</th>
               <th>นามสกุล</th>
               <th>เบอร์โทร</th>
@@ -160,33 +169,34 @@ if (isset($_REQUEST['delete_id'])) {
           </thead>
           <tbody>
             <?php
-            $index = 1;
-            $stmt = $conn->query("SELECT * FROM tbl_teacher");
-            $stmt->execute();
-            $result = $stmt->fetchAll();
+              $index = 1;
+            if (isset($_GET['id'])) {
+              $id = $_GET['id'];
+              $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s ON s.id = u.school_id WHERE s.id = $id ORDER BY s.id asc ");
+              $stmt->execute();
+              $data = $stmt->fetchAll();
 
-            if (!$result) {
-              echo "<tr><td> </td></tr>";
-            } else {
-              foreach ($result as $a) {
-
-
+              if (!$data) {
+                echo "ไม่มีข้อมูล";
+              } else {
+                foreach ($data as $school) {
             ?>
-                <tr>
-                  <td><?= $index++; ?></td>
-                  <td><?= $a['firstname']; ?></td>
-                  <td><?= $a['lastname']; ?></td>
-                  <td><?= $a['phone']; ?></td>
-                  <td><?= $a['email']; ?></td>
-                  <td><?= $a['password']; ?></td>
-                  <td>
-                    <a href="edit_teacher.php?id=<?= $a['id']; ?>" class="btn btn-warning">แก้ไข</a>
-                    <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger">ลบข้อมูล</a></td>
-                  </td>
-                  
-                </tr>
-
+                  <tr>
+                    <td><?= $index++; ?></td>
+                    <td><?= $school['urole']; ?></td>
+                    <td><?= $school['schoolname']; ?></td>
+                    <td><?= $school['firstname']; ?></td>
+                    <td><?= $school['lastname']; ?></td>
+                    <td><?= $school['phone']; ?></td>
+                    <td><?= $school['email']; ?></td>
+                    <td><?= $school['password']; ?></td>
+                    <td>
+                      <a href="edit_teacher.php?id=<?= $school['id']; ?>" class="btn btn-warning">แก้ไข</a>
+                    <td><a href="?delete_id=<?php echo $school["id"]; ?>" class="btn btn-danger">ลบข้อมูล</a></td>
+                    </td>
+                  </tr>
             <?php  }
+              }
             } ?>
           </tbody>
         </table>

@@ -10,6 +10,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
+        $urole = $_POST['urole'];
        
 
         if (empty($firstname)) {
@@ -39,10 +40,13 @@
         } else if ($password != $c_password) {
             $_SESSION['error'] = 'passwords do not match';
             header("location: teacher.php");
+        } else if (empty($urole)){
+            $_SESSION['error'] = 'please enter your urole';
+            header("location: teacher.php");
         } else {
             try {
 
-                $check_email = $conn->prepare("SELECT email FROM tbl_teacher WHERE email = :email");
+                $check_email = $conn->prepare("SELECT email FROM users WHERE email = :email");
                 $check_email->bindParam(":email", $email);
                 $check_email->execute();
                 $row = $check_email->fetch(PDO::FETCH_ASSOC);
@@ -52,13 +56,14 @@
                     header("location: director.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO tbl_teacher(firstname, lastname, phone, email, password) 
-                                            VALUES(:firstname, :lastname, :phone , :email, :password)");
+                    $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, phone, email, password,urole) 
+                                            VALUES(:firstname, :lastname, :phone , :email, :password, :urole)");
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
                     $stmt->bindParam(":phone", $phone);
                     $stmt->bindParam(":email", $email);
                     $stmt->bindParam(":password", $passwordHash);
+                    $stmt->bindParam(":urole", $urole);
 
                     if ($stmt->execute()) {
                         $_SESSION = "Insert Successfully...";

@@ -63,7 +63,7 @@ if (isset($_POST['update'])) {
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #f1f1f1;
+      background-color: #cdcd;
       height: 100%;
     }
 
@@ -111,8 +111,8 @@ if (isset($_POST['update'])) {
           <h4>ชื่อของใช้งาน</h4>
         </div><br>
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="admin.php">หน้าแรก</a></li>
-          <li><a href="school.php">โรงเรียน</a></li>
+          <li><a href="admin.php">หน้าแรก</a></li>
+          <li class="active"><a href="school.php">โรงเรียน</a></li>
           <li><a href="#section3">ตัวชี้วัดสมรรถนะ</a></li>
           <li><a href="#section3">ช่วงเวลาประเมิน</a></li>
           <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>

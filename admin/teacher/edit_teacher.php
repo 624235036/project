@@ -10,25 +10,27 @@ if (isset($_POST['update'])) {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $urole = $_POST['urole'];
     // $c_password = $_POST['c_password'];
-    
 
-$sql = $conn->prepare("UPDATE tbl_teacher SET firstname = :firstname, lastname = :lastname,  phone = :phone, email = :email, password = :password  WHERE id = :id");
-$sql->bindParam(':id', $id);
-$sql->bindParam(':firstname', $firstname);
-$sql->bindParam(':lastname', $lastname);
-$sql->bindParam(':phone', $phone);
-$sql->bindParam(':email', $email);
-$sql->bindParam(':password', $password);
-$sql->execute();
 
-if ($sql) {
-    $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
-    header("location: teacher.php");
-  } else {
-    $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
-    header("location: teacher.php");
-  }
+    $sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname,  phone = :phone, email = :email, password = :password, urole = :urole  WHERE id = :id");
+    $sql->bindParam(':id', $id);
+    $sql->bindParam(':firstname', $firstname);
+    $sql->bindParam(':lastname', $lastname);
+    $sql->bindParam(':phone', $phone);
+    $sql->bindParam(':email', $email);
+    $sql->bindParam(':password', $password);
+    $sql->bindParam(':urole', $urole);
+    $sql->execute();
+
+    if ($sql) {
+        $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
+        header("location: teacher.php");
+    } else {
+        $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
+        header("location: teacher.php");
+    }
 }
 
 ?>
@@ -107,13 +109,13 @@ if ($sql) {
             <div class="col-sm-9">
                 <div class="container" style="background-color: #cdcdcd;">
                     <div class="card" style="border-radius: 25px;">
-                        <h1 class="container-">แก้ไขข้อมูลผู้อำนวยการ</h1>
+                        <h1>แก้ไขข้อมูลคุณครู</h1>
                     </div><br>
                     <form action="edit_teacher.php" method="post" enctype="multipart/form-data">
                         <?php
                         if (isset($_GET['id'])) {
                             $id = $_GET['id'];
-                            $stmt = $conn->query("SELECT * FROM tbl_teacher WHERE id = $id");
+                            $stmt = $conn->query("SELECT * FROM users WHERE id = $id"); 
                             $stmt->execute();
                             $data = $stmt->fetch();
                         }
@@ -143,7 +145,15 @@ if ($sql) {
                             <label for="password">ยืนยันรหัสผ่าน:</label>
                             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
                         </div>
-                        <a class="btn btn-danger" href="teacher.php">ปิด</a>
+                        <div class="form-group">
+                            <label for="urole">สถานะ:</label>
+                            <select name="urole">
+                                <option value="director">director</option>
+                                <option value="user">user</option>
+                            </select>
+                        </div>
+                        
+                        <a class="btn btn-danger" href="../school.php">ปิด</a>
                         <button type="submit" name="update" class="btn btn-default">บันทึก</button>
                         <hr>
                     </form>

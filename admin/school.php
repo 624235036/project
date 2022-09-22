@@ -38,12 +38,14 @@ if (isset($_GET['delete'])) {
       background-color: #cdcd;
       height: 100%;
     }
+
     /* Set black background color, white text and some padding */
     footer {
       background-color: #555;
       color: white;
       padding: 15px;
     }
+
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -124,7 +126,7 @@ if (isset($_GET['delete'])) {
                     <input type="file" class="form-control" id="imgInput" name="img">
                     <img width="100%" id="previewImg" alt="">
                   </div>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target ="#myModal">ปิด</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button>
                   <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                 </form>
               </div>
@@ -155,11 +157,11 @@ if (isset($_GET['delete'])) {
               } else {
                 foreach ($schools as $school) {
 
-
               ?>
 
                   <tr>
-                    <th><?= $index++;['id']; ?></th>
+                    <th><?= $index++;
+                        ['id']; ?></th>
                     <td><?= $school['schoolname']; ?></td>
                     <td><?= $school['schooladrees']; ?></td>
                     <td width="250px"><img width="100%" src="uploads/<?= $school['img']; ?>" class="rounded" alt=""></td>
@@ -170,7 +172,7 @@ if (isset($_GET['delete'])) {
                       <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
                     </td>
                     <td>
-                      <a href="selectdata.php" class="btn btn-primary">ข้อมูล</a>
+                      <a href="selectdata.php?id=<?= $school['id']; ?>" class="btn btn-primary">ข้อมูล</a>
                     </td>
                   </tr>
 

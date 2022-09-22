@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+require_once "../config/db.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +23,7 @@
 
         /* Set gray background color and 100% height */
         .sidenav {
-            background-color: #f1f1f1;
+            background-color: #cdcd;
             height: 100%;
         }
 
@@ -76,13 +83,21 @@
                     </div>
                 </a>
             </div>
-            <div class="p-2 col-md-3 text-center">
-                <a href="teacher/teacher.php">
-                    <!-- ยังคลิ็กไปไม่ได้ -->
+            <div class="p-2 col-md-3 text-center">   
+            <?php
+             if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $stmt = $conn->query("SELECT * FROM school WHERE id = $id");
+                $stmt->execute();
+                $data = $stmt->fetch();
+              }
+              ?>         
+                <a href="teacher/teacher.php?id=<?= $data['id']; ?>" name="next">
                     <div class="btn-warning box-container" style="padding-bottom:50%;"><br>
                         <div>ข้อมูลคุณครู</div>
                     </div>
-                </a>
+                </a> 
+               
             </div>
 
 

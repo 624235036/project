@@ -13,7 +13,7 @@ if (isset($_POST['update'])) {
     // $c_password = $_POST['c_password'];
     
 
-$sql = $conn->prepare("UPDATE tbl_director SET firstname = :firstname, lastname = :lastname,  phone = :phone, email = :email, password = :password  WHERE id = :id");
+$sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname,  phone = :phone, email = :email, password = :password  WHERE id = :id");
 $sql->bindParam(':id', $id);
 $sql->bindParam(':firstname', $firstname);
 $sql->bindParam(':lastname', $lastname);
@@ -113,7 +113,7 @@ if ($sql) {
                         <?php
                         if (isset($_GET['id'])) {
                             $id = $_GET['id'];
-                            $stmt = $conn->query("SELECT * FROM tbl_director WHERE id = $id");
+                            $stmt = $conn->query("SELECT * FROM users WHERE id = $id");
                             $stmt->execute();
                             $data = $stmt->fetch();
                         }

@@ -10,6 +10,7 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
+        $urole = $_POST['urole'];
        
 
         if (empty($firstname)) {
@@ -42,7 +43,7 @@
         } else {
             try {
 
-                $check_email = $conn->prepare("SELECT email FROM tbl_director WHERE email = :email");
+                $check_email = $conn->prepare("SELECT email FROM users WHERE email = :email");
                 $check_email->bindParam(":email", $email);
                 $check_email->execute();
                 $row = $check_email->fetch(PDO::FETCH_ASSOC);
@@ -52,7 +53,7 @@
                     header("location: director.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO tbl_director(firstname, lastname, phone, email, password) 
+                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, phone, email, password) 
                                             VALUES(:firstname, :lastname, :phone , :email, :password)");
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
