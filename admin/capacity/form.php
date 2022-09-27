@@ -155,8 +155,7 @@ if (isset($_GET['delete'])) {
                             <td colspan="8" align="center">ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</td>
                         </tr><br>
                         <tr>
-                            <th width="15" scope="col">ลำดับ</th>
-                            
+                            <th width="100" scope="col">ลำดับ</th>
                             <th width="350" scope="col">รายการประเมินตัวชี้วัด</th>
                             <th width="15" scope="col">มากที่สุด</th>
                             <th width="15" scope="col">มาก</th>
@@ -168,7 +167,7 @@ if (isset($_GET['delete'])) {
                         <tbody>
                             <?php
                             $index = 1;
-                            $select_stmt = $conn->prepare("SELECT * FROM form_question  INNER JOIN form_header  on id_header = id_header ORDER BY id_header asc ");
+                            $select_stmt = $conn->prepare("SELECT q.*, h.name_header FROM form_question as q INNER JOIN form_header as h on h.id_header = q.id_header WHERE h.id_header = h.id_header  ");
                             $select_stmt->execute();
                             $data = $select_stmt->fetchAll();
 
@@ -179,7 +178,9 @@ if (isset($_GET['delete'])) {
 
                             ?>
                                     
-                                    <tr bgcolor="#cdcd"><td colspan="8" align="center"><?php echo $a["name_header"]; $index++; ["id_header"]; ?></td></tr>
+                                    <tr bgcolor="#cdcd"><td colspan="8" align="center"><?php echo $a["name_header"];?></td></tr>
+                                    <td><?php $index++; ["id_header"];?></td>
+                                    <td><?php echo $a["question"];?></td>
                                     <td width="70" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5"></td>
                                     <td width="63" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
                                     <td width="71" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
@@ -192,7 +193,7 @@ if (isset($_GET['delete'])) {
                                     </tr>
                             <?php }
                             }
-                            ?>
+                         ?>
                         </tbody>
                     </table>
                 </div>
