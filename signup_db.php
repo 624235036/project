@@ -9,7 +9,8 @@
         $email = $_POST['email'];
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
-        $urole = 'user';
+        $urole = $_POST['urole'];
+        $school = $_POST['school_id'];
 
         if (empty($firstname)) {
             $_SESSION['error'] = 'please enter your name';
@@ -35,6 +36,12 @@
         } else if ($password != $c_password) {
             $_SESSION['error'] = 'passwords do not match';
             header("location: index.php");
+        } else if (empty($school)) {
+            $_SESSION['error'] = 'please enter school';
+            header("location: index.php");
+        } else if(empty($urole)) {
+            $_SESSION['error'] = 'please enter urole';
+            header("location: index.php");
         } else {
             try {
 
@@ -48,13 +55,14 @@
                     header("location: index.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, email, password, urole) 
-                                            VALUES(:firstname, :lastname, :email, :password, :urole)");
+                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, email, password, urole, school_id) 
+                                            VALUES(:firstname, :lastname, :email, :password, :urole, :school_id)");
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
                     $stmt->bindParam(":email", $email);
                     $stmt->bindParam(":password", $passwordHash);
                     $stmt->bindParam(":urole", $urole);
+                    $stmt->bindParam(":school_id", $school);
                     $stmt->execute();
                     $_SESSION['success'] = "registered successfully! <a href='signin.php' class='alert-link'>Click here to </a> login";
                     header("location: index.php");

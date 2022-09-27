@@ -29,7 +29,7 @@
         ?>
     </div>
     <h3
-        class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname']?></h3>
+        class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id']?></h3>
         <a href="logout.php" class="btn btn-danger">Logout</a>
         
 </body>

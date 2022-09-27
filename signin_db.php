@@ -6,6 +6,7 @@
 
         $email = $_POST['email'];
         $password = $_POST['password'];
+        //$school = $_POST['school_id'];
  
        if (empty($email)) {
             $_SESSION['error'] = 'please enter email';
@@ -19,12 +20,14 @@
         } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 10) {
             $_SESSION['error'] = 'password must be between 10 and 20 characters long.';
             header("location: signin.php");
-    
-        } else {
+        } //else if (empty($school)) {
+            //$_SESSION['error'] = 'please enter school';
+            //header("location: signin.php");
+         else {
             try {
-
                 $check_data = $conn->prepare("SELECT * FROM users WHERE email = :email");
                 $check_data->bindParam(":email", $email);
+                //$check_data->bindParam(":school_id", $school);
                 $check_data->execute();
                 $row = $check_data->fetch(PDO::FETCH_ASSOC);
 
@@ -32,6 +35,7 @@
 
                if ($email == $row['email']) {
                         if (password_verify($password, $row['password'])) {
+                            //if ($school == $row['school_id']){
                             if ($row['urole'] == 'admin') {
                                 $_SESSION['admin_login'] = $row['id'];
                                 header("location: admin/admin.php");//ผู้ดูแล

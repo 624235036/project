@@ -17,7 +17,7 @@ require_once 'config/db.php';
 <body style="background-image: url(images/bg2.jpg);
     background-repeat: no-repeat;
     background-size: cover;">
-<div  class="container-sm p-5 my-5 bg-white text-dark">
+  <div class="container-sm p-5 my-5 bg-white text-dark">
     <h3 class="mt-5">Register</h3>
     <hr>
     <form action="signup_db.php" method="post">
@@ -45,7 +45,12 @@ require_once 'config/db.php';
           ?>
         </div>
       <?php } ?>
-
+      
+      <?php
+      $stmt = $conn->prepare("SELECT * FROM school");
+      $stmt->execute();
+      $schools = $stmt->fetchAll();
+      ?>
       <div class="mb-3">
         <label for="firstname" class="form-label">First Name</label>
         <input type="text" class="form-control" name="firstname" aria-describedby="firstname">
@@ -65,6 +70,23 @@ require_once 'config/db.php';
       <div class="mb-3">
         <label for="confirm password" class="form-label">Confirm Password</label>
         <input type="password" class="form-control" name="c_password">
+      </div>
+      <div class="mb-3">
+        <label for="urole" class="form-label">urole:</label>
+        <select name="urole" class="form-control">
+          <option value="director">director</option>
+          <option value="user">user</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="school" class="form-label">school</label>
+        <select name="school_id" class="form-control" required>
+          <option value="">เลือก</option>
+          <?php
+          foreach ($schools as $row) { ?>
+            <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
+          <?php } ?>
+        </select>
       </div>
       <button type="submit" name="signup" class="btn btn-primary">Signup</button>
     </form>

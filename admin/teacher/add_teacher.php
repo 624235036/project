@@ -67,7 +67,7 @@
 
                     if ($stmt->execute()) {
                         $_SESSION = "Insert Successfully...";
-                        header("refresh:2;teacher.php");
+                        header("location:teacher.php");
                     }
                 } else {
                     $_SESSION['error'] = "something went wrong!";

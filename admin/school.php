@@ -75,7 +75,16 @@ if (isset($_GET['delete'])) {
           <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
         </div><br>
         <div align="center">
-          <h4>ชื่อของใช้งาน</h4>
+          <?php
+
+          if (isset($_SESSION['admin_login'])) {
+            $user_id = $_SESSION['admin_login'];
+            $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          }
+          ?>
+          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
         </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="admin.php">หน้าแรก</a></li>
