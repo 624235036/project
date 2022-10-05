@@ -1,11 +1,10 @@
 <?php
-
 session_start();
 require_once "../../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    $deletestmt = $conn->query("DELETE FROM form_header WHERE id_header = $delete_id");
+    $deletestmt = $conn->query("DELETE FROM tb_question WHERE id_question = $delete_id");
     $deletestmt->execute();
 
     if ($deletestmt) {
@@ -14,9 +13,7 @@ if (isset($_GET['delete'])) {
         header("location:form.php");
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,9 +86,7 @@ if (isset($_GET['delete'])) {
         }
     </style>
 </head>
-
 <body style="background-color: #00008B;">
-
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
@@ -100,13 +95,14 @@ if (isset($_GET['delete'])) {
                 </div>
                 <h4>ชื่อของใช้งาน</h4>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="../admin/admin.php">หน้าแรก</a></li>
-                    <li><a href="../admin/school.php">ข้อมูลโรงเรียน</a></li>
-                    <li><a href="../admin/director/director.php">ข้อมูลผู้อำนวยการ</a></li>
-                    <li><a href="../admin/teacher/teacher.php">ข้อมูลคุณครู</a></li>
+                    <li><a href="../admin.php">หน้าแรก</a></li>
+                    <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
+                    <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
+                    <li><a href="../teacher/teacher.php">ข้อมูลคุณครู</a></li>
+                    <li><a href="../class/class.php">เพิ่มห้อง</a></li>
                     <li class="active"><a href="form.php">ตัวชี้วัดสมรรถนะ</a></li>
                     <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
-                    <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+                    <li><a href="../../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -119,8 +115,6 @@ if (isset($_GET['delete'])) {
                             <strong>Wrong! <?php echo $errorMsg; ?></strong>
                         </div>
                     <?php } ?>
-
-
                     <?php
                     if (isset($insertMsg)) {
                     ?>
@@ -155,7 +149,7 @@ if (isset($_GET['delete'])) {
                             <td colspan="8" align="center">ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</td>
                         </tr><br>
                         <tr>
-                            <th width="100" scope="col">ลำดับ</th>
+                            <th width="15" scope="col">ลำดับ</th>
                             <th width="350" scope="col">รายการประเมินตัวชี้วัด</th>
                             <th width="15" scope="col">มากที่สุด</th>
                             <th width="15" scope="col">มาก</th>
@@ -170,30 +164,32 @@ if (isset($_GET['delete'])) {
                             $select_stmt = $conn->prepare("SELECT q.*, h.name_header FROM form_question as q INNER JOIN form_header as h on h.id_header = q.id_header WHERE h.id_header = h.id_header  ");
                             $select_stmt->execute();
                             $data = $select_stmt->fetchAll();
-
                             if (!$data) {
                                 echo "ไม่มี";
                             } else {
                                 foreach ($data as $a) {
-
                             ?>
+
+                                    <tr bgcolor="#cdcd">
+                                        <td colspan="8" align="center"><?php echo $a["name_header"]; ?></td>
+                                    </tr>
                                     
-                                    <tr bgcolor="#cdcd"><td colspan="8" align="center"><?php echo $a["name_header"];?></td></tr>
-                                    <td><?php $index++; ["id_header"];?></td>
-                                    <td><?php echo $a["question"];?></td>
-                                    <td width="70" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5"></td>
-                                    <td width="63" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
-                                    <td width="71" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
-                                    <td width="65" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
-                                    <td width="81" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
+                                        <td><?php ["id_question == id_header"]; ?></td>
+                                        <td><?php echo $a["question"]; ?></td>
+                                        <td width="70" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5"></td>
+                                        <td width="63" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
+                                        <td width="71" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
+                                        <td width="65" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
+                                        <td width="81" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
+                                    
                                     <td>
-                                        <a href="edit.php?id_question=<?= $a['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true" ></span></a> <!-- <a href="password.php?nik='.$row['nik'].'" title="Ganti Password" data-placement="bottom" data-toggle="tooltip" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a> -->
+                                        <a href="edit.php?id_question=<?= $a['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> <!-- <a href="password.php?nik='.$row['nik'].'" title="Ganti Password" data-placement="bottom" data-toggle="tooltip" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a> -->
                                         <a href="?delete=<?= $a['id_header']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                     </td>
                                     </tr>
                             <?php }
                             }
-                         ?>
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -204,8 +200,6 @@ if (isset($_GET['delete'])) {
 
 
 
-
-
-
-
 </body>
+
+</html>

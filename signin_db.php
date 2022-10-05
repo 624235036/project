@@ -10,16 +10,16 @@
  
        if (empty($email)) {
             $_SESSION['error'] = 'please enter email';
-            header("location: signin.php");
+            header("location: index.php");
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['error'] = 'invalid email format';
-            header("location: signin.php");
+            header("location: index.php");
         } else if (empty($password)) {
             $_SESSION['error'] = 'please enter your password';
-            header("location: signin.php");
+            header("location: index.php");
         } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 10) {
             $_SESSION['error'] = 'password must be between 10 and 20 characters long.';
-            header("location: signin.php");
+            header("location: index.php");
         } //else if (empty($school)) {
             //$_SESSION['error'] = 'please enter school';
             //header("location: signin.php");
@@ -38,26 +38,26 @@
                             //if ($school == $row['school_id']){
                             if ($row['urole'] == 'admin') {
                                 $_SESSION['admin_login'] = $row['id'];
-                                header("location: admin/admin.php");//ผู้ดูแล
+                                header("location:admin/admin.php");//ผู้ดูแล
                             } else if ($row['urole'] == 'director'){
                                 $_SESSION['director_login'] = $row['id'];
-                                header("location: director.php");//ผู้อำนวยการ user 
+                                header("location:director/director.php");//ผู้อำนวยการ user 
                             }else {
                                 $_SESSION['tech_login'] = $row['id'];
-                                header("location: tech.php");
+                                header("location:teacher/teacher.php");
                             }//คุณครู User
                             
                          } else {
                             $_SESSION['error'] = 'password error';
-                            header("location: signin.php");
+                            header("location: index.php");
                         }
                     } else {
                         $_SESSION['error'] = 'e-mail error';
-                        header("location: signin.php");
+                        header("location: index.php");
                     }
                 } else {
                     $_SESSION['error'] = "No information in the system";
-                    header("location: signin.php");
+                    header("location: index.php");
                 }
 
             } catch(PDOException $e) {

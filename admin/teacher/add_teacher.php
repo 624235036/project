@@ -3,7 +3,7 @@
     session_start();
     require_once '../../config/db.php';
 
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['signup'])) {
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $phone = $_POST['phone'];
@@ -11,7 +11,8 @@
         $password = $_POST['password'];
         $c_password = $_POST['c_password'];
         $urole = $_POST['urole'];
-       
+        $school = $_POST['id_school'];
+        $class = $_POST['id_room'];
 
         if (empty($firstname)) {
             $_SESSION['error'] = 'please enter your name';
@@ -40,40 +41,46 @@
         } else if ($password != $c_password) {
             $_SESSION['error'] = 'passwords do not match';
             header("location: teacher.php");
-        } else if (empty($urole)){
-            $_SESSION['error'] = 'please enter your urole';
+        }  else if(empty($urole)) {
+            $_SESSION['error'] = 'please enter urole';
             header("location: teacher.php");
-        } else {
+        } else if (empty($school)) {
+            $_SESSION['error'] = 'please enter school';
+            header("location: teacher.php");
+        } else if (empty($class)) {
+            $_SESSION['error'] = 'please enter school';
+            header("location: teacher.php");
+        }else {
             try {
 
-                $check_email = $conn->prepare("SELECT email FROM users WHERE email = :email");
-                $check_email->bindParam(":email", $email);
+                $check_email = $conn->prepare("SELECT * FROM users WHERE id_room = :id_room");
+                $check_email->bindParam(":id_room", $class);
                 $check_email->execute();
                 $row = $check_email->fetch(PDO::FETCH_ASSOC);
 
-                if ($row['email'] == $email) {
-                    $_SESSION['warning'] = "this email is already in the system.";
-                    header("location: director.php");
+                if ($row['id_room'] == $class) {
+                    $_SESSION['warning'] = "this email is already in the system";
+                    header("location: teacher.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO users (firstname, lastname, phone, email, password,urole) 
-                                            VALUES(:firstname, :lastname, :phone , :email, :password, :urole)");
+                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, phone, email, password, urole, school_id, id_room) 
+                                            VALUES(:firstname, :lastname, :phone, :email, :password, :urole, :school_id, :id_room)");
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
                     $stmt->bindParam(":phone", $phone);
                     $stmt->bindParam(":email", $email);
                     $stmt->bindParam(":password", $passwordHash);
                     $stmt->bindParam(":urole", $urole);
-
-                    if ($stmt->execute()) {
-                        $_SESSION = "Insert Successfully...";
-                        header("location:teacher.php");
-                    }
+                    $stmt->bindParam(":school_id", $school);
+                    $stmt->bindParam(":id_room", $class);
+                    $stmt->execute();
+                    $_SESSION['success'] = "registered successfully!";
+                    header("location: teacher.php");
                 } else {
                     $_SESSION['error'] = "something went wrong!";
-                    header("location:teacher.php");
+                    header("location: teacher.php");
                 }
-
+                
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }

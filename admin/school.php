@@ -15,6 +15,24 @@ if (isset($_GET['delete'])) {
   }
 }
 
+//สร้างเงื่อนไขตรวจสอบถ้ามีการค้นหาให้แสดงเฉพาะรายการค้นหา
+if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
+
+  //ประกาศตัวแปรรับค่าจากฟอร์ม
+  $schoolname = "%{$_GET['schoolname']}%";
+
+  //คิวรี่ข้อมูลมาแสดงจากการค้นหา
+  $stmt = $conn->prepare("SELECT* FROM school WHERE schoolname LIKE ?");
+  $stmt->execute([$schoolname]);
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+} else {
+  //คิวรี่ข้อมูลมาแสดงตามปกติ *แสดงทั้งหมด
+  $stmt = $conn->prepare("SELECT* FROM school");
+  $stmt->execute();
+  $result = $stmt->fetchAll();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +45,36 @@ if (isset($_GET['delete'])) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
   <style>
+    body {
+
+      line-height: 22px;
+      margin: 0;
+
+      -webkit-font-smoothing: antialiased !important;
+    }
+
+    .container {
+      background-color: #FFFFFF;
+      width: 980px;
+      /* height: 200px; */
+      position: absolute;
+      top: 25%;
+      left: 35%;
+      margin-top: -100px;
+      margin-left: -100px;
+
+    }
+
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {
-      height: 500px
+      height: 1500px
     }
 
     /* Set gray background color and 100% height */
     .sidenav {
-      background-color: #cdcd;
+      background-color: #FFFFFF;
       height: 100%;
     }
 
@@ -62,42 +101,51 @@ if (isset($_GET['delete'])) {
       margin: 20px;
       padding: 20px;
     }
+
+    .displayed {
+      display: block;
+      margin-left: 28%;
+    }
   </style>
+
+
+
 </head>
 
-<body>
-
+<body style="background-color: #00008B;">
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav">
-        <br>
-        <div align="center">
-          <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
-        </div><br>
+        <div align="center"><br>
+          <img src="../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
+        </div>
         <div align="center">
           <?php
 
-          if (isset($_SESSION['admin_login'])) {
-            $user_id = $_SESSION['admin_login'];
-            $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          }
+          // if (isset($_SESSION['admin_login'])) {
+          //   $user_id = $_SESSION['admin_login'];
+          //   $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+          //   $stmt->execute();
+          //   $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          // }
+          // 
           ?>
-          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+          <!-- // <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4> -->
         </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="admin.php">หน้าแรก</a></li>
-          <li class="active"><a href="school.php">โรงเรียน</a></li>
-          <li><a href="#section3">ตัวชี้วัดสมรรถนะ</a></li>
-          <li><a href="#section3">ช่วงเวลาประเมิน</a></li>
-          <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+          <li class="active"><a href="school.php">ข้อมูลโรงเรียน</a></li>
+          <li><a href="../admin/director/director.php">ข้อมูลผู้อำนวยการ</a></li>
+          <li><a href="teacher/teacher.php">ข้อมูลคุณครู</a></li>
+          <li><a href="class/class.php">เพิ่มห้อง</a></li>
+          <li><a href="capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
+          <li><a href="../admin/date/t_date.php">ช่วงเวลาประเมิน</a></li>
+          <li><a href="../index.php">ออกจากระบบ</a></li>
         </ul><br>
       </div><br>
-
-      <div class="col-sm-9">
-        <div class="container">
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
+      <div class="container">
+        <div class=" col-sm-15 col-sm-offset-0">
+          <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
           <hr>
           <?php if (isset($_SESSION['success'])) { ?>
             <div class="alert alert-success">
@@ -115,7 +163,6 @@ if (isset($_GET['delete'])) {
               ?>
             </div>
           <?php } ?>
-
           <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
@@ -130,87 +177,88 @@ if (isset($_GET['delete'])) {
                     <label for="schooladrees">ที่อยู่โรงเรียน:</label>
                     <input type="text" class="form-control" name="schooladrees">
                   </div>
-                  <div class="form-group">
-                    <label for="img">รูปภาพ:</label>
-                    <input type="file" class="form-control" id="imgInput" name="img">
-                    <img width="100%" id="previewImg" alt="">
-                  </div>
                   <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button>
                   <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                 </form>
               </div>
             </div>
           </div>
-
-          <table class="table">
+          <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <th>ลำดับที่</th>
                 <th>โรงเรียน</th>
                 <th>ที่อยู่</th>
-                <th>รูปภาพ</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
-                <th>ข้อมูล</th>
+                <!-- <th>รูปภาพ</th> -->
+
+                <!-- <th>ข้อมูล</th> -->
               </tr>
             </thead>
             <tbody>
-              <?php
-              $index = 1;
-              $stmt = $conn->query("SELECT * FROM school");
-              $stmt->execute();
-              $schools = $stmt->fetchAll();
+              <form action="school.php" method="get">
+                <div class="mb-3 row">
+                  <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
+                  <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
+                  <div class="col-7 col-sm-5">
+                    <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
+                                                                                                                                              echo $_GET['schoolname'];
+                                                                                                                                            } ?>">
+                  </div>
+                  <div class="col-2 col-sm-1">
+                    <button type="submit" class="btn btn-primary">ค้นหา</button>
+                  </div>
+                  <div class="col-2 col-sm-1">
+                    <a href="school.php" class="btn btn-success">Reset</a>
+                  </div>
+                </div>
+                <?php
+                //แสดงข้อความที่ค้นหา
+                if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
+                  echo '<font color="red"> ข้อมูลการค้นหา : ' . $_GET['schoolname'];
+                  echo ' *พบ ' . $stmt->rowCount() . ' รายการ</font><br><br>';
+                } ?>
+                <hr>
+                <?php
+                $index = 1;
+                $stmt = $conn->query("SELECT * FROM school");
+                $stmt->execute();
+                $schools = $stmt->fetchAll();
 
-              if (!$schools) {
-                echo "ไม่มีข้อมูล";
-              } else {
-                foreach ($schools as $school) {
+                if (!$schools) {
+                  echo "ไม่มีข้อมูล";
+                } else {
+                  foreach ($schools as $school) {
 
-              ?>
-
-                  <tr>
-                    <th><?= $index++;
-                        ['id']; ?></th>
-                    <td><?= $school['schoolname']; ?></td>
-                    <td><?= $school['schooladrees']; ?></td>
-                    <td width="250px"><img width="100%" src="uploads/<?= $school['img']; ?>" class="rounded" alt=""></td>
-                    <td>
-                      <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning">แก้ไข</a>
-                    </td>
-                    <td>
-                      <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
-                    </td>
-                    <td>
+                ?>
+              </form>
+              <tr>
+                <th><?= $index++;
+                    ['id']; ?></th>
+                <td><?= $school['schoolname']; ?></td>
+                <td><?= $school['schooladrees']; ?></td>
+                <td>
+                  <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning" data-toggle="modal" data-target="#myModal">แก้ไข</a>
+                </td>
+                <td>
+                  <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
+                </td>
+                <td>
                       <a href="selectdata.php?id=<?= $school['id']; ?>" class="btn btn-primary">ข้อมูล</a>
                     </td>
-                  </tr>
+              </tr>
 
-              <?php  }
-              } ?>
+          <?php  }
+                } ?>
+
             </tbody>
           </table>
-        </div>
+        </div><br>
       </div>
-
-
     </div>
   </div>
-
-  <footer class="container-fluid">
-    <p>Footer Text</p>
-  </footer>
-
-  <script>
-    let imgInput = document.getElementById('imgInput');
-    let previewImg = document.getElementById('previewImg');
-
-    imgInput.onchange = evt => {
-      const [file] = imgInput.files;
-      if (file) {
-        previewImg.src = URL.createObjectURL(file);
-      }
-    }
-  </script>
+  <!-- สิ้นสุด container -->
 
 </body>
 
