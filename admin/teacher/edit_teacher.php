@@ -122,7 +122,7 @@ if (isset($_POST['update'])) {
                         ?>
                         <div class="form-group">
                             <label for="firstname">ชื่่อ</label>
-                            <input type="text" readonly value="<?= $data['id']; ?>" class="form-control" name="id">
+                            <input type="text" hidden value="<?= $data['id']; ?>" class="form-control" name="id">
                             <input type="text" value="<?= $data['firstname']; ?>" class="form-control" name="firstname">
                         </div>
                         <div class="form-group">

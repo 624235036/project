@@ -37,7 +37,6 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -45,70 +44,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <style>
-    body {
-
-      line-height: 22px;
-      margin: 0;
-
-      -webkit-font-smoothing: antialiased !important;
-    }
-
-    .container {
-      background-color: #FFFFFF;
-      width: 980px;
-      /* height: 200px; */
-      position: absolute;
-      top: 25%;
-      left: 35%;
-      margin-top: -100px;
-      margin-left: -100px;
-
-    }
-
-    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {
-      height: 1500px
-    }
-
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #FFFFFF;
-      height: 100%;
-    }
-
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-
-      .row.content {
-        height: auto;
-      }
-    }
-
-    .modal-content {
-      margin: 20px;
-      padding: 20px;
-    }
-
-    .displayed {
-      display: block;
-      margin-left: 28%;
-    }
-  </style>
-
-
+  <link rel = "stylesheet" href="../style.css" type="text/css" />
 
 </head>
 
@@ -121,16 +57,14 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
         </div>
         <div align="center">
           <?php
-
-          // if (isset($_SESSION['admin_login'])) {
-          //   $user_id = $_SESSION['admin_login'];
-          //   $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
-          //   $stmt->execute();
-          //   $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          // }
-          // 
+          if (isset($_SESSION['admin_login'])) {
+            $user_id = $_SESSION['admin_login'];
+            $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          }
           ?>
-          <!-- // <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4> -->
+          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
         </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="admin.php">หน้าแรก</a></li>

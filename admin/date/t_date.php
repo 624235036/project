@@ -1,10 +1,9 @@
-<?php include('dbconfig.php');
-
-
+<?php
+include('dbconfig.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
@@ -12,7 +11,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <style>
         body {
 
@@ -85,14 +83,27 @@
         <div class="row content">
             <div class="col-sm-3 sidenav">
                 <div align="center"><br>
-                    <img src="../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
+                    <img src="../../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
                 </div>
-                <h4>ชื่อของใช้งาน</h4>
+                <div align="center">
+                    <?php
+                    session_start();
+                    require_once "../../config/db.php";
+                    if (isset($_SESSION['admin_login'])) {
+                        $user_id = $_SESSION['admin_login'];
+                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt->execute();
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                </div><br>
                 <ul class="nav nav-pills nav-stacked">
-                <li><a href="../admin.php">หน้าแรก</a></li>
+                    <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../admin.php">ข้อมูลโรงเรียน</a></li>
                     <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
                     <li><a href="../teacher/teacher.php">ข้อมูลคุณครู</a></li>
+                    <li><a href="../class/class.php">เพิ่มห้อง</a></li>
                     <li><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
                     <li class="active"><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
                     <li><a href="../../index.php">ออกจากระบบ</a></li>
@@ -149,7 +160,7 @@
                     <?php
                     $sql_date = "SELECT * FROM tbl_date"
                         or die("Error : " . mysqli_connect_error($sql_date));
-                    $sql_date = mysqli_query($conn, $sql_date);
+                    $sql_date = mysqli_query($con, $sql_date);
                     ?>
                 </div>
 

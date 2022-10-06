@@ -41,9 +41,12 @@
                                 header("location:admin/admin.php");//ผู้ดูแล
                             } else if ($row['urole'] == 'director'){
                                 $_SESSION['director_login'] = $row['id'];
+                                $_SESSION['school_id'] = $row['school_id'];
                                 header("location:director/director.php");//ผู้อำนวยการ user 
                             }else {
                                 $_SESSION['tech_login'] = $row['id'];
+                                $_SESSION['school_id'] = $row['school_id'];
+                                $_SESSION['class_room'] = $row['id_room'];
                                 header("location:teacher/teacher.php");
                             }//คุณครู User
                             

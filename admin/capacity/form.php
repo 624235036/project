@@ -1,10 +1,11 @@
 <?php
+
 session_start();
 require_once "../../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    $deletestmt = $conn->query("DELETE FROM tb_question WHERE id_question = $delete_id");
+    $deletestmt = $conn->query("DELETE FROM form_question WHERE id_queustion = $delete_id");
     $deletestmt->execute();
 
     if ($deletestmt) {
@@ -13,7 +14,11 @@ if (isset($_GET['delete'])) {
         header("location:form.php");
     }
 }
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +29,7 @@ if (isset($_GET['delete'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
     <style>
         body {
 
@@ -35,10 +41,10 @@ if (isset($_GET['delete'])) {
 
         .container {
             background-color: #FFFFFF;
-            width: 980px;
+            width: 990px;
             /* height: 200px; */
             position: absolute;
-            top: 25%;
+            top: 20%;
             left: 35%;
             margin-top: -100px;
             margin-left: -100px;
@@ -86,28 +92,39 @@ if (isset($_GET['delete'])) {
         }
     </style>
 </head>
+
 <body style="background-color: #00008B;">
+
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
                 <div align="center"><br>
-                    <img src="../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
+                    <img src="../../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
                 </div>
-                <h4>ชื่อของใช้งาน</h4>
+                <div align="center">
+                    <?php
+                    if (isset($_SESSION['admin_login'])) {
+                        $user_id = $_SESSION['admin_login'];
+                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt->execute();
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                </div><br>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
                     <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
-                    <li><a href="../teacher/teacher.php">ข้อมูลคุณครู</a></li>
+                    <li><a href="teacher.php?id=<?= $school['id']; ?>">ข้อมูลคุณครู</a></li>
                     <li><a href="../class/class.php">เพิ่มห้อง</a></li>
-                    <li class="active"><a href="form.php">ตัวชี้วัดสมรรถนะ</a></li>
+                    <li class="active"><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
                     <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
                     <li><a href="../../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
-                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มตัวชี้วัด</button>
                     <?php
                     if (isset($errorMsg)) {
                     ?>
@@ -115,6 +132,8 @@ if (isset($_GET['delete'])) {
                             <strong>Wrong! <?php echo $errorMsg; ?></strong>
                         </div>
                     <?php } ?>
+
+
                     <?php
                     if (isset($insertMsg)) {
                     ?>
@@ -145,52 +164,101 @@ if (isset($_GET['delete'])) {
 
                     <table class="table  table-bordered">
                         <tr bgcolor="#F5FFFA">
-                            <td width="20">&nbsp;</td>
-                            <td colspan="8" align="center">ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</td>
+                            <!-- <td width="25">&nbsp;</td> -->
+                            <td colspan="10" align="center">ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</td>
                         </tr><br>
                         <tr>
-                            <th width="15" scope="col">ลำดับ</th>
-                            <th width="350" scope="col">รายการประเมินตัวชี้วัด</th>
-                            <th width="15" scope="col">มากที่สุด</th>
-                            <th width="15" scope="col">มาก</th>
-                            <th width="15" scope="col">ปานกลาง</th>
-                            <th width="15" scope="col">น้อย</th>
-                            <th width="15" scope="col">น้อยที่สุด</th>
-                            <th width="75" scope="col">เครื่องมือ</th>
-                        </tr>
-                        <tbody>
-                            <?php
-                            $index = 1;
-                            $select_stmt = $conn->prepare("SELECT q.*, h.name_header FROM form_question as q INNER JOIN form_header as h on h.id_header = q.id_header WHERE h.id_header = h.id_header  ");
-                            $select_stmt->execute();
-                            $data = $select_stmt->fetchAll();
-                            if (!$data) {
-                                echo "ไม่มี";
-                            } else {
-                                foreach ($data as $a) {
-                            ?>
 
-                                    <tr bgcolor="#cdcd">
-                                        <td colspan="8" align="center"><?php echo $a["name_header"]; ?></td>
-                                    </tr>
-                                    
-                                        <td><?php ["id_question == id_header"]; ?></td>
-                                        <td><?php echo $a["question"]; ?></td>
-                                        <td width="70" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5"></td>
-                                        <td width="63" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
-                                        <td width="71" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
-                                        <td width="65" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
-                                        <td width="81" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
-                                    
-                                    <td>
-                                        <a href="edit.php?id_question=<?= $a['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> <!-- <a href="password.php?nik='.$row['nik'].'" title="Ganti Password" data-placement="bottom" data-toggle="tooltip" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></a> -->
-                                        <a href="?delete=<?= $a['id_header']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                    </td>
-                                    </tr>
-                            <?php }
-                            }
+                            <th width="25%" scope="col">หัวข้อตัวชี้วัด</th>
+                            <th width="5%" scope="col">ลำดับ</th>
+                            <th width="35%" scope="col">รายการประเมินตัวชี้วัด</th>
+                            <th width="5%" scope="col">มากที่สุด</th>
+                            <th width="5%" scope="col">มาก</th>
+                            <th width="5%" scope="col">ปานกลาง</th>
+                            <th width="5%" scope="col">น้อย</th>
+                            <th width="5%" scope="col">น้อยที่สุด</th>
+                            <th width="10%" scope="col">เครื่องมือ</th>
+                        </tr>
+                        <?php
+                        $index_h = 0;
+                        $index = 1.1;
+                        $select_stmt = $conn->prepare("SELECT * FROM form_header");
+                        $select_stmt->execute();
+                        $data1 = $select_stmt->fetchAll();
+                        foreach ($data1 as $h) {
+                            $index_h++;
+
+
+                            $id_header = $h["id_header"];
+                        ?>
+
+                            <th>
+                                <?php echo $h["name_header"]; ?>
+                            </th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th>
+                                <a href="edit_h.php?id_header=<?= $h['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+                                <a href="?delete=<?= $h['id_header']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            </th>
+
+
+                            <tbody>
+                                <?php
+                                $index_h = $index;
+                                $select_stmt = $conn->prepare("SELECT * FROM form_question WHERE id_header = '$id_header'");
+                                $select_stmt->execute();
+                                $data = $select_stmt->fetchAll();
+                                if (!$data) {
+                                    echo "ไม่มี";
+                                } else {
+
+                                    foreach ($data as $a) {
+                                        $index++;
+
+                                ?>
+                                        <!-- วนสloop หัวข้อย่อย -->
+                                        <tr>
+                                            <td></td>
+                                            <td><?= $index_h++;
+                                                ["id_queustion"]; ?></td>
+
+                                            <td><?php echo $a["question"]; ?></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5" required="required" /></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
+
+                                            <td>
+
+                                                <a href="edit.php?id_queustion=<?= $a['id_queustion']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+                                                <a href="?delete=<?= $a['id_queustion']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </tr>
+
+                                        <?
+                                        $i++;
+                                        ?>
+
+                                        </td>
+                                        </tr>
+
+                                <?php
+
+                                    }
+                                }
+                                ?>
+                            <?php
+                        }
                             ?>
-                        </tbody>
+                            </tbody>
+
+
                     </table>
                 </div>
             </div>
@@ -200,6 +268,8 @@ if (isset($_GET['delete'])) {
 
 
 
-</body>
 
-</html>
+
+
+
+</body>

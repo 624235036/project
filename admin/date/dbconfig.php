@@ -5,13 +5,13 @@ $username = "root";
 $password = "";
 $bdname = "project";
 
-$conn = mysqli_connect("localhost", "root", "", "project" );
+$con = mysqli_connect("localhost", "root", "", "project" );
   // set the PDO error mode to exception
-  if ($conn === false) {
+  if ($con === false) {
     die("ERROR: Could not connect. "
         . mysqli_connect_error());
 }
   
-  mysqli_query( $conn, "SET NAMES UTF8" );
+  mysqli_query( $con, "SET NAMES UTF8" );
 
 ?>

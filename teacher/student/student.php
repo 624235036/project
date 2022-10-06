@@ -15,7 +15,6 @@ require_once "../../config/db.php";
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
   <style>
     body {
 
@@ -89,13 +88,23 @@ require_once "../../config/db.php";
         <div align="center"><br>
           <img src="../../images/icon1.png" height="150" class="img-circle" alt="Cinque Terre">
         </div>
-        <h4>ชื่อของใช้งาน</h4>
+        <div align="center">
+          <?php
+          if (isset($_SESSION['tech_login'])) {
+            $user_id = $_SESSION['tech_login'];
+            $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          }
+          ?>
+          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
+        </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="../teacher.php">หน้าแรก</a></li>
           <li class="active"><a href="student.php">ข้อมูลนักเรียน</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของห้องเรียน</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของชั้นปี</a></li>
-          <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+          <li><a href="../../index.php">ออกจากระบบ</a></li>
         </ul><br>
       </div><br>
       <div class="container">
@@ -116,13 +125,17 @@ require_once "../../config/db.php";
                     <label for="lastname">นามสกุล</label>
                     <input type="text" class="form-control" name="student_lastname">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" hidden>
                     <label for="class_years">ชั้นปี</label>
-                    <input type="text" class="form-control" name="class_years">
+                    <input type="text" readonly value="<?= $row['id_room']; ?>" class="form-control" name="id_room">
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" hidden>
                     <label for="school_id">โรงเรียน</label>
-                    <input type="text" class="form-control" name="school_id">
+                    <input type="text" readonly value="<?= $row['school_id']; ?>" class="form-control" name="school_id">
+                  </div>
+                  <div class="form-group" hidden>
+                    <label for="school_id">คุณครูประจำชั้น</label>
+                    <input type="text" readonly value="<?= $row['id']; ?>" class="form-control" name="id_teacher">
                   </div>
                   <!-- <div class="form-group">
                     <label for="school">ชั้นปี</label>
@@ -157,32 +170,32 @@ require_once "../../config/db.php";
                 <th>ชื่่อ</th>
                 <th>นามสกุล</th>
                 <th>ชั้นปี</th>
-                <th>โรงเรียน</th>
                 <th>ฟอร์ม</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-              $index = 1;
-              $stmt = $conn->query("SELECT * FROM student");
-              $stmt->execute();
-              $result = $stmt->fetchAll();
+            <?php
+                if (isset($_SESSION['class_room'])) {
+                    $index = 1;
+                    $class_id = $_SESSION['class_room'];
+                    $stmt = $conn->query("SELECT t.*,c.class_name FROM student as t INNER JOIN class_room as c on c.id_room = t.id_room  WHERE t.id_teacher = $user_id ");
+                    $stmt->execute();
+                    $data = $stmt->fetchAll();
 
-              if (!$result) {
-                echo "ไม่มีข้อมูล";
-              } else {
-                foreach ($result as $a) {
+                    if (!$data) {
+                        echo "ไม่มี";
+                    } else {
+                        foreach ($data as $student) {
 
-              ?>
+                ?>
                   <tr>
                     <td><?= $index++; ?></td>
-                    <td><?= $a['student_name']; ?></td>
-                    <td><?= $a['student_lastname']; ?></td>
-                    <td><?= $a['class_years']; ?></td>
-                    <td><?= $a['school_id']; ?></td>
-                    <td><a href="form.php" class="btn btn-info btn-xs">ฟอร์ม</a>
+                    <td><?= $student['student_name']; ?></td>
+                    <td><?= $student['student_lastname']; ?></td>
+                    <td><?= $student['class_name']; ?></td>
+                    <td><a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-xs">ฟอร์ม</a>
                     <td><a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
                     <td><a href="#" class="btn btn-danger btn-xs">ลบ</a></td>
                     </td>
@@ -190,7 +203,7 @@ require_once "../../config/db.php";
                   </tr>
 
               <?php  }
-              } ?>
+              } }?>
             </tbody>
           </table>
         </div>

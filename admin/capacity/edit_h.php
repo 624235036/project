@@ -4,14 +4,12 @@ session_start();
 require_once "../../config/db.php";
 
 if (isset($_POST['btn_update'])) {
-   
-    $question = $_POST['question'];
 
-    $sql = $conn->prepare("UPDATE form_question SET question = :question WHERE id_queustion  = id_queustion ");
-    
-    $sql->bindParam(':question', $question);
+    $name_header = $_POST['name_header'];
+    $sql = $conn->prepare("UPDATE form_header SET name_header = :name_header WHERE id_header = id_header");
+    $sql->bindParam(':name_header', $name_header);
     $sql->execute();
-    
+
 
     if ($sql) {
         $_SESSION['success'] = "แก้ไขได้";
@@ -101,18 +99,18 @@ if (isset($_POST['btn_update'])) {
         <h3>แก้ไขตัวชี้วัด</h3>
     </div><br>
 
-    <form action="edit.php" method="post" class="form-horizontal mt-5">
+    <form action="edit_h.php" method="post" class="form-horizontal mt-5">
         <?php
-        if (isset($_GET['id_queustion '])) {
-            $id_queustion  = $_GET['id_queustion '];
-            $select_stmt = $conn->query("SELECT * FROM form_question WHERE id_queustion = $id_queustion");
+        if (isset($_GET['id_header'])) {
+            $id_header = $_GET['id_header'];
+            $select_stmt = $conn->query("SELECT * FROM form_header WHERE id_header = $id_header");
             $select_stmt->execute();
             $data = $select_stmt->fetch();
         }
         ?>
         <div class="form-group">
-            <label for="question">ตัวชี้วัด:</label>
-            <input type="text" value="<?= $data['question']; ?>" class="form-control" name="question">
+            <label for="name_header">ตัวชี้วัด:</label>
+            <input type="text" value="<?= $data['name_header']; ?>" class="form-control" name="name_header">
         </div>
         <a href="form.php" class="btn btn-danger">ปิด</a>
 

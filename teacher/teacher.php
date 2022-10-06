@@ -15,7 +15,6 @@ require_once "../config/db.php";
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
   <style>
     body {
 
@@ -79,7 +78,6 @@ require_once "../config/db.php";
       margin-right: auto
     }
   </style>
-
 </head>
 
 <body style="background-color: #8FBC8F;">
@@ -90,14 +88,24 @@ require_once "../config/db.php";
         <div align="center"><br>
           <img src="../images/icon1.png" height="150" class="img-circle" alt="Cinque Terre">
         </div>
-        <h4>ชื่อของใช้งาน</h4>
+        <div align="center">
+          <?php
+          if (isset($_SESSION['tech_login'])) {
+            $user_id = $_SESSION['tech_login'];
+            $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          }
+          ?>
+          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
+        </div><br>
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="teacher.php">หน้าแรก</a></li>
           <li><a href="../teacher/student/student.php">ข้อมูลนักเรียน</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-          <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+          <li><a href="../index.php">ออกจากระบบ</a></li>
         </ul><br>
       </div><br>
       <div class="container">
