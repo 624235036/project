@@ -15,7 +15,6 @@ require_once "../config/db.php";
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
   <style>
     body {
 
@@ -79,9 +78,6 @@ require_once "../config/db.php";
       margin-right: auto
     }
   </style>
-
-
-
 </head>
 
 <body style="background-color: #F5F5DC;">
@@ -95,13 +91,13 @@ require_once "../config/db.php";
         <h4>ชื่อของใช้งาน</h4>
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="director.php">หน้าแรก</a></li>
-          <li><a href="#">รายชื่อครูประจำชั้น</a></li>
+          <li><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
           <li><a href="student.php">รายชื่อนักเรียน</a></li>
           <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
           <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-          <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+          <li><a href="../index.php">ออกจากระบบ</a></li>
         </ul><br>
       </div><br>
       <div class="container">

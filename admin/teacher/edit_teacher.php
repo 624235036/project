@@ -46,14 +46,33 @@ if (isset($_POST['update'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
+        body {
+            line-height: 22px;
+            margin: 0;
+
+            -webkit-font-smoothing: antialiased !important;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            width: 980px;
+            /* height: 200px; */
+            position: absolute;
+            top: 25%;
+            left: 35%;
+            margin-top: -100px;
+            margin-left: -100px;
+
+        }
+
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
         .row.content {
-            height: 1000px
+            height: 1500px
         }
 
         /* Set gray background color and 100% height */
         .sidenav {
-            background-color: #f1f1f1;
+            background-color: #FFFFFF;
             height: 100%;
         }
 
@@ -81,86 +100,64 @@ if (isset($_POST['update'])) {
             padding: 20px;
         }
 
-        .container {
-            max-width: 550px;
-            border-radius: 25px;
+        .displayed {
+            display: block;
+            margin-left: 28%;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container-fluid">
-        <div class="row content">
-            <div class="col-sm-3 sidenav">
-                <div align="center">
-                    <img src="https://png.pngtree.com/element_our/20190524/ourmid/pngtree-elementary-school-girl-going-to-school-cartoon-can-decorate-elements-image_1094339.jpg" height="150" class="img-circle" alt="Cinque Terre">
-                </div>
-                <h4>ชื่อของใช้งาน</h4>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="../admin.php">หน้าแรก</a></li>
-                    <li class="active"><a href="../school.php">โรงเรียน</a></li>
-                    <li><a href="#section3">ตัวชี้วัดสมรรถนะ</a></li>
-                    <li><a href="#section3">ช่วงเวลาประเมิน</a></li>
-                    <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
-                </ul><br>
-            </div><br>
-
-            <div class="col-sm-9">
-                <div class="container" style="background-color: #cdcdcd;">
-                    <div class="card" style="border-radius: 25px;">
-                        <h1>แก้ไขข้อมูลคุณครู</h1>
-                    </div><br>
-                    <form action="edit_teacher.php" method="post" enctype="multipart/form-data">
-                        <?php
-                        if (isset($_GET['id'])) {
-                            $id = $_GET['id'];
-                            $stmt = $conn->query("SELECT * FROM users WHERE id = $id"); 
-                            $stmt->execute();
-                            $data = $stmt->fetch();
-                        }
-                        ?>
-                        <div class="form-group">
-                            <label for="firstname">ชื่่อ</label>
-                            <input type="text" hidden value="<?= $data['id']; ?>" class="form-control" name="id">
-                            <input type="text" value="<?= $data['firstname']; ?>" class="form-control" name="firstname">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastname">นามสกุล</label>
-                            <input type="text" value="<?= $data['lastname']; ?>" class="form-control" name="lastname">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">เบอร์โทร</label>
-                            <input type="text" value="<?= $data['phone']; ?>" class="form-control" name="phone">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">อีเมล</label>
-                            <input type="text" value="<?= $data['email']; ?>" class="form-control" name="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">รหัสผ่าน:</label>
-                            <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">ยืนยันรหัสผ่าน:</label>
-                            <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
-                        </div>
-                        <div class="form-group">
-                            <label for="urole">สถานะ:</label>
-                            <select name="urole">
-                                <option value="director">director</option>
-                                <option value="user">user</option>
-                            </select>
-                        </div>
-                        
-                        <a class="btn btn-danger" href="../school.php">ปิด</a>
-                        <button type="submit" name="update" class="btn btn-default">บันทึก</button>
-                        <hr>
-                    </form>
-                </div>
-            </div>
+    <div class="card" style="border-radius: 25px;">
+        <h1>แก้ไขข้อมูลคุณครู</h1>
+    </div><br>
+    <form action="edit_teacher.php" method="post" enctype="multipart/form-data">
+        <?php
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $stmt = $conn->query("SELECT * FROM users WHERE id = $id");
+            $stmt->execute();
+            $data = $stmt->fetch();
+        }
+        ?>
+        <div class="form-group">
+            <label for="firstname">ชื่่อ</label>
+            <input type="text" hidden value="<?= $data['id']; ?>" class="form-control" name="id">
+            <input type="text" value="<?= $data['firstname']; ?>" class="form-control" name="firstname">
         </div>
-    </div>
+        <div class="form-group">
+            <label for="lastname">นามสกุล</label>
+            <input type="text" value="<?= $data['lastname']; ?>" class="form-control" name="lastname">
+        </div>
+        <div class="form-group">
+            <label for="phone">เบอร์โทร</label>
+            <input type="text" value="<?= $data['phone']; ?>" class="form-control" name="phone">
+        </div>
+        <div class="form-group">
+            <label for="email">อีเมล</label>
+            <input type="text" value="<?= $data['email']; ?>" class="form-control" name="email">
+        </div>
+        <div class="form-group">
+            <label for="password">รหัสผ่าน:</label>
+            <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
+        </div>
+        <div class="form-group">
+            <label for="password">ยืนยันรหัสผ่าน:</label>
+            <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
+        </div>
+        <div class="form-group">
+            <label for="urole">สถานะ:</label>
+            <select name="urole">
+                <option value="director">director</option>
+                <option value="user">user</option>
+            </select>
+        </div>
+
+        <a class="btn btn-danger" href="teacher.php">ปิด</a>
+        <button type="submit" name="update" class="btn btn-default">บันทึก</button>
+        <hr>
+    </form>
 </body>
 
 </html>

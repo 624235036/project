@@ -29,7 +29,7 @@ if (isset($_REQUEST['delete_id'])) {
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <link rel = "stylesheet" href="../../style.css" type="text/css" />
+  <link rel="stylesheet" href="../../style.css" type="text/css" />
   <script>
     $(document).ready(function() { //
       $("#school").change(function() { //
@@ -79,8 +79,14 @@ if (isset($_REQUEST['delete_id'])) {
         <ul class="nav nav-pills nav-stacked">
           <li><a href="../admin.php">หน้าแรก</a></li>
           <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
-          <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
-          <li class="active"><a href="teacher.php?id=<?= $school['id']; ?>">ข้อมูลคุณครู</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">เพิ่มสมาชิก
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
+              <li class="active"><a href="teacher.php?id=">ข้อมูลคุณครู</a></li>
+            </ul>
+          </li>
           <li><a href="../class/class.php">เพิ่มห้อง</a></li>
           <li><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
           <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
@@ -179,8 +185,8 @@ if (isset($_REQUEST['delete_id'])) {
 
                     ?>
                   </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    <button type="submit" name="signup" class="btn btn-default">บันทึก</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                  <button type="submit" name="signup" class="btn btn-default">บันทึก</button>
           </form>
         </div>
       </div>
@@ -222,9 +228,9 @@ if (isset($_REQUEST['delete_id'])) {
               <td><?= $a['urole']; ?></td>
               <td><?= $a['schoolname']; ?></td>
               <td><?= $a['class_name']; ?></td>
-              
+
               <td>
-                <a href="edit_teacher.php?id=<?= $a['id']; ?>" class="btn btn-warning btn-xs">แก้ไข</a>
+                <a href="edit_teacher.php?id=<?= $a['id']; ?>" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
               <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger btn-xs">ลบ</a></td>
               </td>
             </tr>

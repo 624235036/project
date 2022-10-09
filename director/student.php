@@ -3,8 +3,6 @@
 session_start();
 require_once "../config/db.php";
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +15,6 @@ require_once "../config/db.php";
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <style>
         body {
 
@@ -28,11 +25,11 @@ require_once "../config/db.php";
         }
 
         .container {
-            /* background-color: #FFFFFF; */
-            width: 1000px;
+            background-color: #FFFFFF;
+            width: 980px;
             /* height: 200px; */
             position: absolute;
-            top: auto;
+            top: 25%;
             left: 35%;
             margin-top: -100px;
             margin-left: -100px;
@@ -76,32 +73,164 @@ require_once "../config/db.php";
 
         .displayed {
             display: block;
-            margin-left: auto;
-            margin-right: auto
+            margin-left: 28%;
         }
     </style>
 </head>
 
-<body style="background-color: #FAFAD2;">
+<body style="background-color: #8FBC8F;">
+
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-3 sidenav">
                 <div align="center"><br>
-                    <img src="../images/icon2.png" height="150" class="img-circle" alt="Cinque Terre">
+                    <img src="../images/icon1.png" height="150" class="img-circle" alt="Cinque Terre">
                 </div>
-                <h4>ชื่อของใช้งาน</h4>
+                <div align="center">
+                    <?php
+                    if (isset($_SESSION['director_login'])) {
+                        $user_id = $_SESSION['director_login'];
+                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt->execute();
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                </div><br>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="director.php">หน้าแรก</a></li>
-                    <li><a href="#">รายชื่อครูประจำชั้น</a></li>
-                    <li class="active"><a href="student.php">รายชื่อนักเรียน</a></li>
-                    <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
+                    <li><a href="#">รายชื่อนักเรียน</a></li>
+                    <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                    <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
+                    <li><a href="../index.php">ออกจากระบบ</a></li>
                 </ul><br>
+            </div><br>
+            <div class="container">
+                <div class=" col-sm-15 col-sm-offset-0">
+                    <?php
+                    if (isset($_GET['id'])) {
+                        $id = $_GET['id'];
+                        $stmt = $conn->query("SELECT * FROM users WHERE id = $id");
+                        $stmt->execute();
+                        $data_name = $stmt->fetch();
+                    }
+                    ?>
+                    <h2>รายชื่อนักเรียนครูประจำชั้น <?php echo $data_name['firstname']. ' ' . $data_name['lastname']; ?></h2>
+                    <hr>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <h2>เพิ่มนักเรียน</h2>
+                                <form action="addstudent.php" method="post">
+                                    <div class="form-group">
+                                        <label for="firstname">ชื่่อ</label>
+                                        <input type="text" class="form-control" name="student_name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">นามสกุล</label>
+                                        <input type="text" class="form-control" name="student_lastname">
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label for="class_years">ชั้นปี</label>
+                                        <input type="text" readonly value="<?= $row['id_room']; ?>" class="form-control" name="id_room">
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label for="school_id">โรงเรียน</label>
+                                        <input type="text" readonly value="<?= $row['school_id']; ?>" class="form-control" name="school_id">
+                                    </div>
+                                    <div class="form-group" hidden>
+                                        <label for="school_id">คุณครูประจำชั้น</label>
+                                        <input type="text" readonly value="<?= $row['id']; ?>" class="form-control" name="id_teacher">
+                                    </div>
+                                    <!-- <div class="form-group">
+                    <label for="school">ชั้นปี</label>
+                    <select name="school_id" class="form-control" required>
+                      <option value="">เลือก</option>
+                      <?php
+                        foreach ($schools as $row) { ?>
+                        <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="school">โรงเรียน</label>
+                    <select name="school_id" class="form-control" required>
+                      <option value="">เลือก</option>
+                      <?php
+                        foreach ($schools as $row) { ?>
+                        <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div> -->
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                    <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ลำดับที่</th>
+                                <th>ชื่่อ</th>
+                                <th>นามสกุล</th>
+                                <th>ชั้นปี</th>
+                                <th>ฟอร์ม</th>
+                                <th>แก้ไข</th>
+                                <th>ลบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (isset($_GET['id'])) {
+                                $index = 1;
+                                $class_id = $_GET['id'];
+                                $stmt = $conn->query("SELECT t.*,c.class_name FROM student as t INNER JOIN class_room as c on c.id_room = t.id_room  WHERE t.id_teacher = $class_id ");
+                                $stmt->execute();
+                                $data = $stmt->fetchAll();
+
+                                if (!$data) {
+                                    echo "ไม่มี";
+                                } else {
+                                    foreach ($data as $student) {
+
+                            ?>
+                                        <tr>
+                                            <td><?= $index++; ?></td>
+                                            <td><?= $student['student_name']; ?></td>
+                                            <td><?= $student['student_lastname']; ?></td>
+                                            <td><?= $student['class_name']; ?></td>
+                                            <td><a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-xs">ฟอร์ม</a>
+                                            <td><a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
+                                            <td><a href="#" class="btn btn-danger btn-xs">ลบ</a></td>
+                                            </td>
+
+                                        </tr>
+
+                            <?php  }
+                                }
+                            } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- สิ้นสุด container -->
+
+
+
+
+
+
+
+
+
 </body>
+
+</html>

@@ -19,7 +19,6 @@ require_once "../config/db.php";
 </head>
 
 <body style="background-color: #CCFFFF;">
-
   <div class="container-fluid">
     <div class="row content">
       <div class="col-sm-3 sidenav">
