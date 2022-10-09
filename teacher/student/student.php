@@ -166,13 +166,16 @@ require_once "../../config/db.php";
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th>ลำดับที่</th>
-                <th>ชื่่อ</th>
-                <th>นามสกุล</th>
-                <th>ชั้นปี</th>
-                <th>ฟอร์ม</th>
-                <th>แก้ไข</th>
-                <th>ลบ</th>
+              <th width="10%" scope="col">ลำดับที่</th>
+                <th width="40%" scope="col">ชื่่อ</th>
+                <th width="20%" scope="col">นามสกุล</th>
+                <th width="10%" scope="col">ชั้นปี</th>
+                <th width="5%" scope="col">ฟอร์ม</th>
+                <th width="5%" scope="col">คะแนน</th>
+                <th width="5%" scope="col">แก้ไขคะแนน</th>
+                <th width="5%" scope="col">พิมพ์รายงาน</th>
+                <th width="5%" scope="col">แก้ไข</th>
+                <th width="5%" scope="col">ลบ</th>
               </tr>
             </thead>
             <tbody>
@@ -195,9 +198,12 @@ require_once "../../config/db.php";
                     <td><?= $student['student_name']; ?></td>
                     <td><?= $student['student_lastname']; ?></td>
                     <td><?= $student['class_name']; ?></td>
-                    <td><a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-xs">ฟอร์ม</a>
-                    <td><a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                    <td><a href="#" class="btn btn-danger btn-xs">ลบ</a></td>
+                    <td><a href="../../form/form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
+                    <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm">คะแนน</a>
+                    <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-warning btn-sm">แก้ไขคะแนน</a>
+                    <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                    <td><a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">แก้ไขชื่อ</a>
+                    <td><a href="#" class="btn btn-danger btn-sm">ลบ</a></td>
                     </td>
 
                   </tr>

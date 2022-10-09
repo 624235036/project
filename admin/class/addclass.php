@@ -17,7 +17,7 @@
                     $stmt->execute();
                     $conn = null;
                    
-                   if ($stmt > 0){
+                   if ($stmt){
                    $_SESSION['success'] = "registered successfully!";
                     header("location:class.php");
                 } else {

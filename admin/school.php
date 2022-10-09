@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once "../config/db.php";
 
@@ -32,11 +31,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   $stmt->execute();
   $result = $stmt->fetchAll();
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
@@ -44,16 +42,35 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
   <link rel = "stylesheet" href="../style.css" type="text/css" />
-
+  <link rel = "stylesheet" href="../newstyle.css" type="text/css" />
 </head>
 
 <body style="background-color: #00008B;">
-  <div class="container-fluid">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid ">
     <div class="row content">
-      <div class="col-sm-3 sidenav">
+      <div class="col-sm-2 sidenav">
         <div align="center"><br>
-          <img src="../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
+          <img src="../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
         </div>
         <div align="center">
           <?php
@@ -74,11 +91,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
           <li><a href="class/class.php">เพิ่มห้อง</a></li>
           <li><a href="capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
           <li><a href="../admin/date/t_date.php">ช่วงเวลาประเมิน</a></li>
-          <li><a href="../index.php">ออกจากระบบ</a></li>
         </ul><br>
-      </div><br>
+      </div>
       <div class="container">
-        <div class=" col-sm-15 col-sm-offset-0">
+        <div class=" col-sm-15 col-sm-offset-0"><br>
           <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
           <hr>
           <?php if (isset($_SESSION['success'])) { ?>
@@ -125,9 +141,6 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                 <th>ที่อยู่</th>
                 <th>แก้ไข</th>
                 <th>ลบ</th>
-                <!-- <th>รูปภาพ</th> -->
-
-                <!-- <th>ข้อมูล</th> -->
               </tr>
             </thead>
             <tbody>
@@ -189,7 +202,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
       </div>
     </div>
   </div>
-  <!-- สิ้นสุด container -->
+
 
 </body>
 

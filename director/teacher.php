@@ -122,7 +122,6 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="director.php">หน้าแรก</a></li>
                     <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="#">รายชื่อนักเรียน</a></li>
                     <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
@@ -189,7 +188,6 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                     ?>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
-                            <!-- Modal content-->
                             <div class="modal-content">
                                 <h2>เพิ่มคุณครู</h2>
                                 <div class="form-group">
@@ -249,7 +247,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                                 <th>อีเมล</th>
                                 <th>ตำแหน่ง</th>
                                 <th>ห้องเรียน</th>
-                                <th>ข้อมูล</th> -->
+                                <th>ข้อมูล</th>
                             </tr>
                         </thead>
                         <tbody>

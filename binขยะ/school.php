@@ -3,9 +3,9 @@
 session_start();
 require_once "../config/db.php";
 
-if (isset($_GET['delete'])) {
-  $delete_id = $_GET['delete'];
-  $deletestmt = $conn->query("DELETE FROM school WHERE id = $delete_id");
+if (isset($_REQUEST['delete'])) {
+  $delete_id = $_REQUEST['delete'];
+  $deletestmt = $conn->prepare("DELETE FROM school WHERE id = $delete_id");
   $deletestmt->execute();
 
   if ($deletestmt) {
@@ -34,6 +34,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,94 +44,16 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
-  <style>
-    body {
-    line-height: 22px;
-    margin: 0;
-    -webkit-font-smoothing: antialiased !important;
-  }
+  <link rel = "stylesheet" href="../style.css" type="text/css" />
 
-  .container {
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    width: 980px;
-    /* height: 200px; */
-    position: absolute;
-    top: 25%;
-    left: 35%;
-    margin-top: -100px;
-    margin-left: -100px;
-
-  }
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 1500px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-        border-radius: 10px;
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
-
-    .modal-content {
-    margin: 20px;
-    padding: 20px;
-  }
-
-  .displayed {
-    display: block;
-    margin-left: 28%;
-  }
-    </style>
 </head>
+
 <body style="background-color: #00008B;">
-<nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
-<div class="container-fluid ">    
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-    <div align="center"><br>
-          <img src="../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
+    <div class="row content">
+      <div class="col-sm-3 sidenav">
+        <div align="center"><br>
+          <img src="../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
         </div>
         <div align="center">
           <?php
@@ -151,10 +74,11 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
           <li><a href="class/class.php">เพิ่มห้อง</a></li>
           <li><a href="capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
           <li><a href="../admin/date/t_date.php">ช่วงเวลาประเมิน</a></li>
+          <li><a href="../index.php">ออกจากระบบ</a></li>
         </ul><br>
-    </div>
-    <div class="container">
-        <div class=" col-sm-15 col-sm-offset-0"><br>
+      </div><br>
+      <div class="container">
+        <div class=" col-sm-15 col-sm-offset-0">
           <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
           <hr>
           <?php if (isset($_SESSION['success'])) { ?>
@@ -254,9 +178,6 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                 <td>
                   <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
                 </td>
-                <td>
-                      <a href="selectdata.php?id=<?= $school['id']; ?>" class="btn btn-primary">ข้อมูล</a>
-                    </td>
               </tr>
 
           <?php  }
@@ -266,9 +187,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
           </table>
         </div><br>
       </div>
+    </div>
   </div>
-</div>
-
+  <!-- สิ้นสุด container -->
 
 </body>
+
 </html>

@@ -78,36 +78,35 @@ require_once "../config/db.php";
     </style>
 </head>
 
-<body style="background-color: #8FBC8F;">
+<body style="background-color: #F5F5DC;">
 
-    <div class="container-fluid">
-        <div class="row content">
-            <div class="col-sm-3 sidenav">
-                <div align="center"><br>
-                    <img src="../images/icon1.png" height="150" class="img-circle" alt="Cinque Terre">
-                </div>
-                <div align="center">
-                    <?php
-                    if (isset($_SESSION['director_login'])) {
-                        $user_id = $_SESSION['director_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
-                        $stmt->execute();
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    }
-                    ?>
-                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div><br>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><a href="director.php">หน้าแรก</a></li>
-                    <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="#">รายชื่อนักเรียน</a></li>
-                    <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                    <li><a href="../index.php">ออกจากระบบ</a></li>
-                </ul><br>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-3 sidenav">
+            <div align="center"><br>
+                <img src="../images/icon2.png" height="150" class="img-circle" alt="Cinque Terre">
+            </div>
+            <div align="center">
+                <?php
+                if (isset($_SESSION['director_login'])) {
+                    $user_id = $_SESSION['director_login'];
+                    $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                    $stmt->execute();
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                }
+                ?>
+                <h4 class="mt-4">welcome<?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
             </div><br>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="director.php">หน้าแรก</a></li>
+                <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
+                <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
+                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
+                <li><a href="../index.php">ออกจากระบบ</a></li>
+            </ul><br>
+        </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
                     <?php
