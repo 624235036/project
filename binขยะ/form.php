@@ -15,6 +15,7 @@ if (isset($_GET['delete'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,35 +26,77 @@ if (isset($_GET['delete'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../style.css" type="text/css" />
-    <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+
+    <style>
+        body {
+
+            line-height: 22px;
+            margin: 0;
+
+            -webkit-font-smoothing: antialiased !important;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            width: 990px;
+            /* height: 200px; */
+            position: absolute;
+            top: 20%;
+            left: 35%;
+            margin-top: -100px;
+            margin-left: -100px;
+
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+        .row.content {
+            height: 1500px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            background-color: #FFFFFF;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+
+        .modal-content {
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .displayed {
+            display: block;
+            margin-left: 28%;
+        }
+    </style>
 </head>
 
 <body style="background-color: #00008B;">
 
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid ">
+    <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
-                    <img src="../../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
+                    <img src="../../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
                     <?php
@@ -65,8 +108,7 @@ if (isset($_GET['delete'])) {
                     }
                     ?>
                     <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div>
-                <hr>
+                </div><br>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
@@ -75,6 +117,7 @@ if (isset($_GET['delete'])) {
                     <li><a href="../class/class.php">เพิ่มห้อง</a></li>
                     <li class="active"><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
                     <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
+                    <li><a href="../../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -119,9 +162,7 @@ if (isset($_GET['delete'])) {
                     <table class="table  table-bordered">
                         <tr bgcolor="#F5FFFA">
                             <!-- <td width="25">&nbsp;</td> -->
-                            <td colspan="10" align="center">
-                                <h3>ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</h3>
-                            </td>
+                            <td colspan="10" align="center">ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</td>
                         </tr><br>
                         <tr>
 
@@ -159,7 +200,7 @@ if (isset($_GET['delete'])) {
                             <td></td>
                             <td></td>
                             <th>
-                                <a href="edit_h.php?id_header=<?= $h['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a href="edit_h.php?id_header=<?= $h['id_header']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
                                 <a href="?delete=<?= $h['id_header']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </th>
 
@@ -193,7 +234,7 @@ if (isset($_GET['delete'])) {
 
                                             <td>
 
-                                                <a href="edit.php?id_queustion=<?= $a['id_queustion']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                                <a href="edit.php?id_queustion=<?= $a['id_queustion']; ?>" title="Edit Data" class="btn btn-dark btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
                                                 <a href="?delete=<?= $a['id_queustion']; ?>" title="Hapus Data" class="btn btn-dark btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                         </tr>
 
@@ -221,6 +262,11 @@ if (isset($_GET['delete'])) {
         </div>
     </div>
 
-</body>
 
-</html>
+
+
+
+
+
+
+</body>

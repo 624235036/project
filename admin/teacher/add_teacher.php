@@ -75,10 +75,10 @@
                     $stmt->bindParam(":id_room", $class);
                     $stmt->execute();
                     $_SESSION['success'] = "registered successfully!";
-                    header("location: teacher.php");
+                    header("refresh:1; url= teacher.php");
                 } else {
                     $_SESSION['error'] = "something went wrong!";
-                    header("location: teacher.php");
+                    header("refresh:1; url= teacher.php");
                 }
                 
             } catch(PDOException $e) {

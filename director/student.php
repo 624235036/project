@@ -4,7 +4,6 @@ session_start();
 require_once "../config/db.php";
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,100 +14,61 @@ require_once "../config/db.php";
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        body {
-
-            line-height: 22px;
-            margin: 0;
-
-            -webkit-font-smoothing: antialiased !important;
-        }
-
-        .container {
-            background-color: #FFFFFF;
-            width: 980px;
-            /* height: 200px; */
-            position: absolute;
-            top: 25%;
-            left: 35%;
-            margin-top: -100px;
-            margin-left: -100px;
-
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-        .row.content {
-            height: 1500px
-        }
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            background-color: #FFFFFF;
-            height: 100%;
-        }
-
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-
-            .row.content {
-                height: auto;
-            }
-        }
-
-        .modal-content {
-            margin: 20px;
-            padding: 20px;
-        }
-
-        .displayed {
-            display: block;
-            margin-left: 28%;
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css" type="text/css" />
+    <link rel="stylesheet" href="../newstyle.css" type="text/css" />
 </head>
 
 <body style="background-color: #F5F5DC;">
 
-<div class="container-fluid">
-    <div class="row content">
-        <div class="col-sm-3 sidenav">
-            <div align="center"><br>
-                <img src="../images/icon2.png" height="150" class="img-circle" alt="Cinque Terre">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
             </div>
-            <div align="center">
-                <?php
-                if (isset($_SESSION['director_login'])) {
-                    $user_id = $_SESSION['director_login'];
-                    $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
-                <h4 class="mt-4">welcome<?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <div align="center"><br>
+                    <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
+                </div>
+                <div align="center">
+                    <?php
+                    if (isset($_SESSION['director_login'])) {
+                        $user_id = $_SESSION['director_login'];
+                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt->execute();
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <h4 class="mt-4">welcome<?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                </div>
+                <hr>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="director.php">หน้าแรก</a></li>
+                    <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
+                    <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
+                    <li><a href="../index.php">ออกจากระบบ</a></li>
+                </ul><br>
             </div><br>
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href="director.php">หน้าแรก</a></li>
-                <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
-                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
-                <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                <li><a href="../index.php">ออกจากระบบ</a></li>
-            </ul><br>
-        </div><br>
             <div class="container">
-                <div class=" col-sm-15 col-sm-offset-0">
+                <div class=" col-sm-15 col-sm-offset-0"><br>
+                    <a href="teacher.php"><button type="button" class="btn btn-primary btn-m">ย้อนกลับ</button></a>
                     <?php
                     if (isset($_GET['id'])) {
                         $id = $_GET['id'];
@@ -117,7 +77,7 @@ require_once "../config/db.php";
                         $data_name = $stmt->fetch();
                     }
                     ?>
-                    <h2>รายชื่อนักเรียนครูประจำชั้น <?php echo $data_name['firstname']. ' ' . $data_name['lastname']; ?></h2>
+                    <h2>รายชื่อนักเรียนครูประจำชั้น <?php echo $data_name['firstname'] . ' ' . $data_name['lastname']; ?></h2>
                     <hr>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -219,16 +179,6 @@ require_once "../config/db.php";
             </div>
         </div>
     </div>
-
-    <!-- สิ้นสุด container -->
-
-
-
-
-
-
-
-
 
 </body>
 

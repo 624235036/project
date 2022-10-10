@@ -70,10 +70,10 @@
                     $stmt->bindParam(":school_id", $school);
                     $stmt->execute();
                     $_SESSION['success'] = "registered successfully!";
-                    header("location:director.php");
+                    header("refresh:1; url= director.php");
                 } else {
                     $_SESSION['error'] = "something went wrong!";
-                    header("location:director.php");
+                    header("refresh:1; url= director.php");
                 }
 
             } catch(PDOException $e) {

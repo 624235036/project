@@ -1,16 +1,16 @@
 <?php
 session_start();
-require_once "../config/db.php";
+require_once "../../config/db.php";
 
-if (isset($_GET['delete'])) {
-  $delete_id = $_GET['delete'];
-  $deletestmt = $conn->query("DELETE FROM school WHERE id = $delete_id");
+if (isset($_GET['delete_id'])) {
+  $delete_id = $_GET['delete_id'];
+  $deletestmt = $conn->query("DELETE FROM class_room WHERE id_room = $delete_id");
   $deletestmt->execute();
 
   if ($deletestmt) {
     echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
     $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
-    header("refresh:1; url=school.php");
+    header("refresh:1; url=class.php");
   }
 }
 
@@ -32,6 +32,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   $result = $stmt->fetchAll();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,35 +43,15 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
-  <link rel = "stylesheet" href="../style.css" type="text/css" />
-  <link rel = "stylesheet" href="../newstyle.css" type="text/css" />
+  <link rel="stylesheet" href="../../style.css" type="text/css" />
 </head>
 
 <body style="background-color: #00008B;">
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container-fluid ">
+  <div class="container-fluid">
     <div class="row content">
-      <div class="col-sm-2 sidenav">
+      <div class="col-sm-3 sidenav">
         <div align="center"><br>
-          <img src="../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
+          <img src="../../images/icon.jpg" height="150" class="img-circle" alt="Cinque Terre">
         </div>
         <div align="center">
           <?php
@@ -82,20 +63,21 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
           }
           ?>
           <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-        </div><hr>
+        </div><br>
         <ul class="nav nav-pills nav-stacked">
-          <li><a href="admin.php">หน้าแรก</a></li>
-          <li class="active"><a href="school.php">ข้อมูลโรงเรียน</a></li>
-          <li><a href="../admin/director/director.php">ข้อมูลผู้อำนวยการ</a></li>
-          <li><a href="teacher/teacher.php">ข้อมูลคุณครู</a></li>
-          <li><a href="class/class.php">เพิ่มห้อง</a></li>
-          <li><a href="capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
-          <li><a href="../admin/date/t_date.php">ช่วงเวลาประเมิน</a></li>
-        </ul>
+          <li><a href="../admin.php">หน้าแรก</a></li>
+          <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
+          <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
+          <li><a href="../teacher/teacher.php">ข้อมูลคุณครู</a></li>
+          <li class="active"><a href="class/class.php">เพิ่มห้อง</a></li>
+          <li><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
+          <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
+          <li><a href="../index.php">ออกจากระบบ</a></li>
+        </ul><br>
       </div><br>
       <div class="container">
         <div class=" col-sm-15 col-sm-offset-0"><br>
-          <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
+          <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มห้อง</button>
           <hr>
           <?php if (isset($_SESSION['success'])) { ?>
             <div class="alert alert-success">
@@ -113,19 +95,45 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
               ?>
             </div>
           <?php } ?>
+          <?php
+          $stmt = $conn->prepare("SELECT * FROM school");
+          $stmt->execute();
+          $schools = $stmt->fetchAll();
+          ?>
+          <?php
+          $stmt = $conn->prepare("SELECT * FROM class_group");
+          $stmt->execute();
+          $class = $stmt->fetchAll();
+          ?>
           <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
               <div class="modal-content">
                 <h2>เพิ่มโรงเรียน</h2>
-                <form action="addschool.php" method="post" enctype="multipart/form-data">
+                <form action="addclass.php" method="post" enctype="multipart/form-data">
                   <div class="form-group">
-                    <label for="schoolname">ชื่อโรงเรียน:</label>
+                    <label for="schoolname">ชั้นปี:</label>
                     <input type="text" class="form-control" name="schoolname">
                   </div>
                   <div class="form-group">
-                    <label for="schooladrees">ที่อยู่โรงเรียน:</label>
-                    <input type="text" class="form-control" name="schooladrees">
+                    <label for="school">ระดับ</label>
+                    <select name="class_group" class="form-control" required>
+                      <option value="">เลือก</option>
+                      <?php
+                      foreach ($class as $row) { ?>
+                        <option value="<?= $row['id']; ?>"><?= $row['name_group']; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="school">โรงเรียน</label>
+                    <select name="school_id" class="form-control" required>
+                      <option value="">เลือก</option>
+                      <?php
+                      foreach ($schools as $row) { ?>
+                        <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
+                      <?php } ?>
+                    </select>
                   </div>
                   <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button>
                   <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
@@ -137,9 +145,9 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
             <thead>
               <tr>
                 <th>ลำดับที่</th>
+                <th>ชั้นปี</th>
+                <th>ระดับ</th>
                 <th>โรงเรียน</th>
-                <th>ที่อยู่</th>
-                <th>แก้ไข</th>
                 <th>ลบ</th>
               </tr>
             </thead>
@@ -169,28 +177,24 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                 <hr>
                 <?php
                 $index = 1;
-                $stmt = $conn->query("SELECT * FROM school");
+                $stmt = $conn->query("SELECT c.*, s.schoolname , g.name_group FROM class_room as c INNER JOIN school as s ON s.id = c.id_school INNER JOIN class_group as g on g.id = c.id_class_group");
                 $stmt->execute();
-                $schools = $stmt->fetchAll();
+                $class = $stmt->fetchAll();
 
-                if (!$schools) {
+                if (!$class) {
                   echo "ไม่มีข้อมูล";
                 } else {
-                  foreach ($schools as $school) {
+                  foreach ($class as $room) {
 
                 ?>
               </form>
               <tr>
                 <th><?= $index++;
                     ['id']; ?></th>
-                <td><?= $school['schoolname']; ?></td>
-                <td><?= $school['schooladrees']; ?></td>
-                <td>
-                  <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                </td>
-                <td>
-                  <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
-                </td>
+                <td><?= $room['class_name']; ?></td>
+                <td><?= $room['name_group']; ?></td>
+                <td><?= $room['schoolname']; ?></td>
+                <td><a href="?delete_id=<?php echo $room['id_room']; ?>" class="btn btn-danger">ลบ</a></td>
               </tr>
 
           <?php  }
@@ -202,7 +206,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
       </div>
     </div>
   </div>
-
+  <!-- สิ้นสุด container -->
 
 </body>
 

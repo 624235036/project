@@ -86,7 +86,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     }
                     ?>
                     <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div><br>
+                </div><hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>

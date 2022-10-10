@@ -29,9 +29,33 @@ if (isset($_REQUEST['delete_id'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../style.css" type="text/css" />
     <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+    <script>
+        $(document).ready(function() { //
+            $("#school").change(function() { //
+
+                $.ajax({
+                    url: "select.php", //ทำงานกับไฟล์นี้
+                    data: "id_school=" + $("#school").val(), //ส่งตัวแปร
+                    type: "POST",
+                    async: false,
+                    success: function(data, status) {
+                        $("#class_room").html(data);
+
+                    },
+
+                    error: function(xhr, status, exception) {
+                        alert(status);
+                    }
+
+                });
+                //return flag;
+            });
+        });
+    </script>
 </head>
 
 <body style="background-color: #00008B;">
+
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -68,7 +92,8 @@ if (isset($_REQUEST['delete_id'])) {
                     }
                     ?>
                     <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div><br>
+                </div>
+                <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
@@ -83,7 +108,39 @@ if (isset($_REQUEST['delete_id'])) {
                 <div class=" col-sm-15 col-sm-offset-0"><br>
                     <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มคุณครู</button>
                     <hr>
+                    <?php if (isset($_SESSION['success'])) { ?>
+                        <div class="alert alert-success">
+                            <?php
+                            echo $_SESSION['success'];
+                            unset($_SESSION['success']);
+                            ?>
+                        </div>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['error'])) { ?>
+                        <div class="alert alert-danger">
+                            <?php
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php } ?>
                     <form action="add_teacher.php" method="post">
+                        <div class="mb-3 row">
+                            <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
+                            <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
+                            <div class="col-7 col-sm-5">
+                                <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
+                                                                                                                                                            echo $_GET['schoolname'];
+                                                                                                                                                        } ?>">
+                            </div>
+                            <div class="col-2 col-sm-1">
+                                <button type="submit" class="btn btn-primary">ค้นหา</button>
+                            </div>
+                            <div class="col-2 col-sm-1">
+                                <a href="director.php" class="btn btn-success">Reset</a>
+                            </div>
+                        </div>
+                        <hr>
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
@@ -171,7 +228,7 @@ if (isset($_REQUEST['delete_id'])) {
 
                                         ?>
                                     </div>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                                     <button type="submit" name="signup" class="btn btn-default">บันทึก</button>
                     </form>
                 </div>

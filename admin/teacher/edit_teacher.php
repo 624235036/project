@@ -45,66 +45,8 @@ if (isset($_POST['update'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            line-height: 22px;
-            margin: 0;
-
-            -webkit-font-smoothing: antialiased !important;
-        }
-
-        .container {
-            background-color: #FFFFFF;
-            width: 980px;
-            /* height: 200px; */
-            position: absolute;
-            top: 25%;
-            left: 35%;
-            margin-top: -100px;
-            margin-left: -100px;
-
-        }
-
-        /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-        .row.content {
-            height: 1500px
-        }
-
-        /* Set gray background color and 100% height */
-        .sidenav {
-            background-color: #FFFFFF;
-            height: 100%;
-        }
-
-        /* Set black background color, white text and some padding */
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
-        }
-
-        /* On small screens, set height to 'auto' for sidenav and grid */
-        @media screen and (max-width: 767px) {
-            .sidenav {
-                height: auto;
-                padding: 15px;
-            }
-
-            .row.content {
-                height: auto;
-            }
-        }
-
-        .modal-content {
-            margin: 20px;
-            padding: 20px;
-        }
-
-        .displayed {
-            display: block;
-            margin-left: 28%;
-        }
-    </style>
+    <link rel="stylesheet" href="../../style.css" type="text/css" />
+    <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
 </head>
 
 <body>
@@ -121,9 +63,9 @@ if (isset($_POST['update'])) {
             $data = $stmt->fetch();
         }
         ?>
+        <div class="form-group" hidden><input type="text" readonly value="<?= $data['id']; ?>" class="form-control" name="id"></div>
         <div class="form-group">
             <label for="firstname">ชื่่อ</label>
-            <input type="text" hidden value="<?= $data['id']; ?>" class="form-control" name="id">
             <input type="text" value="<?= $data['firstname']; ?>" class="form-control" name="firstname">
         </div>
         <div class="form-group">
@@ -138,21 +80,22 @@ if (isset($_POST['update'])) {
             <label for="email">อีเมล</label>
             <input type="text" value="<?= $data['email']; ?>" class="form-control" name="email">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="password">รหัสผ่าน:</label>
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
         </div>
         <div class="form-group">
             <label for="password">ยืนยันรหัสผ่าน:</label>
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
-        </div>
-        <div class="form-group">
-            <label for="urole">สถานะ:</label>
-            <select name="urole">
-                <option value="director">director</option>
-                <option value="user">user</option>
+        </div> -->
+        <!-- <div class="form-group">
+            <label for="school">โรงเรียน</label>
+            <select name="school_id" class="form-control" required>
+                <option value="">เลือก</option>
+                <option value="director">ผู้อำนวยการ</option> 
+                <option value="teacher">คุณครู</option> 
             </select>
-        </div>
+        </div> -->
 
         <a class="btn btn-danger" href="teacher.php">ปิด</a>
         <button type="submit" name="update" class="btn btn-default">บันทึก</button>

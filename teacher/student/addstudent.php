@@ -21,12 +21,12 @@
                     $stmt->execute();
                     $conn = null;
                    
-                   if ($stmt > 0){
+                   if ($stmt){
                    $_SESSION['success'] = "registered successfully!";
-                    header("location:student.php");
+                    header("refresh:1; url=student.php");
                 } else {
                     $_SESSION['error'] = "something went wrong!";
-                    header("location:student.php");
+                    header("refresh:1; url=student.php");
                 }
     
                 }

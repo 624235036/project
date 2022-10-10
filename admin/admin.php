@@ -13,10 +13,11 @@ require_once "../config/db.php";
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel = "stylesheet" href="../newstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../newstyle.css" type="text/css" />
 </head>
 
 <body style="background-color: #00008B;">
+
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -29,7 +30,7 @@ require_once "../config/db.php";
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
             </div>
         </div>
@@ -39,7 +40,7 @@ require_once "../config/db.php";
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <div align="center"><br>
-                    <img src="../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
+                    <img src="../images/icon.jpg" height="100" class="img-circle" alt="Avatar">
                 </div>
                 <div align="center">
                     <?php
@@ -51,7 +52,8 @@ require_once "../config/db.php";
                     }
                     ?>
                     <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div><br>
+                </div>
+                <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="admin.php">หน้าแรก</a></li>
                     <li><a href="school.php">ข้อมูลโรงเรียน</a></li>
