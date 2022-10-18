@@ -55,7 +55,7 @@
                 $row = $check_email->fetch(PDO::FETCH_ASSOC);
 
                 if ($row['email'] == $email) {
-                    $_SESSION['warning'] = "this email is already in the system. <a href='signin.php'>Click here to </a> login ";
+                    $_SESSION['warning'] = "this email is already in the system. <a href='director.php'>Click here to </a> login ";
                     header("location:teacher.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -69,11 +69,11 @@
                     $stmt->bindParam(":urole", $urole);
                     $stmt->bindParam(":school_id", $school);
                     $stmt->execute();
-                    $_SESSION['success'] = "registered successfully!";
-                    header("refresh:1; url= director.php");
+                    $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
+                    header("location: director.php");
                 } else {
-                    $_SESSION['error'] = "something went wrong!";
-                    header("refresh:1; url= director.php");
+                    $_SESSION['error'] = "เพิ่มข้อมูลล้มเหลว";
+                    header("location: director.php");
                 }
 
             } catch(PDOException $e) {

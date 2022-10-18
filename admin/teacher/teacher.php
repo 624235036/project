@@ -14,7 +14,11 @@ if (isset($_REQUEST['delete_id'])) {
     $delete_stmt->bindParam(':id', $id);
     $delete_stmt->execute();
 
-    header('Location:teacher.php');
+    if ($delete_stmt) {
+        echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
+        $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
+        header("refresh:1; url=teacher.php");
+      }
 }
 ?>
 <!DOCTYPE html>
@@ -257,7 +261,7 @@ if (isset($_REQUEST['delete_id'])) {
                 $stmt->execute();
                 $data = $stmt->fetchAll();
                 if (!$data) {
-                    echo "<tr><td> </td></tr>";
+                    echo '<tr><td>ไม่มีข้อมูล</td></tr>';
                 } else {
                     foreach ($data as $a) {
                 ?>

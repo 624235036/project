@@ -127,7 +127,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <label for="schooladrees">ที่อยู่โรงเรียน:</label>
                     <input type="text" class="form-control" name="schooladrees">
                   </div>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button>
+                  <a href="refresh:1; url=school.php"><button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button></a>
                   <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                 </form>
               </div>

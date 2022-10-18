@@ -6,6 +6,14 @@
     if (isset($_POST['submit'])){
         $schoolname = $_POST['schoolname'];
         $schooladrees = $_POST['schooladrees'];
+
+        if (empty($schoolname)) {
+            $_SESSION['error'] = 'please enter your schoolname';
+            header("location:school.php");
+        } else if (empty($schooladrees)) {
+            $_SESSION['error'] = 'please enter your adrees';
+            header("location:school.php");
+        } else{
      
                 $sql = $conn->prepare("INSERT INTO school(schoolname, schooladrees) VALUES(:schoolname, :schooladrees)");
                 $sql->bindParam(":schoolname", $schoolname);
@@ -19,5 +27,6 @@
                     $_SESSION['error'] = "ข้อมูลล้มเหลว";
                     header("refresh:1; url=school.php");
                 }
+            }
             }
 ?>

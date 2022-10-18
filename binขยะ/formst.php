@@ -5,7 +5,7 @@ require_once "../../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    $deletestmt = $conn->query("DELETE FROM form_question WHERE id_queustion = $delete_id");
+    $deletestmt = $conn->query("DELETE FROM tb_question WHERE id_question = $delete_id");
     $deletestmt->execute();
 
     if ($deletestmt) {
@@ -14,6 +14,8 @@ if (isset($_GET['delete'])) {
         header("location:form.php");
     }
 }
+
+
 
 ?>
 
@@ -38,11 +40,11 @@ if (isset($_GET['delete'])) {
 
         .container {
             background-color: #FFFFFF;
-            width: 990px;
+            width: 980px;
             /* height: 200px; */
             position: absolute;
-            top: 20%;
-            left: 25%;
+            top: 25%;
+            left: 35%;
             margin-top: -100px;
             margin-left: -100px;
 
@@ -90,7 +92,7 @@ if (isset($_GET['delete'])) {
     </style>
 </head>
 
-<body style="background-color: #ffff;">
+<body style="background-color: #00008B;">
 
     <div class="container-fluid">
         <div class="row content">
@@ -103,8 +105,6 @@ if (isset($_GET['delete'])) {
                             <strong>Wrong! <?php echo $errorMsg; ?></strong>
                         </div>
                     <?php } ?>
-
-
                     <?php
                     if (isset($insertMsg)) {
                     ?>
@@ -112,26 +112,6 @@ if (isset($_GET['delete'])) {
                             <strong>Success! <?php echo $insertMsg; ?></strong>
                         </div>
                     <?php } ?>
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <h2>เพิ่มตัวชี้วัด</h2>
-                                <form action="add.php" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label for="id_question">ลำดับ</label>
-                                        <input type="text" class="form-control" name="id_question">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="question">ตัวชี้วัด</label>
-                                        <input type="text" class="form-control" name="question">
-                                    </div>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" data-bs-target="#myModal">ปิด</button>
-                                    <button type="btn_insert" name="btn_insert" class="btn btn-default">บันทึก</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <form action="save.php" method="post">
                         <table class="table  table-bordered">
                             <tr bgcolor="#F5FFFA">
@@ -154,15 +134,7 @@ if (isset($_GET['delete'])) {
                             $select_stmt = $conn->prepare("SELECT * FROM form_header ");
                             $select_stmt->execute();
                             $data = $select_stmt->fetchAll();
-                            ?>
 
-                            <?php
-                            if (isset($_GET['id'])) {
-                                $id = $_GET['id'];
-                                $stmt = $conn->query("SELECT * FROM student WHERE id_student = $id");
-                                $stmt->execute();
-                                $result = $stmt->fetch();
-                            }
                             ?>
                             <tbody>
                                 <TR class='HeaderDetail'>
@@ -172,23 +144,23 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
                                         <Font color='RED'></font>1
                                     </TD>
-                                    <TD bgcolor=#F0F7F7>มีความสามารถในการรับ-ส่งสาร </TD><input type="hidden" name="D02" required value="101" />
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice1" name="Q02" required value="5" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice2" name="Q02" required value="4" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice3" name="Q02" required value="3" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice4" name="Q02" required value="2" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice5" name="Q02" required value="1" /></TD>
+                                    <TD bgcolor=#F0F7F7>มีความสามารถในการรับ-ส่งสาร </TD><input type="hidden" name="D02" value="101" />
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice1" name="Q02" value="5" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice2" name="Q02" value="4" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice3" name="Q02" value="3" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice4" name="Q02" value="2" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice5" name="Q02" value="1" /></TD>
                                 </TR>
                                 <TR class='normaldetail'>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
                                         <Font color='RED'></font>2
                                     </TD>
-                                    <TD bgcolor=#F0F7F7>มีความสารถในการถ่ายทอดความรู้ </TD><input type="hidden" name="D03" required value="102" />
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice6" name="Q03" required value="5" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice7" name="Q03" required value="4" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice8" name="Q03" required value="3" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice9" name="Q03" required value="2" /></TD>
-                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice10" name="Q03" required value="1" /></TD>
+                                    <TD bgcolor=#F0F7F7>มีความสารถในการถ่ายทอดความรู้ </TD><input type="hidden" name="D03" value="102" />
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice6" name="Q03" value="5" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice7" name="Q03" value="4" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice8" name="Q03" value="3" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice9" name="Q03" value="2" /></TD>
+                                    <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice10" name="Q03" value="1" /></TD>
                                 </TR>
                                 <TR class='normaldetail'>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
@@ -447,10 +419,11 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice124" name="Q29" value="2" /></TD>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice125" name="Q29" value="1" /></TD>
                                 </TR>
+
+
                             </tbody>
                         </table>
-                        <input type="hidden" name="id_student" value="<?= $result['id_student']; ?>">
-                        <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
+                        <button type="submit" name="submit" class="btn btn-warning ">บันทึก</button><br>
                     </form>
                 </div>
             </div>
@@ -460,8 +433,6 @@ if (isset($_GET['delete'])) {
 
 
 
-
-
-
-
 </body>
+
+</html>

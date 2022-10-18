@@ -53,7 +53,7 @@ require_once "../config/db.php";
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">welcome<?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">

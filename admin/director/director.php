@@ -15,7 +15,11 @@ if (isset($_REQUEST['delete_id'])) {
     $delete_stmt->bindParam(':id', $id);
     $delete_stmt->execute();
 
-    header('location:director.php');
+    if ($delete_stmt) {
+        echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
+        $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
+        header("refresh:1; url=director.php");
+      }
 }
 
 //สร้างเงื่อนไขตรวจสอบถ้ามีการค้นหาให้แสดงเฉพาะรายการค้นหา
@@ -86,7 +90,8 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     }
                     ?>
                     <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
-                </div><hr>
+                </div>
+                <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
@@ -102,10 +107,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มผู้อำนวยการ</button>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
-                        <div class="alert alert-succes">
+                        <div class="alert alert-success">
                             <?php
                             echo $_SESSION['success'];
-                            unset($_SESSION['succes']);
+                            unset($_SESSION['success']);
                             ?>
                         </div>
                     <?php } ?>
@@ -169,7 +174,6 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         <label for="email">อีเมล</label>
                                         <input type="text" class="form-control" name="email">
                                     </div>
-
                                     <div class="form-group">
                                         <label for="password">รหัสผ่าน:</label>
                                         <input type="password" class="form-control" name="password">
@@ -178,12 +182,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         <label for="password">ยืนยันรหัสผ่าน:</label>
                                         <input type="password" class="form-control" name="c_password">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" hidden>
                                         <label for="urole">ตำแหน่ง:</label>
                                         <select name="urole" class="form-control">
-                                            <option value="">เลือก</option>
                                             <option value="director">director</option>
-                                            <option value="teacher">teacher</option>
                                         </select>
                                     </div>
                                     <div class="form-group">

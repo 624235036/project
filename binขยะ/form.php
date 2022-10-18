@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once "../../config/db.php";
+require_once "../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
@@ -226,11 +226,11 @@ if (isset($_GET['delete'])) {
                                                 ["id_queustion"]; ?></td>
 
                                             <td><?php echo $a["question"]; ?></td>
-                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5" required="required" /></td>
-                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
-                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
-                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
-                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo1<?= $i; ?>_1" type="radio" value="5" required="required" /></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo2<?= $i; ?>_2" type="radio" value="4"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo3<?= $i; ?>_3" type="radio" value="3"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo4<?= $i; ?>_4" type="radio" value="2"></td>
+                                            <td width="5%" align="center"><input name="radionNo<?= $i; ?>" id="radionNo5<?= $i; ?>_5" type="radio" value="1"></td>
 
                                             <td>
 

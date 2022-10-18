@@ -74,10 +74,10 @@
                     $stmt->bindParam(":school_id", $school);
                     $stmt->bindParam(":id_room", $class);
                     $stmt->execute();
-                    $_SESSION['success'] = "registered successfully!";
+                    $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
                     header("refresh:1; url= teacher.php");
                 } else {
-                    $_SESSION['error'] = "something went wrong!";
+                    $_SESSION['error'] = "เพิ่มข้อมูลล้มเหลว";
                     header("refresh:1; url= teacher.php");
                 }
                 

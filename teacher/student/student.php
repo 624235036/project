@@ -3,6 +3,26 @@
 session_start();
 require_once "../../config/db.php";
 
+if (isset($_REQUEST['delete_id'])) {
+    $id = $_REQUEST['delete_id'];
+
+    $select_stmt = $conn->prepare("SELECT * FROM student WHERE id_student = :id_student");
+    $select_stmt->bindParam(':id_student', $id);
+    $select_stmt->execute();
+    $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Delete an original record from db
+    $delete_stmt = $conn->prepare('DELETE FROM student WHERE id_student = :id_student ');
+    $delete_stmt->bindParam(':id_student', $id);
+    $delete_stmt->execute();
+
+    if ($delete_stmt) {
+        echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
+        $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
+        header("refresh:1; url=student.php");
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +73,7 @@ require_once "../../config/db.php";
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
+                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
@@ -91,6 +111,18 @@ require_once "../../config/db.php";
                                 <h2>เพิ่มนักเรียน</h2>
                                 <form action="addstudent.php" method="post">
                                     <div class="form-group">
+                                        <label for="firstname">รหัสนักเรียน</label>
+                                        <input type="text" class="form-control" name="number_id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="school">ชั้นปี</label>
+                                        <select name="title" class="form-control" required>
+                                            <option value="">เลือก</option>
+                                            <option value="ด.ช">ด.ช</option>
+                                            <option value="ด.ญ">ด.ญ</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="firstname">ชื่่อ</label>
                                         <input type="text" class="form-control" name="student_name">
                                     </div>
@@ -111,25 +143,15 @@ require_once "../../config/db.php";
                                         <input type="text" readonly value="<?= $row['id']; ?>" class="form-control" name="id_teacher">
                                     </div>
                                     <!-- <div class="form-group">
-                    <label for="school">ชั้นปี</label>
-                    <select name="school_id" class="form-control" required>
-                      <option value="">เลือก</option>
-                      <?php
-                        foreach ($schools as $row) { ?>
-                        <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="school">โรงเรียน</label>
-                    <select name="school_id" class="form-control" required>
-                      <option value="">เลือก</option>
-                      <?php
-                        foreach ($schools as $row) { ?>
-                        <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div> -->
+                                        <label for="school">โรงเรียน</label>
+                                        <select name="school_id" class="form-control" required>
+                                            <option value="">เลือก</option>
+                                            <?php
+                                            foreach ($schools as $row) { ?>
+                                                <option value="<?= $row['id']; ?>"><?= $row['schoolname']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div> -->
                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                     <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                                 </form>
@@ -140,21 +162,19 @@ require_once "../../config/db.php";
                         <thead>
                             <tr>
                                 <th width="10%" scope="col">ลำดับที่</th>
-                                <th width="40%" scope="col">ชื่่อ</th>
+                                <th width="10%" scope="col">คำนำหน้า</th>
+                                <th width="20%" scope="col">ชื่่อ</th>
                                 <th width="20%" scope="col">นามสกุล</th>
                                 <th width="10%" scope="col">ชั้นปี</th>
+                                <th width="10%" scope="col">แก้ไข</th>
                                 <th width="5%" scope="col">ฟอร์ม</th>
                                 <th width="5%" scope="col">คะแนน</th>
-                                <th width="5%" scope="col">แก้ไขคะแนน</th>
                                 <th width="5%" scope="col">พิมพ์รายงาน</th>
-                                <th width="5%" scope="col">แก้ไข</th>
-                                <th width="5%" scope="col">ลบ</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             if (isset($_SESSION['class_room'])) {
-                                $index = 1;
                                 $class_id = $_SESSION['class_room'];
                                 $stmt = $conn->query("SELECT t.*,c.class_name FROM student as t INNER JOIN class_room as c on c.id_room = t.id_room  WHERE t.id_teacher = $user_id ");
                                 $stmt->execute();
@@ -165,18 +185,21 @@ require_once "../../config/db.php";
                                 } else {
                                     foreach ($data as $student) {
 
+                                        $sum = $student['']
+
                             ?>
                                         <tr>
-                                            <td><?= $index++; ?></td>
+                                            <td><?= $student['number_id']; ?></td>
+                                            <td><?= $student['title']; ?></td>
                                             <td><?= $student['student_name']; ?></td>
                                             <td><?= $student['student_lastname']; ?></td>
                                             <td><?= $student['class_name']; ?></td>
-                                            <td><a href="../../form/form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
+                                            <td><a href="editstudent.php?id=<?= $student['id_student']; ?>" class="btn btn-defult btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a><a href="?delete_id=<?php echo $student["id_student"]; ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                                            <td>
+                                                <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
+                                            </td>
                                             <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm">คะแนน</a>
-                                            <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-warning btn-sm">แก้ไขคะแนน</a>
                                             <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
-                                            <td><a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">แก้ไขชื่อ</a>
-                                            <td><a href="#" class="btn btn-danger btn-sm">ลบ</a></td>
                                             </td>
 
                                         </tr>

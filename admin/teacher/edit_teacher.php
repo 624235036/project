@@ -7,29 +7,23 @@ if (isset($_POST['update'])) {
     $id = $_POST['id'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
-    $phone = $_POST['phone'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
     $urole = $_POST['urole'];
     // $c_password = $_POST['c_password'];
 
 
-    $sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname,  phone = :phone, email = :email, password = :password, urole = :urole  WHERE id = :id");
+    $sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, urole = :urole  WHERE id = :id");
     $sql->bindParam(':id', $id);
     $sql->bindParam(':firstname', $firstname);
     $sql->bindParam(':lastname', $lastname);
-    $sql->bindParam(':phone', $phone);
-    $sql->bindParam(':email', $email);
-    $sql->bindParam(':password', $password);
     $sql->bindParam(':urole', $urole);
     $sql->execute();
 
     if ($sql) {
         $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
-        header("location: teacher.php");
+        header("refresh:1; url= teacher.php");
     } else {
         $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
-        header("location: teacher.php");
+        header("refresh:1; url= teacher.php");
     }
 }
 
@@ -72,14 +66,14 @@ if (isset($_POST['update'])) {
             <label for="lastname">นามสกุล</label>
             <input type="text" value="<?= $data['lastname']; ?>" class="form-control" name="lastname">
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="phone">เบอร์โทร</label>
             <input type="text" value="<?= $data['phone']; ?>" class="form-control" name="phone">
         </div>
         <div class="form-group">
             <label for="email">อีเมล</label>
             <input type="text" value="<?= $data['email']; ?>" class="form-control" name="email">
-        </div>
+        </div> -->
         <!-- <div class="form-group">
             <label for="password">รหัสผ่าน:</label>
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
@@ -88,14 +82,12 @@ if (isset($_POST['update'])) {
             <label for="password">ยืนยันรหัสผ่าน:</label>
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
         </div> -->
-        <!-- <div class="form-group">
+        <div class="form-group">
             <label for="school">โรงเรียน</label>
-            <select name="school_id" class="form-control" required>
-                <option value="">เลือก</option>
-                <option value="director">ผู้อำนวยการ</option> 
+            <select name="urole" class="form-control" required>
                 <option value="teacher">คุณครู</option> 
             </select>
-        </div> -->
+        </div>
 
         <a class="btn btn-danger" href="teacher.php">ปิด</a>
         <button type="submit" name="update" class="btn btn-default">บันทึก</button>
