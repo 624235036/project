@@ -1,5 +1,7 @@
 <?php
 
+use LDAP\Result;
+
 session_start();
 require_once "../../config/db.php";
 
@@ -79,14 +81,14 @@ if (isset($_REQUEST['delete_id'])) {
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../teacher.php">หน้าแรก</a></li>
                     <li class="active"><a href="student.php">ข้อมูลนักเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของชั้นปี</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของ/ห้องเรียน</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของ/โรงเรียน</a></li>
                     <li><a href="../../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
-                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มนักเรียน</button>
+                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มนักเรียน</button>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">
@@ -104,6 +106,10 @@ if (isset($_REQUEST['delete_id'])) {
                             ?>
                         </div>
                     <?php } ?>
+                    <?php
+                   
+
+                    ?>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
@@ -179,13 +185,18 @@ if (isset($_REQUEST['delete_id'])) {
                                 $stmt = $conn->query("SELECT t.*,c.class_name FROM student as t INNER JOIN class_room as c on c.id_room = t.id_room  WHERE t.id_teacher = $user_id ");
                                 $stmt->execute();
                                 $data = $stmt->fetchAll();
+                                
 
+                                $stmt_s = $conn->query("SELECT * FROM score WHERE id_student ");
+                                $stmt_s->execute();
+                                $result_s = $stmt_s->fetchAll();
+
+                                
                                 if (!$data) {
                                     echo "ไม่มี";
                                 } else {
                                     foreach ($data as $student) {
-
-                                        $sum = $student['']
+                                        
 
                             ?>
                                         <tr>
@@ -198,7 +209,7 @@ if (isset($_REQUEST['delete_id'])) {
                                             <td>
                                                 <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>
-                                            <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm">คะแนน</a>
+                                            <td><a href="score.php?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm">คะแนน</a>
                                             <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
                                             </td>
 

@@ -11,18 +11,18 @@ echo "</pre>";
 
 
 //สร้างตัวแปร
-$d_1 = $_POST['d_1'];
-$d_2 = $_POST['d_2'];
-$d_3 = $_POST['d_3'];
+$d_open = $_POST['d_1'];
+$d_close = $_POST['d_2'];
+$d_timezone = $_POST['d_3'];
 
 
 
 
 //เพิ่มข้อมูล
 $sql_date = " INSERT INTO tbl_date
-(d_1, d_2, d_3)
+(d_open, d_close, d_timezone)
 VALUES
-('$d_1', '$d_2', '$d_3')";
+('$d_open', '$d_close', '$d_timezone')";
 
 
 

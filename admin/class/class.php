@@ -81,7 +81,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
                 </div><hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../admin.php">หน้าแรก</a></li>
@@ -95,7 +95,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
-                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มห้อง</button>
+                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มห้อง</button>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">
@@ -162,7 +162,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>ลำดับที่</th>
+                                <th width="8%">ลำดับที่</th>
                                 <th>ชั้นปี</th>
                                 <th>ระดับ</th>
                                 <th>โรงเรียน</th>
@@ -212,7 +212,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                 <td><?= $room['class_name']; ?></td>
                                 <td><?= $room['name_group']; ?></td>
                                 <td><?= $room['schoolname']; ?></td>
-                                <td><a href="?delete_id=<?php echo $room['id_room']; ?>" class="btn btn-danger">ลบ</a></td>
+                                <td><a href="?delete_id=<?php echo $room['id_room']; ?>" class="btn btn-danger btn-xs">ลบ</a></td>
                             </tr>
 
                     <?php  }

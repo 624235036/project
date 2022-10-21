@@ -81,7 +81,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
           }
           ?>
-          <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+          <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
         </div><hr>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="admin.php">หน้าแรก</a></li>
@@ -95,7 +95,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
       </div><br>
       <div class="container">
         <div class=" col-sm-15 col-sm-offset-0"><br>
-          <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มโรงเรียน</button>
+          <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มโรงเรียน</button>
           <hr>
           <?php if (isset($_SESSION['success'])) { ?>
             <div class="alert alert-success">
@@ -136,11 +136,11 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th>ลำดับที่</th>
+                <th width="8%">ลำดับที่</th>
                 <th>โรงเรียน</th>
                 <th>ที่อยู่</th>
-                <th>แก้ไข</th>
-                <th>ลบ</th>
+                <th width="10%">แก้ไข</th>
+                <th width="10%">ลบ</th>
               </tr>
             </thead>
             <tbody>
@@ -186,10 +186,10 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                 <td><?= $school['schoolname']; ?></td>
                 <td><?= $school['schooladrees']; ?></td>
                 <td>
-                  <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning" data-toggle="modal" data-target="#myModal">แก้ไข</a>
+                  <a href="editschool.php?id=<?= $school['id']; ?>" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
                 </td>
                 <td>
-                  <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger">ลบ</a>
+                  <a href="?delete=<?= $school['id']; ?>" class="btn btn-danger btn-xs">ลบ</a>
                 </td>
               </tr>
 

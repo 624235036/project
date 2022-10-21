@@ -54,90 +54,237 @@ if (isset($_POST['submit'])) {
     $Q29 = $_POST['Q29'];
     $D29 = $_POST['D29'];
 
-    $stmt = $conn->prepare("INSERT INTO score( score, id_question, id_student ) 
+    if (empty($Q02)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D02)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q03)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่ ';
+        header("location:student.php");
+    } else if (empty($D03)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q04)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D04)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q05)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D05)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q06)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D06)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q08)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D08)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q09)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D09)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q10)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D10)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q11)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D11)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q12)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D12)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q15)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D15)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q16)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D16)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q17)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D17)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q18)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D18)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q19)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D19)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q20)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D20)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q21)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D21)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q22)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D22)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q23)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D23)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q25)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D25)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q26)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D26)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q27)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D27)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q28)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D28)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($Q29)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else if (empty($D29)) {
+        $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
+        header("location:student.php");
+    } else {
+
+        $stmt = $conn->prepare("INSERT INTO score( score, id_question, id_student ) 
                                         VALUES( :score, :id_question, :id_student)");
 
-    
-    $stmt->bindParam(":id_student", $id_student);
-    $stmt->bindParam(":score", $Q02);
-    $stmt->bindParam(":id_question", $D02);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q03);
-    $stmt->bindParam(":id_question", $D03);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q04);
-    $stmt->bindParam(":id_question", $D04);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q05);
-    $stmt->bindParam(":id_question", $D05);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q06);
-    $stmt->bindParam(":id_question", $D06);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q08);
-    $stmt->bindParam(":id_question", $D08);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q09);
-    $stmt->bindParam(":id_question", $D09);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q10);
-    $stmt->bindParam(":id_question", $D10);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q11);
-    $stmt->bindParam(":id_question", $D11);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q12);
-    $stmt->bindParam(":id_question", $D12);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q15);
-    $stmt->bindParam(":id_question", $D15);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q16);
-    $stmt->bindParam(":id_question", $D16);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q17);
-    $stmt->bindParam(":id_question", $D17);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q18);
-    $stmt->bindParam(":id_question", $D18);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q19);
-    $stmt->bindParam(":id_question", $D19);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q20);
-    $stmt->bindParam(":id_question", $D20);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q21);
-    $stmt->bindParam(":id_question", $D21);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q22);
-    $stmt->bindParam(":id_question", $D22);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q23);
-    $stmt->bindParam(":id_question", $D23);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q25);
-    $stmt->bindParam(":id_question", $D25);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q26);
-    $stmt->bindParam(":id_question", $D26);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q27);
-    $stmt->bindParam(":id_question", $D27);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q28);
-    $stmt->bindParam(":id_question", $D28);
-    $stmt->execute();
-    $stmt->bindParam(":score", $Q29);
-    $stmt->bindParam(":id_question", $D29);
-    $stmt->execute();
-    $conn = null;
 
-    if ($stmt) {
-        $_SESSION['success'] = "registered successfully!";
-        header("refresh:1; url=student.php");
-    } else {
-        $_SESSION['error'] = "something went wrong!";
-        header("refresh:1; url=student.php");
-    } 
+        $stmt->bindParam(":id_student", $id_student);
+        $stmt->bindParam(":score", $Q02);
+        $stmt->bindParam(":id_question", $D02);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q03);
+        $stmt->bindParam(":id_question", $D03);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q04);
+        $stmt->bindParam(":id_question", $D04);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q05);
+        $stmt->bindParam(":id_question", $D05);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q06);
+        $stmt->bindParam(":id_question", $D06);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q08);
+        $stmt->bindParam(":id_question", $D08);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q09);
+        $stmt->bindParam(":id_question", $D09);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q10);
+        $stmt->bindParam(":id_question", $D10);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q11);
+        $stmt->bindParam(":id_question", $D11);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q12);
+        $stmt->bindParam(":id_question", $D12);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q15);
+        $stmt->bindParam(":id_question", $D15);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q16);
+        $stmt->bindParam(":id_question", $D16);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q17);
+        $stmt->bindParam(":id_question", $D17);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q18);
+        $stmt->bindParam(":id_question", $D18);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q19);
+        $stmt->bindParam(":id_question", $D19);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q20);
+        $stmt->bindParam(":id_question", $D20);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q21);
+        $stmt->bindParam(":id_question", $D21);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q22);
+        $stmt->bindParam(":id_question", $D22);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q23);
+        $stmt->bindParam(":id_question", $D23);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q25);
+        $stmt->bindParam(":id_question", $D25);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q26);
+        $stmt->bindParam(":id_question", $D26);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q27);
+        $stmt->bindParam(":id_question", $D27);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q28);
+        $stmt->bindParam(":id_question", $D28);
+        $stmt->execute();
+        $stmt->bindParam(":score", $Q29);
+        $stmt->bindParam(":id_question", $D29);
+        $stmt->execute();
+        $conn = null;
+
+        if ($stmt) {
+            $_SESSION['success'] = "กรอกข้อมูลสำเร็จ";
+            header("refresh:1; url=student.php");
+        } else {
+            $_SESSION['error'] = "กรอกข้อมูลล้มเหลว";
+            header("refresh:1; url=student.php");
+        }
+    }
 }

@@ -48,25 +48,32 @@ require_once "../config/db.php";
                     <?php
                     if (isset($_SESSION['tech_login'])) {
                         $user_id = $_SESSION['tech_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
+                    <h4 class="mt-4"> <?php echo  $row['schoolname']; ?></h4>
+                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
+                    <td><a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="teacher.php">หน้าแรก</a></li>
                     <li><a href="../teacher/student/student.php">ข้อมูลนักเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                     <li><a href="../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class=" col-sm-11 col-sm-offset-0">
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            </div>
+                        </div>
+                    </div>
                     <h3>ระบบประเมินสมรรถนะพื้นที่ทางการศึกษาจังหวัดสตูล</h3> <br>
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->

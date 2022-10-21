@@ -4,11 +4,11 @@ session_start();
 require_once "../../config/db.php";
 
 if (isset($_POST['btn_update'])) {
-   
+    $id = $_POST['id'];
     $question = $_POST['question'];
 
-    $sql = $conn->prepare("UPDATE form_question SET question = :question WHERE id_queustion  = id_queustion ");
-    
+    $sql = $conn->prepare("UPDATE form_question SET question = :question WHERE id_queustion  = :id_queustion ");
+    $sql->bindParam(':id_queustion', $id);
     $sql->bindParam(':question', $question);
     $sql->execute();
     
@@ -103,8 +103,8 @@ if (isset($_POST['btn_update'])) {
 
     <form action="edit.php" method="post" class="form-horizontal mt-5">
         <?php
-        if (isset($_GET['id_queustion '])) {
-            $id_queustion  = $_GET['id_queustion '];
+        if (isset($_GET['id_queustion'])) {
+            $id_queustion  = $_GET['id_queustion'];
             $select_stmt = $conn->query("SELECT * FROM form_question WHERE id_queustion = $id_queustion");
             $select_stmt->execute();
             $data = $select_stmt->fetch();
@@ -112,6 +112,7 @@ if (isset($_POST['btn_update'])) {
         ?>
         <div class="form-group">
             <label for="question">ตัวชี้วัด:</label>
+            <input type="hidden" readonly value="<?= $data['id_queustion']; ?>" class="form-control" name="id">
             <input type="text" value="<?= $data['question']; ?>" class="form-control" name="question">
         </div>
         <a href="form.php" class="btn btn-danger">ปิด</a>

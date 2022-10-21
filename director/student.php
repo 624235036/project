@@ -63,7 +63,6 @@ require_once "../config/db.php";
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                    <li><a href="../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -138,9 +137,8 @@ require_once "../config/db.php";
                                 <th>ชื่่อ</th>
                                 <th>นามสกุล</th>
                                 <th>ชั้นปี</th>
-                                <th>ฟอร์ม</th>
-                                <th>แก้ไข</th>
-                                <th>ลบ</th>
+                                <th>คะแนน</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -163,9 +161,7 @@ require_once "../config/db.php";
                                             <td><?= $student['student_name']; ?></td>
                                             <td><?= $student['student_lastname']; ?></td>
                                             <td><?= $student['class_name']; ?></td>
-                                            <td><a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-xs">ฟอร์ม</a>
-                                            <td><a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                                            <td><a href="#" class="btn btn-danger btn-xs">ลบ</a></td>
+                                            <td><a href="#">ฟอร์ม</a>
                                             </td>
 
                                         </tr>

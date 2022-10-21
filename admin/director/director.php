@@ -19,7 +19,7 @@ if (isset($_REQUEST['delete_id'])) {
         echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
         $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
         header("refresh:1; url=director.php");
-      }
+    }
 }
 
 //สร้างเงื่อนไขตรวจสอบถ้ามีการค้นหาให้แสดงเฉพาะรายการค้นหา
@@ -52,6 +52,13 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../style.css" type="text/css" />
     <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+    <script>
+        function confirmDelete(delUrl) {
+            if (confirm("Are you sure you want to delete")) {
+                document.location = delUrl;
+            }
+        }
+    </script>
 </head>
 
 <body style="background-color: #00008B;">
@@ -89,7 +96,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
@@ -104,7 +111,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
-                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มผู้อำนวยการ</button>
+                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มผู้อำนวยการ</button>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">
@@ -246,7 +253,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 
                                         <td>
                                             <a href="edit_director.php?id=<?= $a['id']; ?>" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                                        <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger btn-xs">ลบ</a></td>
+                                        <td><a href="?delete_id=<?php echo $a["id"]; ?>" onclick="return confirm('ต้องลบไช่ไหม')" class="btn btn-danger btn-xs">ลบ</a></td>
                                         </td>
 
                                     </tr>

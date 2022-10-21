@@ -95,7 +95,7 @@ if (isset($_REQUEST['delete_id'])) {
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">Welcome, <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
@@ -110,7 +110,7 @@ if (isset($_REQUEST['delete_id'])) {
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
-                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal">เพิ่มคุณครู</button>
+                    <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มคุณครู</button>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">

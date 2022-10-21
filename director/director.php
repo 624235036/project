@@ -48,12 +48,14 @@ require_once "../config/db.php";
                     <?php
                     if (isset($_SESSION['director_login'])) {
                         $user_id = $_SESSION['director_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"> <?php echo  $row['schoolname'];?></h4>
+                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
+                    <td><a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
@@ -68,6 +70,12 @@ require_once "../config/db.php";
             <div class="container">
                 <div class="col-sm-11 text-left">
                     <h3>ระบบประเมินสมรรถนะพื้นที่ทางการศึกษาจังหวัดสตูล</h3> <br>
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            </div>
+                        </div>
+                    </div>
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
