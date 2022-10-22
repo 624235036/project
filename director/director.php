@@ -62,7 +62,7 @@ require_once "../config/db.php";
                     <li class="active"><a href="director.php">หน้าแรก</a></li>
                     <li><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
                     <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>

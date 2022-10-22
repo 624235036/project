@@ -107,8 +107,6 @@ if (isset($_REQUEST['delete_id'])) {
                         </div>
                     <?php } ?>
                     <?php
-                   
-
                     ?>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -180,24 +178,17 @@ if (isset($_REQUEST['delete_id'])) {
                         </thead>
                         <tbody>
                             <?php
+
                             if (isset($_SESSION['class_room'])) {
                                 $class_id = $_SESSION['class_room'];
                                 $stmt = $conn->query("SELECT t.*,c.class_name FROM student as t INNER JOIN class_room as c on c.id_room = t.id_room  WHERE t.id_teacher = $user_id ");
                                 $stmt->execute();
                                 $data = $stmt->fetchAll();
-                                
 
-                                $stmt_s = $conn->query("SELECT * FROM score WHERE id_student ");
-                                $stmt_s->execute();
-                                $result_s = $stmt_s->fetchAll();
-
-                                
                                 if (!$data) {
                                     echo "ไม่มี";
                                 } else {
                                     foreach ($data as $student) {
-                                        
-
                             ?>
                                         <tr>
                                             <td><?= $student['number_id']; ?></td>
@@ -209,10 +200,9 @@ if (isset($_REQUEST['delete_id'])) {
                                             <td>
                                                 <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>
-                                            <td><a href="score.php?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm">คะแนน</a>
-                                            <td><a href="#?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                                            <td><button class="btn btn-defult btn-sm"><a href="total.php?id=<?= $student['id_student']; ?>">คะแนน</a></button></td>
+                                            <td><a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
                                             </td>
-
                                         </tr>
 
                             <?php  }

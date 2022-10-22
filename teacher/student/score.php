@@ -112,40 +112,43 @@ if (isset($_GET['delete'])) {
                                 <th width="5%" scope="col">น้อยที่สุด</th>
                                 <!-- <th width="10%" scope="col">เครื่องมือ</th> -->
                             </tr>
-                            
+
                             <tbody>
                                 <?php
                                 if (isset($_GET['id'])) {
-                                $id = $_GET['id'];
-                                $check = array();
-                                $index_h = 0;
-                                $select_stmt = $conn->prepare("SELECT c.*, q.*, s.* FROM score as c INNER JOIN form_question as q on q.id_queustion = c.id_question 
+                                    $id = $_GET['id'];
+                                    $check = array();
+                                    $index_h = 0;
+                                    $select_stmt = $conn->prepare("SELECT c.*, q.*, s.* FROM score as c INNER JOIN form_question as q on q.id_queustion = c.id_question 
                                                                 INNER JOIN student as s on s.id_student = c.id_student 
                                                                 WHERE c.id_student = $id");
-                                $select_stmt->execute();
-                                while ($data = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $index_h++;
-                                    $question = $data['question'];
-                                    $id_queustion = $data['id_queustion'];
-                                    $check = array('', '', '', '', '','');
-                                    $check[$data['score']] = "checked=checked";
+                                    $select_stmt->execute();
+                                    while ($data = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $index_h++;
+                                        $question = $data['question'];
+                                        $id_queustion = $data['id_queustion'];
+                                        $check = array('', '', '', '', '', '');
+                                        $check[$data['score']] = "checked=checked";
 
                                 ?>
-                                    
+
                                         <tr>
                                             <td><?= $index_h; ?></td>
                                             <td><?= $question; ?></td>
-                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>"  <?=$check[5]; ?> ></td>
-                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>"  <?=$check[4]; ?> ></td>
-                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>"  <?=$check[3]; ?> ></td>
-                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>"  <?=$check[2]; ?> ></td>
-                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>"  <?=$check[1]; ?> ></td>
+                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>" <?= $check[5]; ?>></td>
+                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>" <?= $check[4]; ?>></td>
+                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>" <?= $check[3]; ?>></td>
+                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>" <?= $check[2]; ?>></td>
+                                            <td width="5%" align="center"><input type="radio" name="radionNo<?= $id_queustion; ?>" <?= $check[1]; ?>></td>
 
-                                    <?php }                         
+                                    <?php }
                                 }
-                                  ?>
+                                    ?>
                             </tbody>
                         </table>
+                        <?php
+                        echo "<input type='button' onclick='javascript:print()' value='สั่งปริ้น'>";
+                        ?>
                     </form>
                 </div>
             </div>

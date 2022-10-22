@@ -88,7 +88,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <li><a href="../school.php">ข้อมูลโรงเรียน</a></li>
                     <li><a href="../director/director.php">ข้อมูลผู้อำนวยการ</a></li>
                     <li><a href="../teacher/teacher.php">ข้อมูลคุณครู</a></li>
-                    <li class="active"><a href="class/class.php">เพิ่มห้อง</a></li>
+                    <li class="active"><a href="class.php">เพิ่มห้อง</a></li>
                     <li><a href="../capacity/form.php">ตัวชี้วัดสมรรถนะ</a></li>
                     <li><a href="../date/t_date.php">ช่วงเวลาประเมิน</a></li>
                 </ul><br>
@@ -121,24 +121,39 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <?php
                     $stmt = $conn->prepare("SELECT * FROM class_group");
                     $stmt->execute();
+                    $class_g = $stmt->fetchAll();
+                    ?>
+                    <?php
+                    $stmt = $conn->prepare("SELECT * FROM class");
+                    $stmt->execute();
                     $class = $stmt->fetchAll();
                     ?>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
                             <!-- Modal content-->
                             <div class="modal-content">
-                                <h2>เพิ่มโรงเรียน</h2>
+                                <h2>เพิ่มห้อง</h2>
                                 <form action="addclass.php" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <label for="schoolname">ชั้นปี:</label>
+                                        <label for="schoolname">ห้องเรียน:</label>
                                         <input type="text" class="form-control" name="schoolname">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="school">ประถมศึกปีที่</label>
+                                        <select name="class" class="form-control" required>
+                                            <option value="">เลือก</option>
+                                            <?php
+                                            foreach ($class as $row) { ?>
+                                                <option value="<?= $row['id_class']; ?>"><?= $row['name_class']; ?></option>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="school">ระดับ</label>
                                         <select name="class_group" class="form-control" required>
                                             <option value="">เลือก</option>
                                             <?php
-                                            foreach ($class as $row) { ?>
+                                            foreach ($class_g as $row) { ?>
                                                 <option value="<?= $row['id']; ?>"><?= $row['name_group']; ?></option>
                                             <?php } ?>
                                         </select>

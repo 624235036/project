@@ -151,9 +151,11 @@ if (isset($_GET['delete'])) {
                             </th>
 
                             <?php
-                            $select_stmt = $conn->prepare("SELECT * FROM form_header ");
+                            $select_stmt = $conn->prepare("SELECT * FROM form_question ");
                             $select_stmt->execute();
-                            $data = $select_stmt->fetchAll();
+                            $data = $select_stmt->fetch();
+                            $id_queustion = $data['id_queustion'];
+                            $i = 1;
                             ?>
 
                             <?php
@@ -172,7 +174,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
                                         <Font color='RED'></font>1
                                     </TD>
-                                    <TD bgcolor=#F0F7F7>มีความสามารถในการรับ-ส่งสาร </TD><input type="hidden" name="D02" required value="101" />
+                                    <TD bgcolor=#F0F7F7>มีความสามารถในการรับ-ส่งสาร</TD><input type="hidden" name="D02" required value="101" />
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice1" name="Q02" required value="5" /></TD>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice2" name="Q02" required value="4" /></TD>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice3" name="Q02" required value="3" /></TD>
@@ -183,7 +185,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
                                         <Font color='RED'></font>2
                                     </TD>
-                                    <TD bgcolor=#F0F7F7>มีความสารถในการถ่ายทอดความรู้ </TD><input type="hidden" name="D03" required value="102" />
+                                    <TD bgcolor=#F0F7F7>มีความสารถในการถ่ายทอดความรู้</TD><input type="hidden" name="D03" required value="102" />
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice6" name="Q03" required value="5" /></TD>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice7" name="Q03" required value="4" /></TD>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice8" name="Q03" required value="3" /></TD>

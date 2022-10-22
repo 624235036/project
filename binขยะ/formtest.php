@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once "../../config/db.php";
+require_once "../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
@@ -188,11 +188,11 @@ if (isset($_GET['delete'])) {
                                             <tr>
                                                 <td><?= $index_h++;["id_queustion"]; ?></td>
                                                 <td><?php echo $a["question"]; ?></td>
-                                                <td width="5%" align="center"><input name="q01<?= $a['id_queustion']; ?>" id="radionNo1<?= $i; ?>_1" type="radio" value="5" required="required" /></td>
-                                                <td width="5%" align="center"><input name="q01<?= $a['id_queustion']; ?>" id="radionNo2<?= $i; ?>_2" type="radio" value="4"></td>
-                                                <td width="5%" align="center"><input name="q01<?= $a['id_queustion']; ?>" id="radionNo3<?= $i; ?>_3" type="radio" value="3"></td>
-                                                <td width="5%" align="center"><input name="q01<?= $a['id_queustion']; ?>" id="radionNo4<?= $i; ?>_4" type="radio" value="2"></td>
-                                                <td width="5%" align="center"><input name="q01<?= $a['id_queustion']; ?>" id="radionNo5<?= $i; ?>_5" type="radio" value="1"></td>
+                                                <td width="5%" align="center"><input name="radionNo<?= $a['id_queustion']; ?>" id="radionNo<?= $i; ?>_1" type="radio" value="5" required="required" /></td>
+                                                <td width="5%" align="center"><input name="radionNo<?= $a['id_queustion']; ?>" id="radionNo<?= $i; ?>_2" type="radio" value="4"></td>
+                                                <td width="5%" align="center"><input name="radionNo<?= $a['id_queustion']; ?>" id="radionNo<?= $i; ?>_3" type="radio" value="3"></td>
+                                                <td width="5%" align="center"><input name="radionNo<?= $a['id_queustion']; ?>" id="radionNo<?= $i; ?>_4" type="radio" value="2"></td>
+                                                <td width="5%" align="center"><input name="radionNo<?= $a['id_queustion']; ?>" id="radionNo<?= $i; ?>_5" type="radio" value="1"></td>
                                             </tr>
                                             <?
                                             $i++;
@@ -209,6 +209,7 @@ if (isset($_GET['delete'])) {
                                 ?>
                                 </tbody>
                         </table>
+                        <input type="hidden" name="hdnRows" value="<?= $i - 1; ?>">
                         <input type="hidden" name="id_student" value="<?= $result['id_student']; ?>">
                         <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
                     </form>

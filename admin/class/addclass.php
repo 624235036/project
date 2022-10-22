@@ -5,13 +5,15 @@
 
     if (isset($_POST['submit'])) {
         $schoolname = $_POST['schoolname'];
+        $class = $_POST['class'];
         $class_group = $_POST['class_group'];
         $school_id = $_POST['school_id'];
     
 
-                    $stmt = $conn->prepare("INSERT INTO class_room(class_name, id_class_group, id_school) 
-                                            VALUES(:class_name, :id_class_group, :id_school)");
+                    $stmt = $conn->prepare("INSERT INTO class_room(class_name, class, id_class_group, id_school) 
+                                            VALUES(:class_name, :class :id_class_group, :id_school)");
                     $stmt->bindParam(":class_name", $schoolname);
+                    $stmt->bindParam(":class", $class);
                     $stmt->bindParam(":id_class_group", $class_group);
                     $stmt->bindParam(":id_school", $school_id);
                     $stmt->execute();

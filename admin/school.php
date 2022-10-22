@@ -149,7 +149,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                   <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
                   <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
                   <div class="col-7 col-sm-5">
-                    <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
+                    <input type="text" name="schoolname" id="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
                                                                                                                                               echo $_GET['schoolname'];
                                                                                                                                             } ?>">
                   </div>
