@@ -90,7 +90,7 @@ if (isset($_GET['delete'])) {
     </style>
 </head>
 
-<body style="background-color: #ffff;">
+<body style="background-color: orange;">
 
     <div class="container-fluid">
         <div class="row content">
@@ -141,11 +141,11 @@ if (isset($_GET['delete'])) {
                             <tr>
                                 <th width="5%" scope="col">ลำดับ</th>
                                 <th width="40%" scope="col">รายการประเมินตัวชี้วัด</th>
-                                <th width="5%" scope="col">มากที่สุด</th>
-                                <th width="5%" scope="col">มาก</th>
-                                <th width="5%" scope="col">ปานกลาง</th>
-                                <th width="5%" scope="col">น้อย</th>
-                                <th width="5%" scope="col">น้อยที่สุด</th>
+                                <th width="6%" scope="col" >มากที่สุด 5</th>
+                                <th width="5%" scope="col">มาก<br>4</th>
+                                <th width="6%" scope="col">ปานกลาง 3</th>
+                                <th width="5%" scope="col">น้อย<br>2</th>
+                                <th width="6%" scope="col">น้อยที่สุด 1</th>
                                 <!-- <th width="10%" scope="col">เครื่องมือ</th> -->
                             </tr>
                             </th>
@@ -168,7 +168,7 @@ if (isset($_GET['delete'])) {
                             ?>
                             <tbody>
                                 <TR class='HeaderDetail'>
-                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการสื่อสาร</TD>
+                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการสื่อสาร</TD><input type="hidden" name="Q1" value="1" />
                                 </TR>
                                 <TR class='normaldetail'>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
@@ -227,7 +227,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice25" name="Q06" value="1" /></TD>
                                 </TR>
                                 <TR class='HeaderDetail'>
-                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการคิด</TD>
+                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการคิด</TD><input type="hidden" name="Q2" value="2" />
                                 </TR>
 
                                 <TR class='normaldetail'>
@@ -286,7 +286,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice55" name="Q12" value="1" /></TD>
                                 </TR>
                                 <TR class='HeaderDetail'>
-                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการแก้ปัญหา</TD>
+                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการแก้ปัญหา</TD><input type="hidden" name="Q3" value="3" />
                                 </TR>
                                 <TR class='normaldetail'>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>
@@ -333,7 +333,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice75" name="Q18" value="1" /></TD>
                                 </TR>
                                 <TR class='HeaderDetail'>
-                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการใช้ทักษะชีวิต</TD>
+                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการใช้ทักษะชีวิต</TD><input type="hidden" name="Q4" value="4" />
                                 </TR>
 
                                 <TR class='normaldetail'>
@@ -392,7 +392,7 @@ if (isset($_GET['delete'])) {
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7><input type="radio" id="choice100" name="Q23" value="1" /></TD>
                                 </TR>
                                 <TR class='HeaderDetail'>
-                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการใช้เทคโนโลยี</TD>
+                                    <TD BGCOLOR=#E0E0E0 COLSPAN='7'>ความสามารถในการใช้เทคโนโลยี</TD><input type="hidden" name="Q5" value="5" />
                                 </TR>
                                 <TR class='normaldetail'>
                                     <TD ALIGN=CENTER bgcolor=#F0F7F7>

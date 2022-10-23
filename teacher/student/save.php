@@ -53,6 +53,11 @@ if (isset($_POST['submit'])) {
     $D28 = $_POST['D28'];
     $Q29 = $_POST['Q29'];
     $D29 = $_POST['D29'];
+    $Q1 = $_POST['Q1'];
+    $Q2 = $_POST['Q2'];
+    $Q3 = $_POST['Q3'];
+    $Q4 = $_POST['Q4'];
+    $Q5 = $_POST['Q5'];
 
     if (empty($Q02)) {
         $_SESSION['error'] = 'กรอกข้อแบบฟอร์มไม่ครบ กรุณากรอกใหม่';
@@ -200,84 +205,113 @@ if (isset($_POST['submit'])) {
         header("location:student.php");
     } else {
 
-        $stmt = $conn->prepare("INSERT INTO score( score, id_question, id_student ) 
-                                        VALUES( :score, :id_question, :id_student)");
+        $stmt = $conn->prepare("INSERT INTO score( score, id_h_question, id_question, id_student ) 
+                                        VALUES( :score, :id_h_question, :id_question, :id_student)");
 
 
         $stmt->bindParam(":id_student", $id_student);
         $stmt->bindParam(":score", $Q02);
+        $stmt->bindParam(":id_h_question", $Q1);
         $stmt->bindParam(":id_question", $D02);
         $stmt->execute();
         $stmt->bindParam(":score", $Q03);
+        $stmt->bindParam(":id_h_question", $Q1);
         $stmt->bindParam(":id_question", $D03);
         $stmt->execute();
         $stmt->bindParam(":score", $Q04);
+        $stmt->bindParam(":id_h_question", $Q1);
         $stmt->bindParam(":id_question", $D04);
         $stmt->execute();
         $stmt->bindParam(":score", $Q05);
+        $stmt->bindParam(":id_h_question", $Q1);
         $stmt->bindParam(":id_question", $D05);
         $stmt->execute();
         $stmt->bindParam(":score", $Q06);
+        $stmt->bindParam(":id_h_question", $Q1);
         $stmt->bindParam(":id_question", $D06);
         $stmt->execute();
+        //จบหัวข้อที่1
         $stmt->bindParam(":score", $Q08);
+        $stmt->bindParam(":id_h_question", $Q2);
         $stmt->bindParam(":id_question", $D08);
         $stmt->execute();
         $stmt->bindParam(":score", $Q09);
+        $stmt->bindParam(":id_h_question", $Q2);
         $stmt->bindParam(":id_question", $D09);
         $stmt->execute();
         $stmt->bindParam(":score", $Q10);
+        $stmt->bindParam(":id_h_question", $Q2);
         $stmt->bindParam(":id_question", $D10);
         $stmt->execute();
         $stmt->bindParam(":score", $Q11);
+        $stmt->bindParam(":id_h_question", $Q2);
         $stmt->bindParam(":id_question", $D11);
         $stmt->execute();
         $stmt->bindParam(":score", $Q12);
+        $stmt->bindParam(":id_h_question", $Q2);
         $stmt->bindParam(":id_question", $D12);
         $stmt->execute();
+        //จบหัวข้อที่2
         $stmt->bindParam(":score", $Q15);
+        $stmt->bindParam(":id_h_question", $Q3);
         $stmt->bindParam(":id_question", $D15);
         $stmt->execute();
         $stmt->bindParam(":score", $Q16);
+        $stmt->bindParam(":id_h_question", $Q3);
         $stmt->bindParam(":id_question", $D16);
         $stmt->execute();
         $stmt->bindParam(":score", $Q17);
+        $stmt->bindParam(":id_h_question", $Q3);
         $stmt->bindParam(":id_question", $D17);
         $stmt->execute();
         $stmt->bindParam(":score", $Q18);
+        $stmt->bindParam(":id_h_question", $Q3);
         $stmt->bindParam(":id_question", $D18);
         $stmt->execute();
+        //จบหัวข้อที่3
         $stmt->bindParam(":score", $Q19);
+        $stmt->bindParam(":id_h_question", $Q4);
         $stmt->bindParam(":id_question", $D19);
         $stmt->execute();
         $stmt->bindParam(":score", $Q20);
+        $stmt->bindParam(":id_h_question", $Q4);
         $stmt->bindParam(":id_question", $D20);
         $stmt->execute();
         $stmt->bindParam(":score", $Q21);
+        $stmt->bindParam(":id_h_question", $Q4);
         $stmt->bindParam(":id_question", $D21);
         $stmt->execute();
         $stmt->bindParam(":score", $Q22);
+        $stmt->bindParam(":id_h_question", $Q4);
         $stmt->bindParam(":id_question", $D22);
         $stmt->execute();
         $stmt->bindParam(":score", $Q23);
+        $stmt->bindParam(":id_h_question", $Q4);
         $stmt->bindParam(":id_question", $D23);
         $stmt->execute();
+        //จบหัวข้อที่4
         $stmt->bindParam(":score", $Q25);
+        $stmt->bindParam(":id_h_question", $Q5);
         $stmt->bindParam(":id_question", $D25);
         $stmt->execute();
         $stmt->bindParam(":score", $Q26);
+        $stmt->bindParam(":id_h_question", $Q5);
         $stmt->bindParam(":id_question", $D26);
         $stmt->execute();
         $stmt->bindParam(":score", $Q27);
+        $stmt->bindParam(":id_h_question", $Q5);
         $stmt->bindParam(":id_question", $D27);
         $stmt->execute();
         $stmt->bindParam(":score", $Q28);
+        $stmt->bindParam(":id_h_question", $Q5);
         $stmt->bindParam(":id_question", $D28);
         $stmt->execute();
         $stmt->bindParam(":score", $Q29);
+        $stmt->bindParam(":id_h_question", $Q5);
         $stmt->bindParam(":id_question", $D29);
         $stmt->execute();
         $conn = null;
+        //จบหัวข้อที่5
 
         if ($stmt) {
             $_SESSION['success'] = "กรอกข้อมูลสำเร็จ";
