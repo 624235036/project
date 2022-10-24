@@ -8,10 +8,9 @@
     <title>Document</title>
     <style>
         body {
-            width: 550px;
+            width: 1000px;
             margin: 3rem auto;
         }
-
         #chart-container {
             width: 100%;
             height: auto;
@@ -37,14 +36,14 @@
                     let name = [];
                     let score = [];
                     for (let i in data) {
-                        name.push(data[i].student_name);
-                        score.push(data[i].student_score);
+                        name.push(data[i].name_header);
+                        score.push(data[i].avgscore);
                     }
                     let chartdata = {
                         labels: name,
                         datasets: [{
-                            label: 'Student Score',
-                            backgroundColor: '#49e2ff',
+                            label: 'ภาพรวมสมรรถนะ',
+                            backgroundColor: 'red',
                             borderColor: '#46d5f1',
                             hoverBackgroundColor: '#CCCCCC',
                             hoverBorderColor: '#666666',
@@ -52,7 +51,7 @@
                         }]
                     };
                     let graphTarget = $('#graphCanvas');
-                    let barGraph = new Chart(graphTarget, {
+                    let radarGraph = new Chart(graphTarget, {
                         type: 'bar',
                         data: chartdata
                     })
@@ -60,5 +59,5 @@
             }
         }
     </script>
-
+</body>
 </html>

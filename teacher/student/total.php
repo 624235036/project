@@ -74,7 +74,7 @@ require_once "../../config/db.php";
                             </tr><br>
                             <tr>
                                 <th width="5%">ลำดับ</th>
-                                <th width="50%">หัวข้อ</th>
+                                <th width="45%">หัวข้อ</th>
                                 <th width="5%">คะแนน</th>
                                 <!-- <th width="10%" scope="col">เครื่องมือ</th> -->
                             </tr>
@@ -89,7 +89,7 @@ require_once "../../config/db.php";
                             ?>
                             <?php
                             $index_h = 0;
-                            $index = 1.1;
+                            //$index = 1.1;
                             $select_stmt = $conn->prepare("SELECT * FROM form_header");
                             $select_stmt->execute();
                             $data1 = $select_stmt->fetchAll();
@@ -111,13 +111,7 @@ require_once "../../config/db.php";
                                         $select_stmt->execute();
                                         while ($data = $select_stmt->fetch()) {
                                             $index_h++;
-                                            $total_score = $total_score + $data['score'];
-
-                                            if($total_h = $data['id_h_question']==$data['id_header']&&$data['id_question']==$data['id_id_queustion']) {
-                                                
-                                            }
-                                            
-
+                                        
                                     ?>
                                             <tr>
                                                 <td><?= $index_h; ?></td>
@@ -127,44 +121,47 @@ require_once "../../config/db.php";
                                 <?php }
                                     }
                                 }
+                                
                                 ?>
                                 <tr>
                                     <td bgcolor="#E0E0E0" COLSPAN='4'></td>
                                 </tr>
                                 <tr>
                                     <th width="5%"></th>
-                                    <th width="50%">สรุปคะแนนสมรรถนะ</th>
+                                    <th width="45%">สรุปคะแนนสมรรถนะ</th>
                                     <th width="5%">คะแนน</th>
                                 </tr>
+                                <?php
+                                if (isset($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    $index_h = 1;
+                                    $select_h = $conn->prepare("SELECT student.id_student,form_header.name_header,SUM(score.score) FROM score INNER JOIN form_header on score.id_h_question = form_header.id_header INNER JOIN student on student.id_student = score.id_student
+                                                                WHERE score.id_student = $id GROUP BY student.id_student, form_header.name_header");
+                                    $select_h->execute();
+                                    $data_h = $select_h->fetchAll();
+                                    
+                                    
+                                    
+
+                                    if(!$data_h) {
+                                        echo "ไม่มี";
+                                    } else {
+                                        foreach ($data_h as $q_h) {
+                                        $total_score = $total_score + $q_h['SUM(score.score)'];
+                                ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>ความสามารถในการสือสาร</td>
-                                    <td></td>
+                                    <td><?=$index_h++; ?></td>
+                                    <td><?=$q_h['name_header'];?></td>
+                                    <td><?=$q_h['SUM(score.score)']; ?></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>ความสามารถในการคิด</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>ความสามารถในการแก้ปัญหา</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>ความสามารถในการใช้ทักษะชีวิต</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>ความสามารถในการใช้เทคโนโลยี</td>
-                                    <td></td>
-                                </tr>
+                                <?php }
+                                    }
+                                }
+                                ?>
                                 <tr>
                                     <td></td>
                                     <td></td>
-                                    <td>คะแนนรวม <?= $total_score; ?></td>
+                                    <td>คะแนนรวม <br>(<?= $total_score; ?>)</td>
                                 </tr>
                                 </tbody>
                         </table>

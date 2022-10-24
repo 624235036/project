@@ -313,6 +313,7 @@ if (isset($_POST['submit'])) {
         $conn = null;
         //จบหัวข้อที่5
 
+
         if ($stmt) {
             $_SESSION['success'] = "กรอกข้อมูลสำเร็จ";
             header("refresh:1; url=student.php");
@@ -322,3 +323,4 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+?>

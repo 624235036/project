@@ -4,9 +4,14 @@
     session_start();
     require_once "../../config/db.php";
 
-    $sqlQuery = $conn->query("SELECT * FROM student ORDER BY id");
+    
+    if (isset($_SESSION['tech_login'])) {
+    $user_id = $_SESSION['tech_login'];
+    $sqlQuery = $conn->query("SELECT `id_teacher`,`name_header`,`avgscore` FROM scorestudent WHERE scorestudent.`id_teacher` = $user_id GROUP BY `id_teacher`,`name_header`");
     $sqlQuery->execute();
     $result = $sqlQuery->fetchAll();
+
+    }
 
     $data = array();
     foreach ($result as $row) {

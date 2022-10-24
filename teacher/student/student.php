@@ -119,7 +119,7 @@ if (isset($_REQUEST['delete_id'])) {
                                         <input type="text" class="form-control" name="number_id">
                                     </div>
                                     <div class="form-group">
-                                        <label for="school">ชั้นปี</label>
+                                        <label for="school">คำนำหน้า</label>
                                         <select name="title" class="form-control" required>
                                             <option value="">เลือก</option>
                                             <option value="ด.ช">ด.ช</option>
@@ -165,7 +165,7 @@ if (isset($_REQUEST['delete_id'])) {
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th width="10%" scope="col">ลำดับที่</th>
+                                <th width="10%" scope="col">รหัสนักเรียน</th>
                                 <th width="10%" scope="col">คำนำหน้า</th>
                                 <th width="20%" scope="col">ชื่่อ</th>
                                 <th width="20%" scope="col">นามสกุล</th>

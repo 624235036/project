@@ -61,7 +61,7 @@ require_once "../config/db.php";
                 <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="teacher.php">หน้าแรก</a></li>
                     <li><a href="../teacher/student/student.php">ข้อมูลนักเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="../teacher/graffic/graffic.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                     <li><a href="../index.php">ออกจากระบบ</a></li>
                 </ul><br>
