@@ -18,7 +18,7 @@ if (isset($_REQUEST['delete_id'])) {
         echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
         $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
         header("refresh:1; url=teacher.php");
-      }
+    }
 }
 ?>
 <!DOCTYPE html>

@@ -1,16 +1,20 @@
 <?php
 
 session_start();
-require_once "../config/db.php";
+require_once "../../config/db.php";
 
 if (isset($_SESSION['school_id'])) {
     $school_id = $_SESSION['school_id'];
     $stmt = $conn->prepare("SELECT * FROM class_room INNER JOIN school on school.id = class_room.id_school WHERE class_room.id_school = $school_id");
     $stmt->execute();
-    $rs = $stmt->fetchAll();
+    $rs = $stmt->fetch();
+
+    $id_room = $rs['id_room'];
+    $class_name = $rs['class_name'];
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +25,8 @@ if (isset($_SESSION['school_id'])) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../style.css" type="text/css" />
-    <link rel="stylesheet" href="../newstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../style.css" type="text/css" />
+    <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
 </head>
 
 <body style="background-color: #F5F5DC;">
@@ -39,7 +43,7 @@ if (isset($_SESSION['school_id'])) {
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
                 </ul>
             </div>
         </div>
@@ -49,7 +53,7 @@ if (isset($_SESSION['school_id'])) {
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <div align="center"><br>
-                    <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
+                    <img src="../../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
                     <?php
@@ -66,38 +70,48 @@ if (isset($_SESSION['school_id'])) {
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="director.php">หน้าแรก</a></li>
-                    <li><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li class="active"><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="../director.php">หน้าแรก</a></li>
+                    <li><a href="../teacher.php">รายชื่อครูประจำชั้น</a></li>
+                    <li><a href="../form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li class="active"><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class="col-sm-11 text-left">
                     <h3 align="center">ภาพรวมสมรรถนะผู้เรียน/ห้องเรียน</h3> <br>
-                    <form action="" method="get">
-                        <div class="mb-3 row">
-                            <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
-                            <label class="col-3 col-sm-2 col-form-label d-none d-sm-block"></label>
-                            <div class="col-7 col-sm-5">
-                                <select name="id_room" class="form-control" required>
-                                    <option value="">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</option>
-                                    <?php foreach ($rs as $row) { ?>
-                                        <!--value ที่จะส่งออกไปจากฟอร์มคือ p_id ซึ่งก็คือไอดีหรือรหัสของตำแหน่งครับ  -->
-                                        <option value="<?= $row['id_room']; ?>"><?= $row['class_name']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="col-2 col-sm-2">
-                                <button type="submit" class="btn btn-primary">ประมวลผล</button>
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <a href="result.php" class="btn btn-success">รีเซต</a>
-                            </div>
-                        </div>
-                    </form>
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>ลำดับที่</th>
+                                <th>ชั้นปี</th>
+                                <th>ภาพรวม</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $index = 1;
+                                $stmt = $conn->query("SELECT * FROM class ");
+                                $stmt->execute();
+                                $data = $stmt->fetchAll();
+
+                                if (!$data) {
+                                    echo "ไม่มี";
+                                } else {
+                                    foreach ($data as $a) {
+
+                            ?>
+                                        <tr>
+                                            <td><?= $index++; ?></td>
+                                            <td><?= $a['name_class']; ?></td>
+                                            <td><a href="resultclass.php?id=<?= $a['id_class']; ?>" class="btn btn-denger btn-xs">ภาพรวม</a></td>
+                                        </tr>
+                            <?php }
+                                }
+                             ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

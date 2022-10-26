@@ -32,7 +32,7 @@ require_once "../config/db.php";
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
                 </ul>
             </div>
         </div>
@@ -62,8 +62,8 @@ require_once "../config/db.php";
                     <li class="active"><a href="director.php">หน้าแรก</a></li>
                     <li><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
                     <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li><a href="result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="result/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="resultclass/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>

@@ -133,14 +133,14 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <h2>เพิ่มห้อง</h2>
-                                <form action="addclass.php" method="post" enctype="multipart/form-data">
+                                <form action="addclass.php" method="post" >
                                     <div class="form-group">
                                         <label for="schoolname">ห้องเรียน:</label>
                                         <input type="text" class="form-control" name="schoolname">
                                     </div>
                                     <div class="form-group">
-                                        <label for="school">ประถมศึกปีที่</label>
-                                        <select name="class" class="form-control" required>
+                                        <label for="id_class">ประถมศึกปีที่</label>
+                                        <select name="id_class" class="form-control" required>
                                             <option value="">เลือก</option>
                                             <?php
                                             foreach ($class as $row) { ?>
@@ -149,7 +149,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="school">ระดับ</label>
+                                        <label for="class_group">ระดับ</label>
                                         <select name="class_group" class="form-control" required>
                                             <option value="">เลือก</option>
                                             <?php
@@ -159,7 +159,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="school">โรงเรียน</label>
+                                        <label for="school_id">โรงเรียน</label>
                                         <select name="school_id" class="form-control" required>
                                             <option value="">เลือก</option>
                                             <?php

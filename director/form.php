@@ -36,7 +36,7 @@ require_once "../config/db.php";
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
                 </ul>
             </div>
         </div>
@@ -44,19 +44,20 @@ require_once "../config/db.php";
     <div class="container-fluid">
         <div class="row content">
             <div class="col-sm-2 sidenav">
-            <div align="center"><br>
+                <div align="center"><br>
                     <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
                     <?php
-                    if (isset($_SESSION['admin_login'])) {
-                        $user_id = $_SESSION['admin_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                    if (isset($_SESSION['director_login'])) {
+                        $user_id = $_SESSION['director_login'];
+                        $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4"><?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"> <?php echo  $row['schoolname']; ?></h4>
+                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
@@ -64,10 +65,9 @@ require_once "../config/db.php";
                     <li><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
                     <!-- <li><a href="student.php">รายชื่อนักเรียน</a></li> -->
                     <li class="active"><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="result/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                    <li><a href="http://localhost/project/signin.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -95,7 +95,7 @@ require_once "../config/db.php";
                         $select_stmt = $conn->prepare("SELECT * FROM form_header ");
                         $select_stmt->execute();
                         $data = $select_stmt->fetchAll();
-                        
+
                         ?>
                         <tbody>
                             <TR class='HeaderDetail'>

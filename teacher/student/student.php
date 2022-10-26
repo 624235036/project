@@ -67,21 +67,22 @@ if (isset($_REQUEST['delete_id'])) {
                     <img src="../../images/icon1.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
-                    <?php
+                <?php
                     if (isset($_SESSION['tech_login'])) {
                         $user_id = $_SESSION['tech_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] . ' ' . $row['id_room'] ?></h4>
+                    <h4 class="mt-4"> <?php echo  $row['schoolname']; ?></h4>
+                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../teacher.php">หน้าแรก</a></li>
                     <li class="active"><a href="student.php">ข้อมูลนักเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของ/ห้องเรียน</a></li>
+                    <li><a href="../graffic/data.php">รายงานภาพรวมสมรรถนะของ/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของ/โรงเรียน</a></li>
                     <li><a href="../../index.php">ออกจากระบบ</a></li>
                 </ul><br>
@@ -135,7 +136,7 @@ if (isset($_REQUEST['delete_id'])) {
                                         <input type="text" class="form-control" name="student_lastname">
                                     </div>
                                     <div class="form-group" hidden>
-                                        <label for="class_years">ชั้นปี</label>
+                                        <label for="class_years">ห้องเรียน</label>
                                         <input type="text" readonly value="<?= $row['id_room']; ?>" class="form-control" name="id_room">
                                     </div>
                                     <div class="form-group" hidden>
@@ -156,8 +157,8 @@ if (isset($_REQUEST['delete_id'])) {
                                             <?php } ?>
                                         </select>
                                     </div> -->
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                    <button type="submit" name="submit" class="btn btn-default">บันทึก</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                                    <button type="submit" name="submit" class="btn btn-success">บันทึก</button>
                                 </form>
                             </div>
                         </div>
@@ -169,7 +170,7 @@ if (isset($_REQUEST['delete_id'])) {
                                 <th width="10%" scope="col">คำนำหน้า</th>
                                 <th width="20%" scope="col">ชื่่อ</th>
                                 <th width="20%" scope="col">นามสกุล</th>
-                                <th width="10%" scope="col">ชั้นปี</th>
+                                <th width="10%" scope="col">ห้องเรียน</th>
                                 <th width="10%" scope="col">แก้ไข</th>
                                 <th width="5%" scope="col">ฟอร์ม</th>
                                 <th width="5%" scope="col">คะแนน</th>

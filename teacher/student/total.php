@@ -67,18 +67,12 @@ require_once "../../config/db.php";
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
-                    <form action="confirm.php" method="post">
+                    <br>
+                    <div class="col-2 col-sm-2">
+                        <a href="student.php" class="btn btn-warning">ย้อนกลับ</a>
+                    </div><br>
+                    <form action="" method="post">
                         <table class="table table-striped table-bordered table-hover">
-                            <tr bgcolor="#F5FFFA">
-                                <td colspan="10" align="center">คะแนนรวม</td>
-                            </tr><br>
-                            <tr>
-                                <th width="5%">ลำดับ</th>
-                                <th width="45%">หัวข้อ</th>
-                                <th width="5%">คะแนน</th>
-                                <!-- <th width="10%" scope="col">เครื่องมือ</th> -->
-                            </tr>
-
                             <?php
                             if (isset($_GET['id'])) {
                                 $id = $_GET['id'];
@@ -87,6 +81,23 @@ require_once "../../config/db.php";
                                 $result = $stmt->fetch();
                             }
                             ?>
+                            <tr bgcolor="#F5FFFA">
+                                <td colspan="10" align="center">
+                                    <h4>คะแนนรวมสมรรถนะผู้เรียน</h4>
+                                </td>
+                            </tr><br>
+                            <tr>
+                                <td colspan="10" align="center">
+                                    <h4>ชื่อ <?php echo  $result['title'] . ' ' . $result['student_name'] . '&nbsp;&nbsp;&nbsp;นามสกุล ' . $result['student_lastname'] ?></h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="5%">ลำดับ</th>
+                                <th width="45%">หัวข้อ</th>
+                                <th width="5%">คะแนน</th>
+                                <!-- <th width="10%" scope="col">เครื่องมือ</th> -->
+                            </tr>
+
                             <?php
                             $index_h = 0;
                             //$index = 1.1;
@@ -111,7 +122,7 @@ require_once "../../config/db.php";
                                         $select_stmt->execute();
                                         while ($data = $select_stmt->fetch()) {
                                             $index_h++;
-                                        
+
                                     ?>
                                             <tr>
                                                 <td><?= $index_h; ?></td>
@@ -121,7 +132,7 @@ require_once "../../config/db.php";
                                 <?php }
                                     }
                                 }
-                                
+
                                 ?>
                                 <tr>
                                     <td bgcolor="#E0E0E0" COLSPAN='4'></td>
@@ -135,25 +146,23 @@ require_once "../../config/db.php";
                                 if (isset($_GET['id'])) {
                                     $id = $_GET['id'];
                                     $index_h = 1;
-                                    $select_h = $conn->prepare("SELECT student.id_student,form_header.name_header,SUM(score.score) FROM score INNER JOIN form_header on score.id_h_question = form_header.id_header INNER JOIN student on student.id_student = score.id_student
+                                    $select_h = $conn->prepare("SELECT student.id_student,form_header.name_header,SUM(score.score) as total FROM score INNER JOIN form_header on score.id_h_question = form_header.id_header INNER JOIN student on student.id_student = score.id_student
                                                                 WHERE score.id_student = $id GROUP BY student.id_student, form_header.name_header");
                                     $select_h->execute();
                                     $data_h = $select_h->fetchAll();
-                                    
-                                    
-                                    
 
-                                    if(!$data_h) {
+
+                                    if (!$data_h) {
                                         echo "ไม่มี";
                                     } else {
                                         foreach ($data_h as $q_h) {
-                                        $total_score = $total_score + $q_h['SUM(score.score)'];
+                                            $total_score = $total_score + $q_h['total'];
                                 ?>
-                                <tr>
-                                    <td><?=$index_h++; ?></td>
-                                    <td><?=$q_h['name_header'];?></td>
-                                    <td><?=$q_h['SUM(score.score)']; ?></td>
-                                </tr>
+                                            <tr>
+                                                <td><?= $index_h++; ?></td>
+                                                <td><?= $q_h['name_header']; ?></td>
+                                                <td><?= $q_h['total']; ?></td>
+                                            </tr>
                                 <?php }
                                     }
                                 }
@@ -165,9 +174,6 @@ require_once "../../config/db.php";
                                 </tr>
                                 </tbody>
                         </table>
-                        <input type="hidden" name="id_student" value="<?= $result['id_student']; ?>">
-                        <input type="hidden" name="total" value="<?= $total_score; ?>" />
-                        <button type="submit" name="submit" class="btn btn-success">ยืนยัน</button>
                     </form>
                 </div>
             </div>

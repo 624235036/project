@@ -165,6 +165,15 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             <div class="modal-content">
                                 <h2>เพิ่มผู้อำนวยการ</h2>
                                 <form action="add_director.php" method="post" enctype="multipart/form-data">
+                                    <!-- <div class="form-group">
+                                        <label for="urole">คำนำหน้า:</label>
+                                        <select name="title" class="form-control">
+                                            <option value="">เลือก</option>
+                                            <option value="">นาย</option>
+                                            <option value="นาง">นาง</option>
+                                            <option value="นางสาว">นางสาว</option>
+                                        </select>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="firstname">ชื่่อ</label>
                                         <input type="text" class="form-control" name="firstname">
