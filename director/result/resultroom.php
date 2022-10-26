@@ -1,22 +1,25 @@
 <?php
 
 session_start();
-require_once "../config/db.php";
+require_once "../../config/db.php";
 
 
-if (isset($_SESSION['school_id'])) {
-  $school_id = $_SESSION['school_id'];
-  $sqlQuery = $conn->query("SELECT `name_header`, `id_school`, AVG(`avgscore`) as avgscore FROM `scoreschool` WHERE `id_school`=$school_id GROUP BY `name_header`,`id_school`");
-  $sqlQuery->execute();
-  $result = $sqlQuery->fetchAll();
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sqlQuery = $conn->query("SELECT `name_header`,class_room.id_room ,avg(avgscore) as avgscore FROM scorestudent
+                              INNER JOIN class_room ON class_room.id_room = scorestudent.id_room 
+                              WHERE class_room.id_room = $id
+                              GROUP BY `name_header`, class_room.id_room");
+    $sqlQuery->execute();
+    $result = $sqlQuery->fetchAll();
 }
 
 //นำข้อมูลที่ได้จากคิวรี่มากำหนดรูปแบบข้อมุลให้ถูกโครงสร้างของกราฟที่ใช้ 
 $nameheardr = array();
 $total = array();
 foreach ($result as $rs) {
-  $nameheardr[] = "\"" . $rs['name_header'] . "\"";
-  $total[] = "\"" . $rs['avgscore'] . "\"";
+    $nameheardr[] = "\"" . $rs['name_header'] . "\"";
+    $total[] = "\"" . $rs['avgscore'] . "\"";
 }
 
 //ตัด commar อันสุดท้ายโดยใช้ implode เพื่อให้โครงสร้างข้อมูลถูกต้องก่อนจะนำไปแสดงบนกราฟ
@@ -25,10 +28,11 @@ $total = implode(",", $total);
 
 
 ?>
+
 <html>
 
 <head>
-  <title>scoretotal</title>
+  <title>PHP PDO & BAR CHART : ออกรายงานกราฟแท่ง devbanban.com 2021</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- bootstrap5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -46,9 +50,9 @@ $total = implode(",", $total);
   <div class="container">
     <div class="row">
       <div class="col-md-12"> <br>
-      <a class="btn btn-warning" href="director.php">ย้อนกลับ</a>
+      <a class="btn btn-warning" href="../result/result.php">ย้อนกลับ</a>
       <h3 align="center">รายงานภาพรวมสมรรถนะ 5 ด้าน</h3>
-        <h5 align="center">(โรงเรียน)</h5>
+        <h5 align="center">(ห้องเรียน)</h5>
         <canvas id="myChart" width="800px" height="300px"></canvas>
         <script>
           var ctx = document.getElementById("myChart").getContext('2d');
@@ -59,7 +63,7 @@ $total = implode(",", $total);
 
               ],
               datasets: [{
-                label: 'รายงานภาพรวม แยกตามหัวข้อ',
+                label: 'รายงานภาพรวม แยกตามปี (บาท)',
                 data: [<?php echo $total; ?>],
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',

@@ -145,7 +145,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         <label for="title">คำนำหน้า:</label>
                                         <select name="title" class="form-control">
                                             <option value="">เลือก</option>
-                                            <option value="">นาย</option>
+                                            <option value="นาย">นาย</option>
                                             <option value="นาง">นาง</option>
                                             <option value="นางสาว">นางสาว</option>
                                         </select>
@@ -200,6 +200,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                         <thead>
                             <tr>
                                 <th>ลำดับที่</th>
+                                <th>คำนำหน้า</th>
                                 <th>ชื่่อ</th>
                                 <th>นามสกุล</th>
                                 <th>เบอร์โทร</th>
@@ -228,6 +229,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             ?>
                                     <tr>
                                         <td><?= $index++; ?></td>
+                                        <td><?= $a['title']; ?></td>
                                         <td><?= $a['firstname']; ?></td>
                                         <td><?= $a['lastname']; ?></td>
                                         <td><?= $a['phone']; ?></td>

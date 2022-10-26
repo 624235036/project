@@ -108,7 +108,7 @@ if (isset($_POST['update'])) {
             <input type="text" readonly value="<?= $data['urole']; ?>" class="form-control" name="urole">
         </div> -->
         <a class="btn btn-danger" href="student.php">ปิด</a>
-        <button type="submit" name="update" class="btn btn-default">บันทึก</button>
+        <button type="submit" name="update" class="btn btn-success">บันทึก</button>
         <hr>
     </form>
 

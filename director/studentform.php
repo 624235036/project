@@ -1,10 +1,9 @@
 <?php
 
 session_start();
-require_once "../../config/db.php";
+require_once "../config/db.php";
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,11 +14,11 @@ require_once "../../config/db.php";
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../style.css" type="text/css" />
-    <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../style.css" type="text/css" />
+    <link rel="stylesheet" href="../newstyle.css" type="text/css" />
 </head>
 
-<body style="background-color: #8FBC8F;">
+<body style="background-color: #F5F5DC;">
 
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -33,7 +32,7 @@ require_once "../../config/db.php";
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -43,33 +42,35 @@ require_once "../../config/db.php";
         <div class="row content">
             <div class="col-sm-3 sidenav">
                 <div align="center"><br>
-                    <img src="../../images/icon1.png" height="100" class="img-circle" alt="Cinque Terre">
+                    <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
                     <?php
-                    if (isset($_SESSION['tech_login'])) {
-                        $user_id = $_SESSION['tech_login'];
+                    if (isset($_SESSION['director_login'])) {
+                        $user_id = $_SESSION['director_login'];
                         $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
                     <h4 class="mt-4"> <?php echo  $row['schoolname']; ?></h4>
-                    <h4 class="mt-4">คุณครู <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
+                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
+                    <hr>
                 </div>
-                <hr>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><a href="../teacher.php">หน้าแรก</a></li>
-                    <li class="active"><a href="student.php">ข้อมูลนักเรียน</a></li>
-                    <li><a href="../graffic/data.php">รายงานภาพรวมสมรรถนะของ/ห้องเรียน</a></li>
-                    <li><a href="../resultschool.php">รายงานภาพรวมสมรรถนะของ/โรงเรียน</a></li>
+                    <li><a href="director.php">หน้าแรก</a></li>
+                    <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
+                    <li><a href="capacity/form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li><a href="result/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="resultclass/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="resultschool.php">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
                     <br>
                     <div class="col-2 col-sm-2">
-                        <a href="student.php" class="btn btn-warning">ย้อนกลับ</a>
+                        <a href="teacher.php" class="btn btn-warning">ย้อนกลับ</a>
                     </div><br>
                     <form action="" method="post">
                         <table class="table table-striped table-bordered table-hover">
@@ -88,7 +89,7 @@ require_once "../../config/db.php";
                             </tr><br>
                             <tr>
                                 <td colspan="10" align="center">
-                                    <h4>ชื่อ <?php echo  $result['title'] . ' ' . $result['student_name'] . '&nbsp;&nbsp;&nbsp;นามสกุล ' . $result['student_lastname'] .'&nbsp;&nbsp;&nbsp;รหัสนักเรียน '. $result['number_id'] ?></h4>
+                                    <h4>ชื่อ <?php echo  $result['title'] . ' ' . $result['student_name'] . '&nbsp;&nbsp;&nbsp;นามสกุล ' . $result['student_lastname'] . '&nbsp;&nbsp;&nbsp;รหัสนักเรียน ' . $result['number_id'] ?></h4>
                                 </td>
                             </tr>
                             <tr>
@@ -178,13 +179,13 @@ require_once "../../config/db.php";
                                         echo "ไม่มี";
                                     } else {
                                         foreach ($data_h as $total_score) {
-            
+
                                 ?>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>คะแนนรวม <br>(<?= $total_score['total'];?>)</td>
-                                </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>คะแนนรวม <br>(<?= $total_score['total']; ?>)</td>
+                                            </tr>
                                 <?php }
                                     }
                                 }

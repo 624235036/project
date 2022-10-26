@@ -166,6 +166,15 @@ if (isset($_REQUEST['delete_id'])) {
                                 <div class="modal-content">
                                     <h2>เพิ่มคุณครู</h2>
                                     <div class="form-group">
+                                        <label for="title">คำนำหน้า:</label>
+                                        <select name="title" class="form-control">
+                                            <option value="">เลือก</option>
+                                            <option value="นาย">นาย</option>
+                                            <option value="นาง">นาง</option>
+                                            <option value="นางสาว">นางสาว</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="firstname">ชื่่อ</label>
                                         <input type="text" class="form-control" name="firstname">
                                     </div>
@@ -231,6 +240,7 @@ if (isset($_REQUEST['delete_id'])) {
             <thead>
                 <tr>
                     <th>ลำดับที่</th>
+                    <th>คำนำหน้า</th>
                     <th>ชื่่อ</th>
                     <th>นามสกุล</th>
                     <th>เบอร์โทร</th>
@@ -256,11 +266,11 @@ if (isset($_REQUEST['delete_id'])) {
                 ?>
                         <tr>
                             <td><?= $index++; ?></td>
+                            <td><?= $a['title']; ?></td>
                             <td><?= $a['firstname']; ?></td>
                             <td><?= $a['lastname']; ?></td>
                             <td><?= $a['phone']; ?></td>
                             <td><?= $a['email']; ?></td>
-                            <!-- <td><?= strlen($a['password']); ?></td> -->
                             <td><?= $a['urole']; ?></td>
                             <td><?= $a['schoolname']; ?></td>
                             <td><?= $a['class_name']; ?></td>

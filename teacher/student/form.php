@@ -3,18 +3,6 @@
 session_start();
 require_once "../../config/db.php";
 
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-    $deletestmt = $conn->query("DELETE FROM form_question WHERE id_queustion = $delete_id");
-    $deletestmt->execute();
-
-    if ($deletestmt) {
-        echo "<script>alert('ลบข้อมูลเสร็จสิ้น');</script>";
-        $_SESSION['success'] = "ลบข้อมูลเสร็จสิ้น";
-        header("location:form.php");
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +78,7 @@ if (isset($_GET['delete'])) {
     </style>
 </head>
 
-<body style="background-color: orange;">
+<body style="background-color: gray;">
 
     <div class="container-fluid">
         <div class="row content">
@@ -131,7 +119,7 @@ if (isset($_GET['delete'])) {
                                 <td colspan="10" align="center"><h4>ระบบประเมินสมรรถนะของผู้เรียนพื้นที่นวัตกรรมจังหวัดสตูล</h4></td>
                             </tr><br>
                             <tr>
-                                <td colspan="10" align="center"><h4>ชื่อ <?php echo  $result['title'] .' '. $result['student_name'] .'&nbsp;&nbsp;&nbsp;นามสกุล '. $result['student_lastname'] ?></h4></td>
+                                <td colspan="10" align="center"><h4>ชื่อ <?php echo  $result['title'] .' '. $result['student_name'] .'&nbsp;&nbsp;&nbsp;นามสกุล '. $result['student_lastname'] .'&nbsp;&nbsp;&nbsp;รหัสนักเรียน '. $result['number_id'] ?></h4></td>
                             </tr>
                             <tr>
                                 <th width="5%" scope="col">ลำดับ</th>

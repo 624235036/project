@@ -39,11 +39,11 @@ if (isset($_SESSION['school_id'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -51,7 +51,7 @@ if (isset($_SESSION['school_id'])) {
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -66,16 +66,15 @@ if (isset($_SESSION['school_id'])) {
                     ?>
                     <h4 class="mt-4"> <?php echo  $row['schoolname']; ?></h4>
                     <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
-                    <td><a href="edit.php?id=<?= $row['id']; ?>" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 </div>
                 <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="../director.php">หน้าแรก</a></li>
                     <li><a href="../teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="../form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li class="active"><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
+                    <li><a href="../capacity/form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li class="active"><a href="result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="../resultclass/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="../resultschool.php">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -111,7 +110,7 @@ if (isset($_SESSION['school_id'])) {
                                             <td><?= $a['firstname']; ?></td>
                                             <td><?= $a['lastname']; ?></td>
                                             <td><?= $a['class_name']; ?></td>
-                                            <td><a href="resulttest.php?id=<?= $a['id_room']; ?>" class="btn btn-denger btn-xs">ภาพรวม</a></td>
+                                            <td><a href="resultroom.php?id=<?= $a['id_room']; ?>" class="btn btn-info btn-sm">ภาพรวม</a></td>
                                         </tr>
                             <?php }
                                 }

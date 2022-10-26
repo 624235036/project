@@ -38,6 +38,13 @@ if (isset($_REQUEST['delete_id'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../style.css" type="text/css" />
     <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+    <script>
+        function confirmDelete(delUrl) {
+            if (confirm("Are you sure you want to delete")) {
+                document.location = delUrl;
+            }
+        }
+    </script>
 </head>
 
 <body style="background-color: #8FBC8F;">
@@ -67,7 +74,7 @@ if (isset($_REQUEST['delete_id'])) {
                     <img src="../../images/icon1.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
                 <div align="center">
-                <?php
+                    <?php
                     if (isset($_SESSION['tech_login'])) {
                         $user_id = $_SESSION['tech_login'];
                         $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
@@ -83,8 +90,7 @@ if (isset($_REQUEST['delete_id'])) {
                     <li><a href="../teacher.php">หน้าแรก</a></li>
                     <li class="active"><a href="student.php">ข้อมูลนักเรียน</a></li>
                     <li><a href="../graffic/data.php">รายงานภาพรวมสมรรถนะของ/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของ/โรงเรียน</a></li>
-                    <li><a href="../../index.php">ออกจากระบบ</a></li>
+                    <li><a href="../resultschool.php">รายงานภาพรวมสมรรถนะของ/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -157,7 +163,7 @@ if (isset($_REQUEST['delete_id'])) {
                                             <?php } ?>
                                         </select>
                                     </div> -->
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                                    <a class="btn btn-danger" href="student.php">ปิด</a>
                                     <button type="submit" name="submit" class="btn btn-success">บันทึก</button>
                                 </form>
                             </div>
@@ -197,7 +203,9 @@ if (isset($_REQUEST['delete_id'])) {
                                             <td><?= $student['student_name']; ?></td>
                                             <td><?= $student['student_lastname']; ?></td>
                                             <td><?= $student['class_name']; ?></td>
-                                            <td><a href="editstudent.php?id=<?= $student['id_student']; ?>" class="btn btn-defult btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a><a href="?delete_id=<?php echo $student["id_student"]; ?>" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+                                            <td><a href="editstudent.php?id=<?= $student['id_student']; ?>" class="btn btn-defult btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                                <a href="?delete_id=<?php echo $student["id_student"]; ?>" onclick="return confirm('ยืนยันการลบ')" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                            </td>
                                             <td>
                                                 <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>

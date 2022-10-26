@@ -44,11 +44,11 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -56,7 +56,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -76,14 +76,15 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="director.php">หน้าแรก</a></li>
                     <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li><a href="capacity/form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
                     <li><a href="result/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
+                    <li><a href="resultclass/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="resultschool.php">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
+                    <h3>รายชื่อคุณครู</h3>
                     <hr>
                     <?php if (isset($_SESSION['error'])) { ?>
                         <div class="alert alert-danger" role="alert">
@@ -109,31 +110,13 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                             ?>
                         </div>
                     <?php } ?>
-
-                    <form action="teacher.php" method="get">
-                        <div class="mb-3 row">
-                            <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
-                            <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
-                            <div class="col-7 col-sm-5">
-                                <input type="text" name="firstname" required class="form-control" placeholder="ระบุชื่อที่ต้องการค้นหา" value="<?php if (isset($_GET['firstname'])) {
-                                                                                                                                                    echo $_GET['firstname'];
-                                                                                                                                                } ?>">
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <button type="submit" class="btn btn-primary">ค้นหา</button>
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <a href="teacher.php" class="btn btn-success">Reset</a>
-                            </div>
-                        </div>
-                    </form>
                     <?php
                     //แสดงข้อความที่ค้นหา
                     if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                         echo '<font color="red"> ข้อมูลการค้นหา : ' . $_GET['firstname'];
                         echo ' *พบ ' . $stmt->rowCount() . ' รายการ</font><br><br>';
                     } ?>
-                    <hr>
+                    
                     <?php
                     $stmt = $conn->prepare("SELECT * FROM school");
                     $stmt->execute();
@@ -194,6 +177,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                         <thead>
                             <tr>
                                 <th>ลำดับที่</th>
+                                <th>คำนำหน้า</th>
                                 <th>ชื่่อ</th>
                                 <th>นามสกุล</th>
                                 <th>เบอร์โทร</th>
@@ -220,6 +204,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                             ?>
                                         <tr>
                                             <td><?= $index++; ?></td>
+                                            <td><?= $a['title']; ?></td>
                                             <td><?= $a['firstname']; ?></td>
                                             <td><?= $a['lastname']; ?></td>
                                             <td><?= $a['phone']; ?></td>

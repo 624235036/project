@@ -36,13 +36,21 @@ $total = implode(",", $total);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <!-- call js -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+  <style>
+    body{
+      margin: 0;
+      margin-top: 50px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-12"> <br>
-        <h4 align="center">รายงานภาพรวมชั้นปี</h4>
+      <a class="btn btn-warning" href="../resultclass/result.php">ย้อนกลับ</a>
+      <h3 align="center">รายงานภาพรวมสมรรถนะ 5 ด้าน</h3>
+        <h5 align="center">(ชั้นปี)</h5>
         <!--devbanban.com-->
         <canvas id="myChart" width="800px" height="300px"></canvas>
         <script>

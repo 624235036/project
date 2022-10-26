@@ -28,11 +28,11 @@ require_once "../config/db.php";
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -40,7 +40,7 @@ require_once "../config/db.php";
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../images/icon2.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -48,21 +48,22 @@ require_once "../config/db.php";
                     <?php
                     if (isset($_SESSION['director_login'])) {
                         $user_id = $_SESSION['director_login'];
-                        $stmt = $conn->query("SELECT * FROM users WHERE id = $user_id");
+                        $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s on s.id = u.school_id WHERE u.id = $user_id");
                         $stmt->execute();
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     }
                     ?>
-                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname'] . ' ' . $row['school_id'] ?></h4>
+                    <h4 class="mt-4"> <?php echo  $row['schoolname'];?></h4>
+                    <h4 class="mt-4">ผู้อำนวยการ <?php echo $row['firstname'] . ' ' . $row['lastname']; ?></h4>
+                    <hr>
                 </div>
-                <hr>
                 <ul class="nav nav-pills nav-stacked">
                     <li><a href="director.php">หน้าแรก</a></li>
                     <li class="active"><a href="teacher.php">รายชื่อครูประจำชั้น</a></li>
-                    <li><a href="#">สมรรถนะ(ตัวชี้วัด)</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
-                    <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
+                    <li><a href="capacity/form.php">สมรรถนะ(ตัวชี้วัด)</a></li>
+                    <li><a href="result/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
+                    <li><a href="resultclass/result.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ชั้นปี</a></li>
+                    <li><a href="resultschool.php">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
                 </ul><br>
             </div><br>
             <div class="container">
@@ -133,11 +134,13 @@ require_once "../config/db.php";
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>ลำดับที่</th>
-                                <th>ชื่่อ</th>
-                                <th>นามสกุล</th>
-                                <th>ชั้นปี</th>
-                                <th>คะแนน</th>
+                                <th width="10%" scope="col">รหัสนักเรียน</th>
+                                <th width="10%" scope="col">คำนำหน้า</th>
+                                <th width="20%" scope="col">ชื่่อ</th>
+                                <th width="20%" scope="col">นามสกุล</th>
+                                <th width="10%" scope="col">ชั้นปี</th>
+                                <th width="10%" scope="col">คะแนน</th>
+                                <th width="10%" scope="col">พิมพ์รายงาน</th>
 
                             </tr>
                         </thead>
@@ -157,13 +160,17 @@ require_once "../config/db.php";
 
                             ?>
                                         <tr>
-                                            <td><?= $index++; ?></td>
+                                            <td><?= $student['number_id']; ?></td>
+                                            <td><?= $student['title']; ?></td>
                                             <td><?= $student['student_name']; ?></td>
                                             <td><?= $student['student_lastname']; ?></td>
                                             <td><?= $student['class_name']; ?></td>
-                                            <td><a href="#">ฟอร์ม</a>
+                                            <td>
+                                                <a href="studentform.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>
-
+                                            <td>
+                                                <a href="print.php?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                                            </td>
                                         </tr>
 
                             <?php  }

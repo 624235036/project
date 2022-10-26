@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once "../../config/db.php";
+require_once "../config/db.php";
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
@@ -63,7 +63,7 @@ if (isset($_GET['delete'])) {
     <div class="container" style="border-radius: 20px;">
         <div class=" col-sm-15 col-sm-offset-0">
             <br>
-            <a href="student.php" id="return" class="btn btn-warning">ย้อนกลับ</a>
+            <a href="teacher.php" id="return" class="btn btn-warning">ย้อนกลับ</a>
             <button type="botton" name="botton" id="print" class="btn btn-primary" onclick="window.print();">ปริ้นฟอร์ม</button>
             <br>
             <form action="save.php" method="post">

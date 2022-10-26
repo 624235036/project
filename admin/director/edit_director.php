@@ -5,6 +5,7 @@ require_once "../../config/db.php";
 
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
+    $title = $_POST['title'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $urole = $_POST['urole'];
@@ -16,27 +17,28 @@ if (isset($_POST['update'])) {
     } else if (empty($lastname)) {
         $_SESSION['error'] = 'please enter your last name';
         header("location:director.php");
-    } else if(empty($urole)) {
+    } else if (empty($urole)) {
         $_SESSION['error'] = 'please enter urole';
         header("location:director.php");
     } else {
 
 
-    $sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, urole = :urole  WHERE id = :id");
-    $sql->bindParam(':id', $id);
-    $sql->bindParam(':firstname', $firstname);
-    $sql->bindParam(':lastname', $lastname);
-    $sql->bindParam(':urole', $urole);
-    $sql->execute();
+        $sql = $conn->prepare("UPDATE users SET title = :title, firstname = :firstname, lastname = :lastname, urole = :urole  WHERE id = :id");
+        $sql->bindParam(':id', $id);
+        $sql->bindParam(':title', $title);
+        $sql->bindParam(':firstname', $firstname);
+        $sql->bindParam(':lastname', $lastname);
+        $sql->bindParam(':urole', $urole);
+        $sql->execute();
 
-    if ($sql) {
-        $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
-        header("location: director.php");
-    } else {
-        $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
-        header("location: director.php");
+        if ($sql) {
+            $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
+            header("location: director.php");
+        } else {
+            $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
+            header("location: director.php");
+        }
     }
-}
 }
 
 ?>
@@ -69,6 +71,15 @@ if (isset($_POST['update'])) {
             $data = $stmt->fetch();
         }
         ?>
+        <div class="form-group">
+            <label for="title">คำนำหน้า:</label>
+            <select name="title" class="form-control">
+                <option value="">เลือก</option>
+                <option value="นาย">นาย</option>
+                <option value="นาง">นาง</option>
+                <option value="นางสาว">นางสาว</option>
+            </select>
+        </div>
         <div class="form-group">
             <label for="firstname">ชื่่อ</label>
             <input type="hidden" readonly value="<?= $data['id']; ?>" class="form-control" name="id">

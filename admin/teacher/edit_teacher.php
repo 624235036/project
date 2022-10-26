@@ -5,14 +5,15 @@ require_once "../../config/db.php";
 
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
+    $title = $_POST['title'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $urole = $_POST['urole'];
-    // $c_password = $_POST['c_password'];
 
 
-    $sql = $conn->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, urole = :urole  WHERE id = :id");
+    $sql = $conn->prepare("UPDATE users SET title = :title, firstname = :firstname, lastname = :lastname, urole = :urole  WHERE id = :id");
     $sql->bindParam(':id', $id);
+    $sql->bindParam(':title', $title);
     $sql->bindParam(':firstname', $firstname);
     $sql->bindParam(':lastname', $lastname);
     $sql->bindParam(':urole', $urole);
@@ -20,10 +21,10 @@ if (isset($_POST['update'])) {
 
     if ($sql) {
         $_SESSION['success'] = "แก้ไขเพิ่มข้อมูลเสร็จสิ้น";
-        header("refresh:1; url= teacher.php");
+        header("location:teacher.php");
     } else {
         $_SESSION['error'] = "แก้ไขข้อมูลล้มเหลว";
-        header("refresh:1; url= teacher.php");
+        header("location:teacher.php");
     }
 }
 
@@ -59,6 +60,15 @@ if (isset($_POST['update'])) {
         ?>
         <div class="form-group" hidden><input type="text" readonly value="<?= $data['id']; ?>" class="form-control" name="id"></div>
         <div class="form-group">
+            <label for="title">คำนำหน้า:</label>
+            <select name="title" class="form-control">
+                <option value="">เลือก</option>
+                <option value="นาย">นาย</option>
+                <option value="นาง">นาง</option>
+                <option value="นางสาว">นางสาว</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="firstname">ชื่่อ</label>
             <input type="text" value="<?= $data['firstname']; ?>" class="form-control" name="firstname">
         </div>
@@ -83,10 +93,7 @@ if (isset($_POST['update'])) {
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
         </div> -->
         <div class="form-group" hidden>
-            <label for="school">โรงเรียน</label>
-            <select name="urole" class="form-control" required>
-                <option value="teacher">คุณครู</option> 
-            </select>
+            <input type="text" readonly value="<?= $data['urole']; ?>" class="form-control" name="urole">
         </div>
 
         <a class="btn btn-danger" href="teacher.php">ปิด</a>
