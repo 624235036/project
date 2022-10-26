@@ -39,11 +39,11 @@ if (isset($_GET['delete'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -51,7 +51,7 @@ if (isset($_GET['delete'])) {
 
     <div class="container-fluid ">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
                 </div>

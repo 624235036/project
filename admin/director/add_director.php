@@ -4,6 +4,7 @@
     require_once '../../config/db.php';
 
     if (isset($_POST['signup'])) {
+        $title = $_POST['title'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $phone = $_POST['phone'];
@@ -59,8 +60,9 @@
                     header("location:teacher.php");
                 } else if (!isset($_SESSION['error'])) {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $stmt = $conn->prepare("INSERT INTO users(firstname, lastname, phone, email, password, urole, school_id) 
-                                            VALUES(:firstname, :lastname, :phone, :email, :password, :urole, :school_id)");
+                    $stmt = $conn->prepare("INSERT INTO users(title, firstname, lastname, phone, email, password, urole, school_id) 
+                                            VALUES(:title, :firstname, :lastname, :phone, :email, :password, :urole, :school_id)");
+                    $stmt->bindParam(":title", $title);
                     $stmt->bindParam(":firstname", $firstname);
                     $stmt->bindParam(":lastname", $lastname);
                     $stmt->bindParam(":phone", $phone);

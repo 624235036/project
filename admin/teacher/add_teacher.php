@@ -75,10 +75,10 @@
                     $stmt->bindParam(":id_room", $class);
                     $stmt->execute();
                     $_SESSION['success'] = "เพิ่มข้อมูลสำเร็จ";
-                    header("refresh:1; url= teacher.php");
+                    header("location: teacher.php");
                 } else {
                     $_SESSION['error'] = "เพิ่มข้อมูลล้มเหลว";
-                    header("refresh:1; url= teacher.php");
+                    header("location: teacher.php");
                 }
                 
             } catch(PDOException $e) {

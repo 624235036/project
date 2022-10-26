@@ -88,7 +88,7 @@ require_once "../../config/db.php";
                             </tr><br>
                             <tr>
                                 <td colspan="10" align="center">
-                                    <h4>ชื่อ <?php echo  $result['title'] . ' ' . $result['student_name'] . '&nbsp;&nbsp;&nbsp;นามสกุล ' . $result['student_lastname'] ?></h4>
+                                    <h4>ชื่อ <?php echo  $result['title'] . ' ' . $result['student_name'] . '&nbsp;&nbsp;&nbsp;นามสกุล ' . $result['student_lastname'] .'&nbsp;&nbsp;&nbsp;รหัสนักเรียน '. $result['number_id'] ?></h4>
                                 </td>
                             </tr>
                             <tr>
@@ -156,7 +156,6 @@ require_once "../../config/db.php";
                                         echo "ไม่มี";
                                     } else {
                                         foreach ($data_h as $q_h) {
-                                            $total_score = $total_score + $q_h['total'];
                                 ?>
                                             <tr>
                                                 <td><?= $index_h++; ?></td>
@@ -167,11 +166,29 @@ require_once "../../config/db.php";
                                     }
                                 }
                                 ?>
+                                <?php
+                                if (isset($_GET['id'])) {
+                                    $id = $_GET['id'];
+                                    $index_h = 1;
+                                    $select_h = $conn->prepare("SELECT SUM(`SUM(score.score)`) as total FROM `scoresum` WHERE `id_student` = $id");
+                                    $select_h->execute();
+                                    $data_h = $select_h->fetchAll();
+
+                                    if (!$data_h) {
+                                        echo "ไม่มี";
+                                    } else {
+                                        foreach ($data_h as $total_score) {
+            
+                                ?>
                                 <tr>
                                     <td></td>
                                     <td></td>
-                                    <td>คะแนนรวม <br>(<?= $total_score; ?>)</td>
+                                    <td>คะแนนรวม <br>(<?= $total_score['total'];?>)</td>
                                 </tr>
+                                <?php }
+                                    }
+                                }
+                                ?>
                                 </tbody>
                         </table>
                     </form>

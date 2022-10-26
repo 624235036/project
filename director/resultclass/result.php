@@ -91,8 +91,14 @@ if (isset($_SESSION['school_id'])) {
                         </thead>
                         <tbody>
                             <?php
+                                if (isset($_SESSION['school_id'])) {
+                                $school_id = $_SESSION['school_id'];
                                 $index = 1;
-                                $stmt = $conn->query("SELECT * FROM class ");
+                                $stmt = $conn->query("SELECT class_room.id_school,class.name_class,class.id_class 
+                                FROM class 
+                                INNER JOIN class_room on class_room.id_class = class.id_class
+                                WHERE id_school = $school_id
+                                GROUP BY class_room.id_school,class.name_class,class.id_class");
                                 $stmt->execute();
                                 $data = $stmt->fetchAll();
 
@@ -105,10 +111,18 @@ if (isset($_SESSION['school_id'])) {
                                         <tr>
                                             <td><?= $index++; ?></td>
                                             <td><?= $a['name_class']; ?></td>
-                                            <td><a href="resultclass.php?id=<?= $a['id_class']; ?>" class="btn btn-denger btn-xs">ภาพรวม</a></td>
+                                            <form action="resultclass.php" method="get">
+                                                <td>
+                                                <input type="hidden" class="form-control" name="id_school" value="<?=$a['id_school'] ;?>">
+                                                <input type="hidden" class="form-control" name="id_class" value="<?=$a['id_class'] ;?>">
+                                                <button type="submit" name="scoreclass" class="btn btn-default">ภาพรวม</button>
+                                                </td>
+                                            </form>
+                                            
                                         </tr>
                             <?php }
                                 }
+                            }
                              ?>
                         </tbody>
                     </table>

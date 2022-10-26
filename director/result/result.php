@@ -95,8 +95,8 @@ if (isset($_SESSION['school_id'])) {
                             <?php
                             if (isset($_SESSION['school_id'])) {
                                 $index = 1;
-                                $user_id = $_SESSION['school_id'];
-                                $stmt = $conn->query("SELECT u.*, c.class_name FROM users as u INNER JOIN class_room as c on c.id_room = u.id_room WHERE u.school_id = $user_id AND urole = 'teacher'");
+                                $id_school = $_SESSION['school_id'];
+                                $stmt = $conn->query("SELECT u.*, c.class_name FROM users as u INNER JOIN class_room as c on c.id_room = u.id_room WHERE u.school_id = $id_school AND urole = 'teacher'");
                                 $stmt->execute();
                                 $data = $stmt->fetchAll();
 

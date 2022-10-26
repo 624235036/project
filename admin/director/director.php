@@ -71,11 +71,11 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -83,7 +83,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -129,30 +129,6 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             ?>
                         </div>
                     <?php } ?>
-                    <form action="director.php" method="get">
-                        <div class="mb-3 row">
-                            <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
-                            <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
-                            <div class="col-7 col-sm-5">
-                                <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
-                                                                                                                                                            echo $_GET['schoolname'];
-                                                                                                                                                        } ?>">
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <button type="submit" class="btn btn-primary">ค้นหา</button>
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <a href="director.php" class="btn btn-success">Reset</a>
-                            </div>
-                        </div>
-                    </form>
-                    <?php
-                    //แสดงข้อความที่ค้นหา
-                    if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
-                        echo '<font color="red"> ข้อมูลการค้นหา : ' . $_GET['schoolname'];
-                        echo ' *พบ ' . $stmt->rowCount() . ' รายการ</font><br><br>';
-                    } ?>
-                    <hr>
                     <?php
                     $stmt = $conn->prepare("SELECT * FROM school");
                     $stmt->execute();
@@ -165,15 +141,15 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             <div class="modal-content">
                                 <h2>เพิ่มผู้อำนวยการ</h2>
                                 <form action="add_director.php" method="post" enctype="multipart/form-data">
-                                    <!-- <div class="form-group">
-                                        <label for="urole">คำนำหน้า:</label>
+                                    <div class="form-group">
+                                        <label for="title">คำนำหน้า:</label>
                                         <select name="title" class="form-control">
                                             <option value="">เลือก</option>
                                             <option value="">นาย</option>
                                             <option value="นาง">นาง</option>
                                             <option value="นางสาว">นางสาว</option>
                                         </select>
-                                    </div> -->
+                                    </div>
                                     <div class="form-group">
                                         <label for="firstname">ชื่่อ</label>
                                         <input type="text" class="form-control" name="firstname">
@@ -214,8 +190,8 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                    <button type="submit" name="signup" class="btn btn-default">บันทึก</button>
+                                    <a class="btn btn-danger" href="director.php">ปิด</a>
+                                    <button type="submit" name="signup" class="btn btn-primary">บันทึก</button>
                                 </form>
                             </div>
                         </div>
@@ -262,7 +238,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 
                                         <td>
                                             <a href="edit_director.php?id=<?= $a['id']; ?>" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                                        <td><a href="?delete_id=<?php echo $a["id"]; ?>" onclick="return confirm('ต้องลบไช่ไหม')" class="btn btn-danger btn-xs">ลบ</a></td>
+                                        <td><a href="?delete_id=<?php echo $a["id"]; ?>" onclick="return confirm('ยืนยันการลบ')" class="btn btn-danger btn-xs">ลบ</a></td>
                                         </td>
 
                                     </tr>

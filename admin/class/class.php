@@ -44,6 +44,13 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../style.css" type="text/css" />
     <link rel="stylesheet" href="../../newstyle.css" type="text/css" />
+    <script>
+    function confirmDelete(delUrl) {
+      if (confirm("Are you sure you want to delete")) {
+        document.location = delUrl;
+      }
+    }
+  </script>
 </head>
 
 <body style="background-color: #00008B;">
@@ -56,11 +63,11 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -68,7 +75,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -186,28 +193,13 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                         </thead>
                         <tbody>
                             <form action="school.php" method="get">
-                                <div class="mb-3 row">
-                                    <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
-                                    <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
-                                    <div class="col-7 col-sm-5">
-                                        <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
-                                                                                                                                                                    echo $_GET['schoolname'];
-                                                                                                                                                                } ?>">
-                                    </div>
-                                    <div class="col-2 col-sm-1">
-                                        <button type="submit" class="btn btn-primary">ค้นหา</button>
-                                    </div>
-                                    <div class="col-2 col-sm-1">
-                                        <a href="school.php" class="btn btn-success">Reset</a>
-                                    </div>
-                                </div>
                                 <?php
                                 //แสดงข้อความที่ค้นหา
                                 if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                     echo '<font color="red"> ข้อมูลการค้นหา : ' . $_GET['schoolname'];
                                     echo ' *พบ ' . $stmt->rowCount() . ' รายการ</font><br><br>';
                                 } ?>
-                                <hr>
+                                
                                 <?php
                                 $index = 1;
                                 $stmt = $conn->query("SELECT c.*, s.schoolname , g.name_group FROM class_room as c INNER JOIN school as s ON s.id = c.id_school INNER JOIN class_group as g on g.id = c.id_class_group");
@@ -227,7 +219,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                 <td><?= $room['class_name']; ?></td>
                                 <td><?= $room['name_group']; ?></td>
                                 <td><?= $room['schoolname']; ?></td>
-                                <td><a href="?delete_id=<?php echo $room['id_room']; ?>" class="btn btn-danger btn-xs">ลบ</a></td>
+                                <td><a href="?delete_id=<?php echo $room['id_room']; ?>" onclick="return confirm('ยืนยันการลบ')" class="btn btn-danger btn-xs">ลบ</a></td>
                             </tr>
 
                     <?php  }

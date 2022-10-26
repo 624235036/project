@@ -50,11 +50,11 @@ if (isset($_REQUEST['delete_id'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -62,7 +62,7 @@ if (isset($_REQUEST['delete_id'])) {
 
     <div class="container-fluid ">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon1.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -202,7 +202,7 @@ if (isset($_REQUEST['delete_id'])) {
                                                 <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>
                                             <td><button class="btn btn-defult btn-sm"><a href="total.php?id=<?= $student['id_student']; ?>">คะแนน</a></button></td>
-                                            <td><a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
+                                            <td><a href="print.php?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
                                             </td>
                                         </tr>
 

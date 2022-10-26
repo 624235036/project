@@ -56,7 +56,7 @@ if (isset($_POST['update'])) {
         ?>
         <div class="form-group">
           <label for="schoolname">ชื่อโรงเรียน:</label>
-          <input type="text" readonly value="<?= $data['id']; ?>" class="form-control" name="id">
+          <input type="hidden" readonly value="<?= $data['id']; ?>" class="form-control" name="id">
           <input type="text" value="<?= $data['schoolname']; ?>" class="form-control" name="schoolname">
         </div>
         <div class="form-group">

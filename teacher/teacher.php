@@ -28,11 +28,11 @@ require_once "../config/db.php";
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -40,7 +40,7 @@ require_once "../config/db.php";
 
     <div class="container-fluid ">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../images/icon1.png" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -63,7 +63,6 @@ require_once "../config/db.php";
                     <li><a href="../teacher/student/student.php">ข้อมูลนักเรียน</a></li>
                     <li><a href="../teacher/graffic/data.php">รายงานภาพรวมสมรรถนะของผู้เรียน/ห้องเรียน</a></li>
                     <li><a href="#">รายงานภาพรวมสมรรถนะของผู้เรียน/โรงเรียน</a></li>
-                    <li><a href="../index.php">ออกจากระบบ</a></li>
                 </ul><br>
             </div><br>
             <div class="container">

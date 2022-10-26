@@ -56,6 +56,13 @@ if (isset($_REQUEST['delete_id'])) {
             });
         });
     </script>
+    <script>
+        function confirmDelete(delUrl) {
+            if (confirm("Are you sure you want to delete")) {
+                document.location = delUrl;
+            }
+        }
+    </script>
 </head>
 
 <body style="background-color: #00008B;">
@@ -68,11 +75,11 @@ if (isset($_REQUEST['delete_id'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะผู้เรียนจังหวัดสตูล</a>
+                <a class="navbar-brand" href="#">ระบบประเมินสมรรถนะของผู้เรียน</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="../../index.php"><span class="glyphicon glyphicon-log-out"></span> ออกจากระบบ</a></li>
                 </ul>
             </div>
         </div>
@@ -80,7 +87,7 @@ if (isset($_REQUEST['delete_id'])) {
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-sm-3 sidenav">
                 <div align="center"><br>
                     <img src="../../images/icon.jpg" height="100" class="img-circle" alt="Cinque Terre">
                 </div>
@@ -129,22 +136,6 @@ if (isset($_REQUEST['delete_id'])) {
                         </div>
                     <?php } ?>
                     <form action="add_teacher.php" method="post">
-                        <div class="mb-3 row">
-                            <!-- d-none d-sm-block คือซ่อนเมื่ออยู่หน้าจอโทรศัพท์ -->
-                            <label class="col-3 col-sm-2 col-form-label d-none d-sm-block">ค้นหาข้อมูล</label>
-                            <div class="col-7 col-sm-5">
-                                <input type="text" name="schoolname" required class="form-control" placeholder="ระบุชื่อโรงเรียนที่ต้องการค้นหา" value="<?php if (isset($_GET['schoolname'])) {
-                                                                                                                                                            echo $_GET['schoolname'];
-                                                                                                                                                        } ?>">
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <button type="submit" class="btn btn-primary">ค้นหา</button>
-                            </div>
-                            <div class="col-2 col-sm-1">
-                                <a href="director.php" class="btn btn-success">Reset</a>
-                            </div>
-                        </div>
-                        <hr>
                         <?php if (isset($_SESSION['error'])) { ?>
                             <div class="alert alert-danger" role="alert">
                                 <?php
@@ -198,11 +189,9 @@ if (isset($_REQUEST['delete_id'])) {
                                         <label for="password">ยืนยันรหัสผ่าน:</label>
                                         <input type="password" class="form-control" name="c_password">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" hidden>
                                         <label for="urole">ตำแหน่ง:</label>
                                         <select name="urole" class="form-control">
-                                            <option value="">เลือก</option>
-                                            <option value="director">director</option>
                                             <option value="teacher">teacher</option>
                                         </select>
                                     </div>
@@ -232,7 +221,7 @@ if (isset($_REQUEST['delete_id'])) {
 
                                         ?>
                                     </div>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                                    <a class="btn btn-danger" href="teacher.php">ปิด</a>
                                     <button type="submit" name="signup" class="btn btn-default">บันทึก</button>
                     </form>
                 </div>
@@ -278,7 +267,7 @@ if (isset($_REQUEST['delete_id'])) {
 
                             <td>
                                 <a href="edit_teacher.php?id=<?= $a['id']; ?>" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">แก้ไข</a>
-                            <td><a href="?delete_id=<?php echo $a["id"]; ?>" class="btn btn-danger btn-xs">ลบ</a></td>
+                            <td><a href="?delete_id=<?php echo $a["id"]; ?>" onclick="return confirm('ยืนยันการลบ')" class="btn btn-danger btn-xs">ลบ</a></td>
                             </td>
                         </tr>
                 <?php  }

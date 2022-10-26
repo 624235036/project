@@ -1,13 +1,12 @@
 <?php
 
 session_start();
-require_once "../../config/db.php";
+require_once "../config/db.php";
 
 
-if (isset($_GET['scoreclass'])) {
-  $id = $_GET['id_class'];
-  $id_s = $_GET['id_school'];
-  $sqlQuery = $conn->query("SELECT `name_header`, `id_class`, `id_school`, AVG(`avgscore`) as avgscore FROM `scoreclass` WHERE id_class = $id AND id_school = $id_s GROUP BY `name_header`,`id_class`,`id_school`");
+if (isset($_SESSION['school_id'])) {
+  $school_id = $_SESSION['school_id'];
+  $sqlQuery = $conn->query("SELECT `name_header`, `id_school`, AVG(`avgscore`) as avgscore FROM `scoreschool` WHERE `id_school`=$school_id GROUP BY `name_header`,`id_school`");
   $sqlQuery->execute();
   $result = $sqlQuery->fetchAll();
 }
@@ -24,13 +23,12 @@ foreach ($result as $rs) {
 $nameheardr = implode(",", $nameheardr);
 $total = implode(",", $total);
 
+
 ?>
-
-
 <html>
 
 <head>
-  <title>PHP PDO & BAR CHART : ออกรายงานกราฟแท่ง devbanban.com 2021</title>
+  <title>scoretotal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- bootstrap5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -42,7 +40,7 @@ $total = implode(",", $total);
   <div class="container">
     <div class="row">
       <div class="col-md-12"> <br>
-        <h4 align="center">รายงานภาพรวมชั้นปี</h4>
+        <h4 align="center">รายงานภาพรวมสมรรถนะ 5 ด้าน</h4>
         <!--devbanban.com-->
         <canvas id="myChart" width="800px" height="300px"></canvas>
         <script>
@@ -54,7 +52,7 @@ $total = implode(",", $total);
 
               ],
               datasets: [{
-                label: 'รายงานภาพรวม แยกตามปี (บาท)',
+                label: 'รายงานภาพรวม แยกตามหัวข้อ',
                 data: [<?php echo $total; ?>],
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',

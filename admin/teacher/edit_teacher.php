@@ -82,7 +82,7 @@ if (isset($_POST['update'])) {
             <label for="password">ยืนยันรหัสผ่าน:</label>
             <input type="text" value="<?= $data['password']; ?>" class="form-control" name="password">
         </div> -->
-        <div class="form-group">
+        <div class="form-group" hidden>
             <label for="school">โรงเรียน</label>
             <select name="urole" class="form-control" required>
                 <option value="teacher">คุณครู</option> 
