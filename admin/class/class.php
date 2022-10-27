@@ -103,6 +103,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
                     <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มห้อง</button>
+                    <h2>ห้องเรียน</h2>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">

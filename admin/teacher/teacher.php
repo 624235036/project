@@ -118,6 +118,7 @@ if (isset($_REQUEST['delete_id'])) {
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
                     <button type="button" class="btn btn-primary btn-m" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> เพิ่มคุณครู</button>
+                    <h2>ข้อมูลคุณครู</h2>
                     <hr>
                     <?php if (isset($_SESSION['success'])) { ?>
                         <div class="alert alert-success">

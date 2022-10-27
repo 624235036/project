@@ -78,7 +78,7 @@ require_once "../../config/db.php";
     </style>
 </head>
 
-<body style="background-color: gray;">
+<body style="background-color: #8FBC8F;">
 
     <div class="container-fluid">
         <div class="row content">

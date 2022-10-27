@@ -51,12 +51,17 @@ require_once 'config/db.php';
 
 <body class="bg">
   <nav class="navbar " style="background-color: #FFE4E1;">
-    <!-- <a class="navbar-brand"  >
-      <img style="position: relative; top:10px; "  src="images/02.png" height="100px" width="200px" class="d-inline-block align-top">
-    </a>
-    <a class="navbar-brand" style="text-align: center;">
-    <h3 >ระบบประเมินสมรรถนะ</h3>
-    </a> -->
+    <div class="text">
+      <?php
+      $stmt = $conn->query("SELECT * FROM tbl_date");
+      $stmt->execute();
+      $date = $stmt->fetch(PDO::FETCH_ASSOC);
+      ?>
+      <h2>
+        <marquee width="223%" style="background-color:#ffff ; height: 100px ;" scrollamount="15" direction="right"> ระบบเปิด: <?php echo $date['d_open'] . '&nbsp;&nbsp;&nbsp;' . 'ระบบปิด:  ' . $date['d_close'] ?>
+      </h2>
+      </marquee>
+    </div>
   </nav><br>
   <div class="container">
     <div class="row">
@@ -69,27 +74,27 @@ require_once 'config/db.php';
       <div class="col-sm-5 col-m-push-4" style="background-color:#ffff;">
         <hr>
         <form action="signin_db.php" method="post">
-        <?php if (isset($_SESSION['error'])) { ?>
-                <div class="alert alert-danger" role="alert">
-                  <?php
-                  echo $_SESSION['error'];
-                  unset($_SESSION['error']);
-                  ?>
-                </div>
-              <?php } ?>
-              <?php if (isset($_SESSION['success'])) { ?>
-                <div class="alert alert-success" role="alert">
-                  <?php
-                  echo $_SESSION['success'];
-                  unset($_SESSION['success']);
-                  ?>
-                </div>
-              <?php } ?>
+          <?php if (isset($_SESSION['error'])) { ?>
+            <div class="alert alert-danger" role="alert">
               <?php
-              $stmt = $conn->prepare("SELECT * FROM school");
-              $stmt->execute();
-              $schools = $stmt->fetchAll();
+              echo $_SESSION['error'];
+              unset($_SESSION['error']);
               ?>
+            </div>
+          <?php } ?>
+          <?php if (isset($_SESSION['success'])) { ?>
+            <div class="alert alert-success" role="alert">
+              <?php
+              echo $_SESSION['success'];
+              unset($_SESSION['success']);
+              ?>
+            </div>
+          <?php } ?>
+          <?php
+          $stmt = $conn->prepare("SELECT * FROM school");
+          $stmt->execute();
+          $schools = $stmt->fetchAll();
+          ?>
           <div class="mb-3">
             <label for="email" class="form-label">อีเมล</label>
             <input type="email" class="form-control" name="email" aria-describedby="email" style="width: 350px;">

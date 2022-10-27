@@ -57,7 +57,7 @@ $total = implode(",", $total);
         <script>
           var ctx = document.getElementById("myChart").getContext('2d');
           var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'radar',
             data: {
               labels: [<?php echo $nameheardr; ?>
 

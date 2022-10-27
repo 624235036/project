@@ -11,9 +11,9 @@ echo "</pre>";
 
 
 //สร้างตัวแปร
-$d_open = $_POST['d_1'];
-$d_close = $_POST['d_2'];
-$d_timezone = $_POST['d_3'];
+$d_open = $_POST['d_2'];
+$d_close = $_POST['d_3'];
+$d_timezone = $_POST['d_1'];
 
 
 
@@ -27,9 +27,9 @@ VALUES
 
 
 
-$result = mysqli_query($conn, $sql_date) or die("Error in query: $sql_date " . mysqli_connect_error());
+$result = mysqli_query($con, $sql_date) or die("Error in query: $sql_date " . mysqli_connect_error());
 //ปิดการเชื่อมต่อ database
-mysqli_close($conn);
+mysqli_close($con);
 //ถ้าสำเร็จให้ขึ้นอะไร
 if ($result) {
     echo "<script type='text/javascript'>";

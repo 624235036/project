@@ -58,7 +58,7 @@ if (isset($_GET['delete'])) {
     </style>
 </head>
 
-<body style="background-color: gray;">
+<body style="background-color: #8FBC8F;">
 
     <div class="container" style="border-radius: 20px;">
         <div class=" col-sm-15 col-sm-offset-0">
