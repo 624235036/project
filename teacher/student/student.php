@@ -30,7 +30,7 @@ if (isset($_REQUEST['delete_id'])) {
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Student</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -193,7 +193,7 @@ if (isset($_REQUEST['delete_id'])) {
                                 $data = $stmt->fetchAll();
 
                                 if (!$data) {
-                                    echo "ไม่มี";
+                                    echo "<tr><td COLSPAN='9' align= 'center' >ไม่มีข้อมูล</td></tr>";
                                 } else {
                                     foreach ($data as $student) {
                             ?>
@@ -209,7 +209,7 @@ if (isset($_REQUEST['delete_id'])) {
                                             <td>
                                                 <a href="form.php?id=<?= $student['id_student']; ?>" class="btn btn-info btn-sm">ฟอร์ม</a>
                                             </td>
-                                            <td><button class="btn btn-defult btn-sm"><a href="total.php?id=<?= $student['id_student']; ?>">คะแนน</a></button></td>
+                                            <td><a href="total.php?id=<?= $student['id_student']; ?>" class="btn btn-defult btn-sm">คะแนน</a></td>
                                             <td><a href="print.php?id=<?= $student['id_student']; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></a>
                                             </td>
                                         </tr>

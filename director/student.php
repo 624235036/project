@@ -8,7 +8,7 @@ require_once "../config/db.php";
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Student</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -68,7 +68,7 @@ require_once "../config/db.php";
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0"><br>
-                    <a href="teacher.php"><button type="button" class="btn btn-primary btn-m">ย้อนกลับ</button></a>
+                    <a href="teacher.php" class="btn btn-warning btn-m">ย้อนกลับ</a>
                     <?php
                     if (isset($_GET['id'])) {
                         $id = $_GET['id'];
@@ -77,7 +77,7 @@ require_once "../config/db.php";
                         $data_name = $stmt->fetch();
                     }
                     ?>
-                    <h2>รายชื่อนักเรียนครูประจำชั้น <?php echo $data_name['firstname'] . ' ' . $data_name['lastname']; ?></h2>
+                    <h3>รายชื่อนักเรียนครูประจำชั้น <?php echo $data_name['title'] .' '. $data_name['firstname'] . ' ' . $data_name['lastname']; ?></h3>
                     <hr>
                     <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
@@ -154,7 +154,7 @@ require_once "../config/db.php";
                                 $data = $stmt->fetchAll();
 
                                 if (!$data) {
-                                    echo "ไม่มี";
+                                    echo "<tr><td COLSPAN='7' align= 'center' >ไม่มีข้อมูล</td></tr>";
                                 } else {
                                     foreach ($data as $student) {
 

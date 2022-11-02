@@ -24,7 +24,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Teacher</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -84,7 +84,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
             </div><br>
             <div class="container">
                 <div class=" col-sm-15 col-sm-offset-0">
-                    <h3>รายชื่อคุณครู</h3>
+                    <h3 align = "center">รายชื่อคุณครู</h3>
                     <hr>
                     <?php if (isset($_SESSION['error'])) { ?>
                         <div class="alert alert-danger" role="alert">
@@ -182,7 +182,7 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                                 <th>นามสกุล</th>
                                 <th>เบอร์โทร</th>
                                 <th>อีเมล</th>
-                                <th>ตำแหน่ง</th>
+                                <!-- <th>ตำแหน่ง</th> -->
                                 <th>ห้องเรียน</th>
                                 <th>ข้อมูล</th>
                             </tr>
@@ -209,9 +209,9 @@ if (isset($_GET['firstname']) && $_GET['firstname'] != '') {
                                             <td><?= $a['lastname']; ?></td>
                                             <td><?= $a['phone']; ?></td>
                                             <td><?= $a['email']; ?></td>
-                                            <td><?= $a['urole']; ?></td>
+                                            <!-- <td><?= $a['urole']; ?></td> -->
                                             <td><?= $a['class_name']; ?></td>
-                                            <td><a href="student.php?id=<?= $a["id"]; ?>" class="btn btn-danger btn-xs">ข้อมูล</a></td>
+                                            <td><a href="student.php?id=<?= $a["id"]; ?>" class="btn btn-info btn-xs">ข้อมูล</a></td>
                                         </tr>
 
                             <?php }

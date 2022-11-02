@@ -26,10 +26,10 @@
                     $conn = null;
                    
                    if ($stmt){
-                   $_SESSION['success'] = "registered successfully!";
+                   $_SESSION['success'] = "เพิ่มข้อมูล สำเร็จ";
                     header("refresh:1; url=student.php");
                 } else {
-                    $_SESSION['error'] = "something went wrong!";
+                    $_SESSION['error'] = "เพิ่มข้อมูล ล้มเหลว";
                     header("refresh:1; url=student.php");
                 }
     

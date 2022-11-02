@@ -9,7 +9,7 @@ require_once "../../config/db.php";
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Total Score Student</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -153,7 +153,7 @@ require_once "../../config/db.php";
 
 
                                     if (!$data_h) {
-                                        echo "ไม่มี";
+                                        echo "<tr><td COLSPAN='4' align= 'center' >ไม่มีข้อมูล</td></tr>";
                                     } else {
                                         foreach ($data_h as $q_h) {
                                 ?>

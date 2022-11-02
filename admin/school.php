@@ -36,7 +36,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 <html lang="en">
 
 <head>
-  <title>Bootstrap Example</title>
+  <title>School</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -161,7 +161,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                 $schools = $stmt->fetchAll();
 
                 if (!$schools) {
-                  echo "ไม่มีข้อมูล";
+                  echo "<tr><td COLSPAN='5' align= 'center' >ไม่มีข้อมูล</td></tr>";
                 } else {
                   foreach ($schools as $school) {
 

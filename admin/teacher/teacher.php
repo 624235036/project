@@ -25,7 +25,7 @@ if (isset($_REQUEST['delete_id'])) {
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Teacher</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -246,9 +246,9 @@ if (isset($_REQUEST['delete_id'])) {
                     <th>นามสกุล</th>
                     <th>เบอร์โทร</th>
                     <th>อีเมล</th>
-                    <th>ตำแหน่ง</th>
+                    <!-- <th>ตำแหน่ง</th> -->
                     <th>โรงเรียน</th>
-                    <th>ชั้นปี</th>
+                    <th>ห้องเรียน</th>
                     <th>แก้ไข</th>
                     <th>ลบ</th>
                 </tr>
@@ -261,7 +261,7 @@ if (isset($_REQUEST['delete_id'])) {
                 $stmt->execute();
                 $data = $stmt->fetchAll();
                 if (!$data) {
-                    echo '<tr><td>ไม่มีข้อมูล</td></tr>';
+                    echo "<tr><td COLSPAN='10' align= 'center' >ไม่มีข้อมูล</td></tr>";
                 } else {
                     foreach ($data as $a) {
                 ?>
@@ -272,7 +272,7 @@ if (isset($_REQUEST['delete_id'])) {
                             <td><?= $a['lastname']; ?></td>
                             <td><?= $a['phone']; ?></td>
                             <td><?= $a['email']; ?></td>
-                            <td><?= $a['urole']; ?></td>
+                            <!-- <td><?= $a['urole']; ?></td> -->
                             <td><?= $a['schoolname']; ?></td>
                             <td><?= $a['class_name']; ?></td>
 

@@ -58,7 +58,7 @@ require_once 'config/db.php';
       $date = $stmt->fetch(PDO::FETCH_ASSOC);
       ?>
       <h2>
-        <marquee width="223%" style="background-color:#ffff ; height: 100px ;" scrollamount="15" direction="right"> ระบบเปิด: <?php echo $date['d_open'] . '&nbsp;&nbsp;&nbsp;' . 'ระบบปิด:  ' . $date['d_close'] ?>
+        <marquee width="250%" style="height: 100px ;" scrollamount="15" direction="right"> ระบบเปิด: <?php echo $date['d_open'] . '&nbsp;&nbsp;&nbsp;' . 'ระบบปิด:  ' . $date['d_close'] ?>
       </h2>
       </marquee>
     </div>

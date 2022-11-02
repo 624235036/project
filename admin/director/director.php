@@ -44,7 +44,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Director</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -207,7 +207,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                 <th>เบอร์โทร</th>
                                 <th>อีเมล</th>
                                 <!-- <th>รหัสผ่าน</th> -->
-                                <th>ตำแหน่ง</th>
+                                <!-- <th>ตำแหน่ง</th> -->
                                 <th>โรงเรียน</th>
                                 <th>แก้ไข</th>
                                 <th width="10" scope="col">ลบ</th>
@@ -221,7 +221,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                             $result = $stmt->fetchAll();
 
                             if (!$result) {
-                                echo "<tr><td> </td></tr>";
+                                echo "<tr><td COLSPAN='9' align= 'center' >ไม่มีข้อมูล</td></tr>";
                             } else {
                                 foreach ($result as $a) {
                                     // $stmt = $conn->query("SELECT u.*, s.schoolname FROM users as u INNER JOIN school as s ON s.id = u.school_id WHERE s.id = $id ORDER BY s.id asc ");
@@ -236,7 +236,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                         <td><?= $a['phone']; ?></td>
                                         <td><?= $a['email']; ?></td>
                                         <!-- <td><?= strlen($a['password']); ?></td> -->
-                                        <td><?= $a['urole']; ?></td>
+                                        <!-- <td><?= $a['urole']; ?></td> -->
                                         <td><?= $a['schoolname']; ?></td>
 
                                         <td>

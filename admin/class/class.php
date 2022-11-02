@@ -36,7 +36,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Class</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -156,7 +156,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                             <?php } ?>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="class_group">ระดับ</label>
                                         <select name="class_group" class="form-control" required>
                                             <option value="">เลือก</option>
@@ -165,7 +165,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                                 <option value="<?= $row['id']; ?>"><?= $row['name_group']; ?></option>
                                             <?php } ?>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label for="school_id">โรงเรียน</label>
                                         <select name="school_id" class="form-control" required>
@@ -186,29 +186,24 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                         <thead>
                             <tr>
                                 <th width="8%">ลำดับที่</th>
+                                <th>ห้องเรียน</th>
                                 <th>ชั้นปี</th>
-                                <th>ระดับ</th>
                                 <th>โรงเรียน</th>
                                 <th>ลบ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="school.php" method="get">
-                                <?php
-                                //แสดงข้อความที่ค้นหา
-                                if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
-                                    echo '<font color="red"> ข้อมูลการค้นหา : ' . $_GET['schoolname'];
-                                    echo ' *พบ ' . $stmt->rowCount() . ' รายการ</font><br><br>';
-                                } ?>
-                                
+                            <form action="school.php" method="get"> 
                                 <?php
                                 $index = 1;
-                                $stmt = $conn->query("SELECT c.*, s.schoolname , g.name_group FROM class_room as c INNER JOIN school as s ON s.id = c.id_school INNER JOIN class_group as g on g.id = c.id_class_group");
+                                $stmt = $conn->query("SELECT c.*, s.schoolname , g.name_class FROM class_room as c 
+                                INNER JOIN school as s ON s.id = c.id_school 
+                                INNER JOIN class as g on g.id_class = c.id_class");
                                 $stmt->execute();
                                 $class = $stmt->fetchAll();
 
                                 if (!$class) {
-                                    echo "ไม่มีข้อมูล";
+                                    echo "<tr><td COLSPAN='5' align= 'center' >ไม่มีข้อมูล</td></tr>";
                                 } else {
                                     foreach ($class as $room) {
 
@@ -218,7 +213,7 @@ if (isset($_GET['schoolname']) && $_GET['schoolname'] != '') {
                                 <th><?= $index++;
                                         ['id']; ?></th>
                                 <td><?= $room['class_name']; ?></td>
-                                <td><?= $room['name_group']; ?></td>
+                                <td><?= $room['name_class']; ?></td>
                                 <td><?= $room['schoolname']; ?></td>
                                 <td><a href="?delete_id=<?php echo $room['id_room']; ?>" onclick="return confirm('ยืนยันการลบ')" class="btn btn-danger btn-xs">ลบ</a></td>
                             </tr>

@@ -6,7 +6,12 @@ require_once "../../config/db.php";
 
 if (isset($_SESSION['tech_login'])) {
   $user_id = $_SESSION['tech_login'];
-  $sqlQuery = $conn->query("SELECT `id_teacher`,`name_header`,avg(avgscore) as avgscore FROM scorestudent WHERE scorestudent.`id_teacher` = $user_id GROUP BY `id_teacher`,`name_header`");
+  $sqlQuery = $conn->query("SELECT scorestudent.`id_teacher`, `name_header`, class_room.class_name, users.firstname, users.lastname,avg(avgscore) as avgscore
+                            FROM scorestudent
+                            INNER JOIN class_room ON class_room.id_room = scorestudent.id_room
+                            INNER JOIN users ON users.id = scorestudent.id_teacher
+                            WHERE scorestudent.`id_teacher` = $user_id
+                            GROUP BY scorestudent.`id_teacher`, `name_header`, class_room.class_name, users.firstname, users.lastname ");
   $sqlQuery->execute();
   $result = $sqlQuery->fetchAll();
 }
@@ -28,7 +33,7 @@ $total = implode(",", $total);
 <html>
 
 <head>
-  <title>scoretotal</title>
+  <title>Class Room CHART</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- bootstrap5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -48,13 +53,13 @@ $total = implode(",", $total);
       <div class="col-md-12"> <br>
       <a class="btn btn-warning" href="../student/student.php">ย้อนกลับ</a>
         <h3 align="center">รายงานภาพรวมสมรรถนะทั้ง 5 ด้าน</h3>
-        <h5 align="center">(ห้องเรียน)</h5>
+        <h5 align="center">(คุณครู <?php if(!$result) {echo'ไม่พบข้อมูล';}elseif($rs) {echo $rs['firstname'] .'&nbsp;'. $rs['lastname'] .'&nbsp;ห้องเรียน&nbsp;'. $rs['class_name']; }?>)</h5>
         <!--devbanban.com-->
         <canvas id="myChart" width="800px" height="300px"></canvas>
         <script>
           var ctx = document.getElementById("myChart").getContext('2d');
           var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'radar',
             data: {
               labels: [<?php echo $nameheardr; ?>
 
